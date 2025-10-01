@@ -1,4 +1,20 @@
 ---
-title: "IIDonaji.github.io"
+title: "Ixel"
+image: IxelCroped.jpg
+about: 
+  template: jolla
+  image-shape: round
+  image-width: 17em
+  links: 
+    - text: LinkedIn
+      href: www.linkedin.com/in/ixel-m-337911126
+      target: _blank
+    - text: GitHub
+      href: https://github.com/IIDonaji
+      target: _blank
+    - text: Email
+      href: mailto:imedrano@ucsb.edu
 ---
 
+I value creativity and strong collaborations in addressing ecological issues such as anthropogenic impacts.
+I understand the importance of working across fields to develop progressive environmental solutions and management strategies
