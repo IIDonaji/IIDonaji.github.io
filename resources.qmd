@@ -3,3 +3,30 @@ title: "resources"
 format: html
 ---
 
+<!-- <h1>this is an h1 elemnt</h1> -->
+
+<!-- <h1>class ='title">this is an h1 element with the title class</h1> -->
+
+<!-- <p>class="bondiblue-text">this paragraph is bondiblue</p> -->
+
+<!-- <p>class="center-text bondiblue-text"> this text is both centered and orange</p> -->
+
+<!-- --- -->
+
+<!-- Here is where I'm describing [something fun] {.bondiblue=text} -->
+
+<!-- [or do all theses] {.bondiblue-text} -->
+
+
+<!-- ::: {.bondiblue-text} -->
+
+<!-- here is one -->
+
+<!-- heres another -->
+
+
+<!-- ::: -->
+
+<!-- :::{center-text} -->
+
+<!-- this is centered -->

@@ -1,0 +1,12 @@
+# any option here will apply to all posts in the blog_post/ folder
+
+author: #can add more authoirs by adding - name
+  - name: Ixel
+    url: https://IIDonaji.github.io/
+    affiliation: The Bren School of Environmental Science & Management 
+    affilliation-url: https://bren.ucsb.edu/
+    
+title-block-banner: true
+
+freeze: auto 
+

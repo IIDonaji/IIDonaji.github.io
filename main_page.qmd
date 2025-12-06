@@ -1,6 +1,6 @@
 ---
-title: "Ixel"
-image: IxelCroped.jpg
+title: "Website Under construction!"
+image: "IxelCroped.jpg"
 about: 
   template: jolla
   image-shape: round
@@ -14,6 +14,13 @@ about:
       target: _blank
     - text: Email
       href: mailto:imedrano@ucsb.edu
+ 
+page-footer:
+    left: Copyright© 2025, IxelDonaji
+    right: 
+    - icon: github #This website is built with Github
+      text: Built with Github
+    - href: https://github.com 
 ---
 
 I value creativity and strong collaborations in addressing ecological issues such as anthropogenic impacts.
