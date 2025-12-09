@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-11-12">
 <meta name="description" content="Exclusive Economic Zones (EEZ) on the West Coast of the US that best suited to developing marine aquaculture for several species of oysters and Datemussel">
 
-<title>Prioritizing Potential Aquaculture – Ixel Medrano</title>
+<title>Prioritizing Potential Aquaculture Along the U.S. West Coast – Ixel Medrano</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -135,14 +135,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="../../main_page.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../listingpg_post.html"> 
-<span class="menu-text">Blog</span></a>
-  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -154,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Prioritizing Potential Aquaculture</h1>
+      <h1 class="title">Prioritizing Potential Aquaculture Along the U.S. West Coast</h1>
                   <div>
         <div class="description">
           Exclusive Economic Zones (EEZ) on the West Coast of the US that best suited to developing marine aquaculture for several species of oysters and Datemussel
@@ -163,6 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                           <div class="quarto-categories">
                 <div class="quarto-category">R</div>
                 <div class="quarto-category">Geospatial Analysis</div>
+                <div class="quarto-category">Aquaculture</div>
               </div>
                   </div>
   </div>
@@ -203,7 +196,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#prepare-sst-and-depth" id="toc-prepare-sst-and-depth" class="nav-link" data-scroll-target="#prepare-sst-and-depth">1. Prepare SST and Depth</a></li>
+  </ul></li>
   <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">Set-Up</a></li>
   <li><a href="#process-data" id="toc-process-data" class="nav-link" data-scroll-target="#process-data">Process data</a></li>
   <li><a href="#find-suitable-locations-for-oysters" id="toc-find-suitable-locations-for-oysters" class="nav-link" data-scroll-target="#find-suitable-locations-for-oysters">Find suitable locations for Oysters</a></li>
@@ -225,9 +223,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
-<p>What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and California Datemussel.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Marine aquaculture is rapidly expanding as coastal nations seek sustainable ways to meet seafood demand. Identifying <em>where</em> aquaculture should occur is a major challenge—optimal sites must balance ecological suitability, production needs, and regulatory boundaries.</p>
+<p><strong>This analysis asks:</strong><br>
+<strong>Which West Coast Exclusive Economic Zones (EEZs) in the United States are most suitable for developing aquaculture for oysters and the California datemussel?</strong></p>
+<p>This question matters because poorly sited aquaculture can increase disease risk, reduce water quality, and damage benthic habitats <a href="https://worldfishcenter.org/publication/blue-frontiers-managing-environmental-costs-aquaculture-0">Hall et al., 2011</a>. Meanwhile, global assessments suggest the U.S. has extensive unrealized aquaculture potential <a href="https://www.nature.com/articles/s41559-017-0257-9">Gentry et al., 2017</a>. By integrating environmental data with jurisdictional boundaries, spatial modeling can help coastal managers pinpoint responsible locations for future development.</p>
+</section>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
+<p>I combined three geospatial datasets:</p>
+<ul>
+<li><strong>Bathymetry:</strong> GEBCO 2022 global depth raster<br>
+</li>
+<li><strong>Sea Surface Temperature (SST):</strong> 2008–2012 annual averages<br>
+</li>
+<li><strong>Exclusive Economic Zones:</strong> Cleaned U.S. West Coast EEZ shapefile</li>
+</ul>
+<p>Environmental requirements were taken from fisheries and species-specific literature, including SeaLifeBase (2025).</p>
+<p>All geospatial processing was performed in <strong>R</strong> using <code>terra</code>, <code>stars</code>, and <code>sf</code>.</p>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<section id="prepare-sst-and-depth" class="level3">
+<h3 class="anchored" data-anchor-id="prepare-sst-and-depth">1. Prepare SST and Depth</h3>
+<p>I stacked five annual SST rasters (2008–2012), calculated the mean, and converted Kelvin to Celsius:</p>
+</section>
 </section>
 <section id="set-up" class="level1">
 <h1>Set-Up</h1>
@@ -752,14 +773,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{2025,
   author = {, Ixel},
-  title = {Prioritizing {Potential} {Aquaculture}},
+  title = {Prioritizing {Potential} {Aquaculture} {Along} the {U.S.}
+    {West} {Coast}},
   date = {2025-11-12},
   url = {https://github.com/IIDonaji/Prioritizing-potential-aquaculture},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-2025" class="csl-entry quarto-appendix-citeas" role="listitem">
-Ixel. 2025. <span>“Prioritizing Potential Aquaculture.”</span> November
-12, 2025. <a href="https://github.com/IIDonaji/Prioritizing-potential-aquaculture">https://github.com/IIDonaji/Prioritizing-potential-aquaculture</a>.
+Ixel. 2025. <span>“Prioritizing Potential Aquaculture Along the U.S.
+West Coast.”</span> November 12, 2025. <a href="https://github.com/IIDonaji/Prioritizing-potential-aquaculture">https://github.com/IIDonaji/Prioritizing-potential-aquaculture</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
