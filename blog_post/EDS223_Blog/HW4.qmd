@@ -8,7 +8,7 @@ format:
 editor: 
   markdown: 
     wrap: 72
-categories: [Python]
+categories: [R]
 #image: MEDS Orientation_2026_0053.jpg
 citation: #set true or delete 
   url: https://IIDonaji.github.io/blog_post/
