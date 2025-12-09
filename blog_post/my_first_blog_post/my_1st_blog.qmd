@@ -12,7 +12,7 @@ categories: [MEDS, R, Python]
 image: MEDS Orientation_2026_0053.jpg
 citation: #set true or delete 
   url: https://IIDonaji.github.io/blog_post/
-draft: False
+draft: true
 draft-mode: linked # hides in the listing page can find it using the url it lives in. use unlink to hide
 #bibliography: references.bib
 ---
