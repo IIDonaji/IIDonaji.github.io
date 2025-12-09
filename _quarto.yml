@@ -1,7 +1,7 @@
 project:
   type: website
   output-dir: docs
-
+# ~ parts of `_quarto.yml` omitted for brevity ~
 website:
   #title: # add a logal instead if possible?
 # favicon: images/
@@ -9,12 +9,11 @@ website:
   # title: false -> disaples for navbar but main
   # logo: images/
   # logo-alt: discribes for accsessability speech impare
-    left:
+    right:
       - href: main_page.qmd
         text: Home
       - href: about.qmd
-        text: About
-      - href: post.qmd 
+      - href: listingpg_post.qmd # add your listing page file to your navbar, just like you would any other new web page
         text: Blog
       # - href: resources.qmd
       #   text: Resources

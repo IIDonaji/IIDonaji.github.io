@@ -1,12 +1,21 @@
+
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##        options specified here will apply to all posts in this folder     ----
+##~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # any option here will apply to all posts in the blog_post/ folder
 
+# my author info ----
 author: #can add more authoirs by adding - name
   - name: Ixel
     url: https://IIDonaji.github.io/
     affiliation: The Bren School of Environmental Science & Management 
     affilliation-url: https://bren.ucsb.edu/
-    
+
+# re-render posts only when a change to the source file is made ----
+freeze: auto
+
+# enable banner style title blocks ----   
 title-block-banner: true
 
-freeze: auto 
+
 
