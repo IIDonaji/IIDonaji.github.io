@@ -1,22 +1,22 @@
 ---
-title: "Prioritizing-potential-aquaculture"
-description: "a short description of this blog post"
-date: "11/31/2025"
+title: "Prioritizing Potential Aquaculture"
+description: "Exclusive Economic Zones (EEZ) on the West Coast of the US that best suited to developing marine aquaculture for several species of oysters and Datemussel"
+date: "11/12/2025"
 format: 
   html: 
     code-fold: true
 editor: 
   markdown: 
     wrap: 72
-categories: [R]
+categories: [R, Geospatial Analysis]
 #image: MEDS Orientation_2026_0053.jpg
 citation: #set true or delete 
-  url: https://IIDonaji.github.io/blog_post/
+  url: https://github.com/IIDonaji/Prioritizing-potential-aquaculture
 draft: true
 draft-mode: linked # hides in the listing page can find it using the url it lives in. use unlink to hide
 ---
 
-## README.md Screenshot
+##
 
 
 What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and California Datemussel.
