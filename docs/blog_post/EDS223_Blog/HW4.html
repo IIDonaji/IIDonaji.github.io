@@ -231,6 +231,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="set-up" class="level1">
 <h1>Set-Up</h1>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load in Libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(testthat)</span>
@@ -242,8 +244,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare Data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Bathymetry</span></span>
@@ -257,13 +262,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>sst_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path=</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"blog_post/EDS223_Blog/data_aqua"</span>),</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pattern=</span> <span class="st">"average_annual"</span>, <span class="co"># file name matching pattern</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">full.names =</span> <span class="cn">TRUE</span>) <span class="co"># Reference entire file name matching this pattern</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"sst_files:"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "sst_files:"</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sst_files)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "C:/Users/Donaji/Documents/MEDS/Career_Prof/GitFolder/IIDonaji.github.io/blog_post/EDS223_Blog/data_aqua/average_annual_sst_2008.tif"
 [2] "C:/Users/Donaji/Documents/MEDS/Career_Prof/GitFolder/IIDonaji.github.io/blog_post/EDS223_Blog/data_aqua/average_annual_sst_2009.tif"
@@ -271,19 +283,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [4] "C:/Users/Donaji/Documents/MEDS/Career_Prof/GitFolder/IIDonaji.github.io/blog_post/EDS223_Blog/data_aqua/average_annual_sst_2011.tif"
 [5] "C:/Users/Donaji/Documents/MEDS/Career_Prof/GitFolder/IIDonaji.github.io/blog_post/EDS223_Blog/data_aqua/average_annual_sst_2012.tif"</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"file.exists check:"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "file.exists check:"</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">file.exists</span>(sst_files))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE TRUE TRUE TRUE TRUE</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack all rasters files in folder using rast()</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sst <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(sst_files)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(sst) <span class="co">#checking list</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "average_annual_sst_2008" "average_annual_sst_2009"
 [3] "average_annual_sst_2010" "average_annual_sst_2011"
@@ -292,6 +313,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Check that the datasets have the same coordinate reference system</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check and align CRS for multiple datasets</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">st_crs</span>(depth) <span class="sc">==</span> <span class="fu">st_crs</span>(eez)) {</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Coordinate reference system match!"</span>)</span>
@@ -302,13 +325,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  depth <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(depth, <span class="fu">st_crs</span>(eez))</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Coordinate reference system match!"</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">st_crs</span>(eez)<span class="sc">$</span>wkt <span class="sc">!=</span> <span class="fu">crs</span>(sst)) {</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">"CRS mismatch between eez and sst"</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  sst <span class="ot">&lt;-</span> <span class="fu">project</span>(sst, <span class="fu">st_crs</span>(eez)<span class="sc">$</span>wkt)  </span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: CRS mismatch between eez and sst</code></pre>
 </div>
@@ -327,6 +354,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>check that the depth and SST match in resolution, extent, and coordinate reference system</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the SST average </span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mean_sst <span class="ot">&lt;-</span> <span class="fu">app</span>(sst[[<span class="fu">c</span>(<span class="st">"average_annual_sst_2008"</span>,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"average_annual_sst_2009"</span>, </span>
@@ -337,9 +366,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert average SST from Kelvin to Celsius</span></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>sst_mean_celsius <span class="ot">&lt;-</span> mean_sst <span class="sc">-</span> <span class="fl">273.15</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div></li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First convert depth stars to SpatRaster</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>depth_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(depth)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># crop depth to match SST  extent</span></span>
@@ -347,8 +379,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Resample depth_crop to match SST resolution, use method near</span></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>depth_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(depth_crop, sst_mean_celsius, <span class="at">method =</span> <span class="st">"near"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check resolution match </span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">dim</span>(depth_resample) <span class="sc">==</span> <span class="fu">dim</span>(sst_mean_celsius)) <span class="sc">&amp;&amp;</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">isTRUE</span>(<span class="fu">all.equal</span>(<span class="fu">res</span>(depth_resample), <span class="fu">res</span>(sst_mean_celsius))) <span class="sc">&amp;&amp;</span></span>
@@ -358,9 +393,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"✗ Some properties do not match</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>✗ Some properties do not match</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match depth and SST CRS's</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crs</span>(depth_resample) <span class="ot">&lt;-</span> <span class="fu">crs</span>(sst_mean_celsius)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -368,6 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>ocean_stack <span class="ot">&lt;-</span> <span class="fu">c</span>(sst_mean_celsius, depth_resample)</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ocean_stack) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"sst"</span>, <span class="st">"depth"</span>)</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"✓ Successfully stacked!</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>✓ Successfully stacked!</code></pre>
 </div>
@@ -377,6 +416,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Find suitable locations for Oysters</h1>
 <p>To find suitable locations for marine aquaculture, we’ll need to find locations that are suitable in terms of both SST and depth. <strong>Oyster</strong> research has show that oysters need the following conditions for optimal growth: - Sea surface Reclassify SST and depth data into locations that are suitable for oysters hint: set suitable values to 1 and unsuitable values to 0 find locations that satisfy both SST and depth conditions</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reclassify SST (11-30°C suitable for oysters)</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sst_suitable <span class="ot">&lt;-</span> <span class="fu">app</span>(sst_mean_celsius, <span class="at">fun =</span> <span class="cf">function</span>(x){</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ifelse</span>(x <span class="sc">&gt;=</span> <span class="dv">11</span> <span class="sc">&amp;</span> x <span class="sc">&lt;=</span> <span class="dv">30</span>,<span class="dv">1</span>,<span class="dv">0</span>) <span class="co"># if temperate is between 11- 30 °C, return 1, else 0</span></span>
@@ -394,6 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fun =</span> <span class="cf">function</span>(sst, depth) {</span>
 <span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>                             sst <span class="sc">*</span> depth</span>
 <span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                           })</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 <section id="determine-the-most-suitable-eez" class="level1">
@@ -401,6 +443,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We want to determine the total suitable area within each EEZ in order to rank zones by priority. To do so, we need to find the total area of suitable locations within each EEZ.</p>
 <p>Select suitable cells within West Coast EEZ’s find area of grid cells find the total suitable area within each EEZ hint: it might be helpful to rasterize the EEZ data</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rasterize the EEZ data (creates zone IDs)</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>eez_raster <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(eez, suitable_locations, <span class="at">field =</span> <span class="st">"rgn"</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -416,8 +460,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum suitable are by EEZ zonal statistics </span></span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>eez_suitable_area <span class="ot">&lt;-</span> <span class="fu">zonal</span>(suitable_area, eez_raster, <span class="at">fun =</span> <span class="st">"sum"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(eez_suitable_area) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"eez_id"</span>, <span class="st">"suitable_area_km2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join with eez data</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>eez<span class="sc">$</span>suitable_area_km2 <span class="ot">&lt;-</span> eez_suitable_area<span class="sc">$</span>suitable_area_km2[<span class="fu">match</span>(eez<span class="sc">$</span>rgn, eez_suitable_area<span class="sc">$</span>eez_id)]</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -442,6 +489,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">1</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">background =</span> <span class="st">"#E8F5E9"</span>)  <span class="co"># Highlight top rank</span></span>
 <span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>eez_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <table class="table table-striped caption-top table-sm small">
 <caption>EEZ Rankings by Suitable Aquaculture Area</caption>
@@ -489,6 +537,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map with tmap basic</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_basemap</span>(<span class="st">"Esri.OceanBasemap"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(eez_ranked) <span class="sc">+</span></span>
@@ -503,6 +553,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">frame =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">type =</span> <span class="st">"4star"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"top"</span>)) <span class="sc">+</span></span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -515,6 +566,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="workflow-for-other-species-using-a-function" class="level1">
 <h1>Workflow for other species using a function</h1>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>find_suitable_aquaculture <span class="ot">&lt;-</span> <span class="cf">function</span>(sst_raster, depth_raster, eez_sf, </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                                       sst_min, sst_max, </span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                                       depth_min, depth_max,</span>
@@ -575,6 +628,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(results)</span>
 <span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 </section>
 <section id="apply-function-to-species-of-choice" class="level1">
@@ -591,6 +645,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Source: SeaLifeBase</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mussels (different requirements)</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>mussel_results <span class="ot">&lt;-</span> <span class="fu">find_suitable_aquaculture</span>(</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sst_raster =</span> sst_mean_celsius,</span>
@@ -605,6 +661,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Access results</span></span>
 <span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(mussel_results<span class="sc">$</span>summary_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -645,6 +702,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Mussel EEZ</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.width: 10</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.height: 8</span></span>
@@ -663,6 +722,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>),</span>
 <span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">text.size =</span> <span class="fl">0.7</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
