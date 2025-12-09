@@ -19,7 +19,7 @@ draft-mode: linked # hides in the listing page can find it using the url it live
 ## README.md Screenshot
 
 
-What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and California datemussel.
+What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and California Datemussel.
 
 # Set-Up
 
