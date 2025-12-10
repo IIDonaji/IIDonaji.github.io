@@ -1,10 +1,16 @@
 ---
+# Page title that appears at the top
 title: "Blog"
-listing: 
-  contents: blog_post # this name must match the name of the folder you created in step #1; here, all Quarto docs in the `posts` directory will be included on your listing page
-  type: grid # or `default` or `table`; each type has its own set of yaml options to include
-  sort: "date desc" # can also sort on more than one field
-  categories: true # allows you to sort posts by assigned categories 
-draft: true
----
 
+# Listing configuration - tells Quarto how to display blog posts
+listing:
+  contents: blog_post      # folder where blog posts are stored
+  type: grid               # display style: grid, default, or table
+  sort: "date desc"        # sort posts by date, newest first
+  categories: true         # show category tags for filtering posts
+
+# Draft status - IMPORTANT!
+# draft: true  = page won't be published (hidden from site)
+# draft: false = page will be published (visible on site)
+draft: false
+---
