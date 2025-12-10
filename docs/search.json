@@ -28,31 +28,52 @@
     "text": "I value creativity and strong collaborations in addressing ecological issues such as anthropogenic impacts. I understand the importance of working across fields to develop progressive environmental solutions and management strategies"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "My story"
-  },
-  {
-    "objectID": "about.html#background",
-    "href": "about.html#background",
-    "title": "About",
-    "section": "",
-    "text": "My story"
-  },
-  {
-    "objectID": "about.html#research",
-    "href": "about.html#research",
-    "title": "About",
-    "section": "Research",
-    "text": "Research\nDifferent research experiences"
-  },
-  {
     "objectID": "blog_post/my_first_blog_post/my_1st_blog.html",
     "href": "blog_post/my_first_blog_post/my_1st_blog.html",
     "title": "My First Blog Post",
     "section": "",
     "text": "CitationBibTeX citation:@online{2025,\n  author = {, Ixel and , Ixel},\n  title = {My {First} {Blog} {Post}},\n  date = {2025-11-12},\n  url = {https://IIDonaji.github.io/blog_post/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nIxel, and Ixel. 2025. “My First Blog Post.” November 12,\n2025. https://IIDonaji.github.io/blog_post/."
+  },
+  {
+    "objectID": "blog_post/EDS223_Blog/HW4.html",
+    "href": "blog_post/EDS223_Blog/HW4.html",
+    "title": "Prioritizing Potential Aquaculture Along the U.S. West Coast",
+    "section": "",
+    "text": "Marine aquaculture is rapidly expanding as coastal nations seek sustainable ways to meet seafood demand. Identifying where aquaculture should occur is a major challenge—optimal sites must balance ecological suitability, production needs, and regulatory boundaries.\nThis analysis asks:\nWhich West Coast Exclusive Economic Zones (EEZs) in the United States are most suitable for developing aquaculture for oysters and the California datemussel?\nThis question matters because poorly sited aquaculture can increase disease risk, reduce water quality, and damage benthic habitats Hall et al., 2011. Meanwhile, global assessments suggest the U.S. has extensive unrealized aquaculture potential Gentry et al., 2017. By integrating environmental data with jurisdictional boundaries, spatial modeling can help coastal managers pinpoint responsible locations for future development."
+  },
+  {
+    "objectID": "blog_post/EDS223_Blog/HW4.html#introduction",
+    "href": "blog_post/EDS223_Blog/HW4.html#introduction",
+    "title": "Prioritizing Potential Aquaculture Along the U.S. West Coast",
+    "section": "",
+    "text": "Marine aquaculture is rapidly expanding as coastal nations seek sustainable ways to meet seafood demand. Identifying where aquaculture should occur is a major challenge—optimal sites must balance ecological suitability, production needs, and regulatory boundaries.\nThis analysis asks:\nWhich West Coast Exclusive Economic Zones (EEZs) in the United States are most suitable for developing aquaculture for oysters and the California datemussel?\nThis question matters because poorly sited aquaculture can increase disease risk, reduce water quality, and damage benthic habitats Hall et al., 2011. Meanwhile, global assessments suggest the U.S. has extensive unrealized aquaculture potential Gentry et al., 2017. By integrating environmental data with jurisdictional boundaries, spatial modeling can help coastal managers pinpoint responsible locations for future development."
+  },
+  {
+    "objectID": "blog_post/EDS223_Blog/HW4.html#data-sources",
+    "href": "blog_post/EDS223_Blog/HW4.html#data-sources",
+    "title": "Prioritizing Potential Aquaculture Along the U.S. West Coast",
+    "section": "Data Sources",
+    "text": "Data Sources\nI combined three geospatial datasets:\n\nBathymetry: GEBCO 2022 global depth raster\n\nSea Surface Temperature (SST): 2008–2012 annual averages\n\nExclusive Economic Zones: Cleaned U.S. West Coast EEZ shapefile\n\nEnvironmental requirements were taken from fisheries and species-specific literature, including SeaLifeBase (2025).\nAll geospatial processing was performed in R using terra, stars, and sf."
+  },
+  {
+    "objectID": "blog_post/EDS223_Blog/HW4.html#methods",
+    "href": "blog_post/EDS223_Blog/HW4.html#methods",
+    "title": "Prioritizing Potential Aquaculture Along the U.S. West Coast",
+    "section": "Methods",
+    "text": "Methods\n\n1. Prepare SST and Depth\nI stacked five annual SST rasters (2008–2012), calculated the mean, and converted Kelvin to Celsius:"
+  },
+  {
+    "objectID": "blog_post/EDS223_Blog/HW4.html#adula-californiensis-philippi-1847",
+    "href": "blog_post/EDS223_Blog/HW4.html#adula-californiensis-philippi-1847",
+    "title": "Prioritizing Potential Aquaculture Along the U.S. West Coast",
+    "section": "Adula californiensis (Philippi, 1847)",
+    "text": "Adula californiensis (Philippi, 1847)\n\nCommon Name: California datemussel\nLow Fishing Vulnerability\n\nDepth range: 0-20 meters\nTemperature: 9.1-18.6 C\n\nSource: SeaLifeBase\n\n\n\nCode\n# Mussels (different requirements)\nmussel_results &lt;- find_suitable_aquaculture(\n  sst_raster = sst_mean_celsius,\n  depth_raster = depth_resample,\n  eez_sf = eez,\n  sst_min = 9.1,\n  sst_max = 18.6,\n  depth_min = 0,\n  depth_max = 20,\n  species_name = \"California Datemussel\"\n)\n\n# Access results\nkable(mussel_results$summary_table)\n\n\n\n\n\nRank\nEEZ\nSuitable_Area_km2\n\n\n\n\n1\nWA\n260.91\n\n\n2\nCA-S\n124.68\n\n\n3\nCA-C\n103.50\n\n\n4\nOR\n76.65\n\n\n5\nCA-N\n33.36\n\n\n\n\n\n\n\nCode\n# Plot Mussel EEZ\n#| fig.width: 10\n#| fig.height: 8\n\ntm_basemap(\"Esri.OceanBasemap\", alpha = 0.7) +\ntm_shape(mussel_results$suitable_in_eez) +\n  tm_raster() +\n  tm_shape(mussel_results$eez_ranked) +\n  tm_polygons(\"suitable_area_km2\",\n              palette = \"YlGnBu\",\n              title = \"Suitable Area (km²)\", boarder.col = \"black\",\n              border.lwd = 0.5) +\n  tm_layout(main.title =\"Suitable Mussel Aquaculuture Area by EEZ\",main.title.size =1.2,legend.outsides =TRUE,frame =FALSE) +\n  tm_compass(type = \"4star\", \n           position = c(\"right\", \"top\"),\n           size = 2) +\ntm_scale_bar(position = c(\"left\", \"bottom\"),\n             text.size = 0.7)"
+  },
+  {
+    "objectID": "listingpg_post.html",
+    "href": "listingpg_post.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Visualizing Fire Scars Through False Color Imagery\n\n\n\n\n\n\nIxel\n\n\n\n\n\n\n\n\n\n\n\nPrioritizing Potential Aquaculture Along the U.S. West Coast\n\n\n\nR\n\nGeospatial Analysis\n\nAquaculture\n\n\n\nExclusive Economic Zones (EEZ) on the West Coast of the US that best suited to developing marine aquaculture for several species of oysters and Datemussel\n\n\n\nIxel\n\n\nNov 12, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nMy First Blog Post\n\n\n\nMEDS\n\nR\n\nPython\n\n\n\na short description of this blog post\n\n\n\nIxel\n\n\nNov 12, 2025\n\n\n\n\n\n\nNo matching items"
   }
 ]
