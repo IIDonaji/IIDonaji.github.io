@@ -14,7 +14,7 @@ website:
         text: Home
       - href: about.qmd
       - href: listingpg_post.qmd # add your listing page file to your navbar, just like you would any other new web page
-       
+        text: blog
       # - href: resources.qmd
       #   text: Resources
 format:
