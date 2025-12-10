@@ -1,7 +1,7 @@
 project:
   type: website
   output-dir: docs
-  
+draft: true  
 # ~ parts of `_quarto.yml` omitted for brevity ~
 website:
   title: "Ixel Medrano" # add a logal instead if possible?
@@ -18,6 +18,7 @@ website:
        # add your listing page file to your navbar, just like you would any other new web page
       # - href: resources.qmd
       #   text: Resources
+
 format:
   html:
     theme: lux
