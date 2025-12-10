@@ -1,6 +1,6 @@
 project:
   type: website
-#  output-dir: docs
+  output-dir: docs
   
 # ~ parts of `_quarto.yml` omitted for brevity ~
 website:
