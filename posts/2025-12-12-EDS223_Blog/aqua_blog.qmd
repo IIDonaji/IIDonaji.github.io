@@ -24,8 +24,8 @@ editor_options:
 Marine aquaculture is rapidly expanding as coastal nations seek sustainable ways to meet seafood demand. Identifying *where* aquaculture should occur is a major challenge optimal sites must balance ecological suitability, production needs, and regulatory boundaries.  
 
 
-## Research Question 
-What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and Dungeness crab (*Metacarcinus magister* (Dana, 1852)).
+## Target Question Being Addressed in this Analysis:
+What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and Dungeness Crab *Metacarcinus magister* (Dana, 1852).
 
 
 ### Data Sources
@@ -42,8 +42,14 @@ All geospatial processing was performed in **R** using `terra`, `stars`, and `sf
 
 
 ### Methods
+In this geospatial analysis the following key concepts were addressed
 
-#### 1. Prepare SST and Depth
+- combining vector/raster data
+- resampling raster data
+- masking raster data
+- map algebra
+
+#### 1. Prepare SST and Depth Data
 I stacked five annual SST rasters (2008–2012), calculated the mean, and converted Kelvin to Celsius:
 ```{r,include = FALSE}
 #| output: false
@@ -151,6 +157,7 @@ cat("✓ Successfully stacked!\n")
 
 ## Identify Suitable Habitat for Oysters
 
+According to Oysters research, following conditions are needed for optimal growth:
 **Environmental ranges used:**
 
   - **Sea Surface Temperature Range:** 11–30°C
@@ -258,7 +265,8 @@ tm_shape(eez_ranked) +
 ```
 
 # Repeat previous steps with species of choice by creating a Function
-![**Image:[© Neil McDaniel](https://www.inaturalist.org/photos/446850127)).**](figs/medium.jpd)
+
+![**Image:[© Neil McDaniel](https://www.inaturalist.org/photos/446850127)).**](figs/medium.jpg)
 
 Here we use the Dungeness Crab one of the most important seafood industries along the west coast of North America. Dungeness typical range extends from Alaska's Aleutian Islands to Point Conception, near Santa Barbara, California. Commonly found on soft bottom in very low intertidal areas to a depth of 360 meter and prefer a Sea surface temperature of 9°C
 
