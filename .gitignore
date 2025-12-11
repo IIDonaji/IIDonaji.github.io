@@ -1,5 +1,5 @@
 # Ignore the 'data' directory
-data_aqua/
+aqua_data/
 
 .Rproj.user
 .Rhistory

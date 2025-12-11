@@ -1,22 +1,51 @@
 ---
-title: "Prioritizing-potential-aquaculture"
+title: "Prioritizing Aquaculture Potential Along the U.S. West Coast"
+description: "Using environmental suitability modeling to identify the best Exclusive Economic Zones (EEZs) for developing marine aquaculture."
 author: "Ixel"
-date: "11/31/2025"
+date: "12/12/2025"
+categories: [R, Geospatial Analysis, Aquaculture]
+draft: false
 format: 
   html:
     embed-resources: true
     standalone: true
     toc: true
     code-fold: true
+editor: 
+  markdown: 
+    wrap: 72
+editor_options: 
+  chunk_output_type: console
 ---
 
+![**Image([Commercial Fishing Boats, Santa Barbara Harbor, California, USA.](https://santabarbaraca.gov/things-do/waterfront)).**](figs/HarborfromWflyingW300.png.webp)
 
 
+Marine aquaculture is rapidly expanding as coastal nations seek sustainable ways to meet seafood demand. Identifying *where* aquaculture should occur is a major challenge optimal sites must balance ecological suitability, production needs, and regulatory boundaries.  
+
+
+## Research Question 
 What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and California datemussel.
 
-# Set-Up
 
-```{r, message=FALSE}
+### Data Sources
+
+I combined three geospatial datasets:
+
+- **Bathymetry:** GEBCO 2022 global depth raster  
+- **Sea Surface Temperature (SST):** 2008–2012 annual averages  
+- **Exclusive Economic Zones:** Cleaned U.S. West Coast EEZ shapefile  
+
+Environmental requirements were taken from fisheries and species-specific literature, including SeaLifeBase (2025).
+
+All geospatial processing was performed in **R** using `terra`, `stars`, and `sf`.
+
+
+### Methods
+
+#### 1. Prepare SST and Depth
+I stacked five annual SST rasters (2008–2012), calculated the mean, and converted Kelvin to Celsius:
+```{r,include = FALSE}
 #| output: false
 
 # Load in Libraries
@@ -32,7 +61,7 @@ library(terra)
 library(viridisLite)
 ```
 
-```{r,message = FALSE}
+```{r,include = FALSE}
 #| output: false
 # Prepare Data
 
@@ -52,9 +81,7 @@ sst <- terra::rast(sst)
 names(sst) #checking list
 ```
 
-Check that the datasets have the same coordinate reference system
-
-```{r, message=FALSE}
+```{r,include = FALSE}
 
 # Check and align CRS for multiple datasets
 if (st_crs(depth) == st_crs(eez)) {
@@ -74,43 +101,33 @@ if (st_crs(eez)$wkt != crs(sst)) {
 }
 ```
 
-# Process data
-
--   Find the mean SST from 2008-2012 (e.g. create single raster of average SST)
-
-    -   convert average SST from Kelvin to Celsius hint: subtract by 273.15
-
--   crop depth raster to match the extent of the SST raster note:
-
-    -   the resolutions of the SST and depth data do not match resample the depth data to match the resolution of the SST data using the nearest neighbor approach
-    -   check that the depth and SST match in resolution, extent, and coordinate reference system
-
-    ```{r}
-    # Calculate the SST average 
-    mean_sst <- app(sst[[c("average_annual_sst_2008",
+```{r}
+# Calculate the SST average 
+mean_sst <- app(sst[[c("average_annual_sst_2008",
                            "average_annual_sst_2009", 
                            "average_annual_sst_2010",
                            "average_annual_sst_2011", 
                            "average_annual_sst_2012")]], 
                     fun = mean, na.rm = TRUE)
 
-    # Convert average SST from Kelvin to Celsius
-    sst_mean_celsius <- mean_sst - 273.15
-    ```
+# Convert average SST from Kelvin to Celsius
+sst_mean_celsius <- mean_sst - 273.15
+```
+
+Bathymetry was cropped and resampled to match SST resolution:
 
 ```{r}
 # First convert depth stars to SpatRaster
 depth_rast <- rast(depth)
-# crop depth to match SST  extent
-depth_crop <- crop(depth_rast, sst_mean_celsius)
 
-# Resample depth_crop to match SST resolution, use method near
-depth_resample <- resample(depth_crop,
-                           sst_mean_celsius, 
-                           method = "near")
+depth_resample <- depth_rast %>% 
+  crop(sst_mean_celsius) %>% # crop depth to match SST  extent
+# Resample to match SST resolution, use method near  
+  resample(sst_mean_celsius,
+           method = "near") 
 ```
 
-```{r}
+```{r, include = FALSE}
 #| output: true
 
 #Check resolution match 
@@ -132,9 +149,13 @@ names(ocean_stack) <- c("sst", "depth")
 cat("✓ Successfully stacked!\n")
 ```
 
-# Find suitable locations for Oysters
+## Identify Suitable Habitat for Oysters
 
-To find suitable locations for marine aquaculture, we’ll need to find locations that are suitable in terms of both SST and depth. **Oyster** research has show that oysters need the following conditions for optimal growth: - Sea surface Reclassify SST and depth data into locations that are suitable for oysters hint: set suitable values to 1 and unsuitable values to 0 find locations that satisfy both SST and depth conditions
+**Environmental ranges used:**
+
+  - **Temperature:** 11–30°C
+
+  - **Depth:** 0–70 m
 
 ```{r}
 # Reclassify SST (11-30°C suitable for oysters)
@@ -147,45 +168,42 @@ depth_suitable <- app(depth_resample, fun = function(x){
   ifelse(x >= -70 & x <= 0,1,0) # select depths from 0 to 70 meters below surface.
 })
 
-# Suitable locations for both conditions
-#Use lapp() to multiply the two suitability raster
+# Multiply the two suitability raster
 
-suitable_locations <- lapp(c(sst_suitable, depth_suitable), 
-                          fun = function(sst, depth) {
-                             sst * depth
-                           })
-
-#suitable_locations <- sst_suitable * depth_suitable
+suitable_locations <- sst_suitable * depth_suitable
 
 ```
 
-# Determine the most suitable EEZ
+## Quantify Suitable Area Within Each EEZ
 
-We want to determine the total suitable area within each EEZ in order to rank zones by priority. To do so, we need to find the total area of suitable locations within each EEZ.
-
-Select suitable cells within West Coast EEZ's find area of grid cells find the total suitable area within each EEZ hint: it might be helpful to rasterize the EEZ data
-
+I rasterized EEZ polygons, masked suitability value, and computed cell-area:
 ```{r}
 # Rasterize the EEZ data (creates zone IDs)
 eez_raster <- rasterize(eez, suitable_locations, field = "rgn")
-
-# Mask suitable locations to EEZ boundaries
-suitable_eez <- mask(suitable_locations, eez) # keep only raster cells that fall within the EEZ polygons
-
 #Calculate cell area with cellSize()
-cell_area_km2 <- cellSize(suitable_locations, unit = "km") # calculate actual area of each raster cell
-
-# Calculate suitable area per cell
-suitable_area <- suitable_eez * cell_area_km2
-
+cell_area <- cellSize(suitable_locations, unit = "km")
+# Mask suitable locations to EEZ boundaries
+suitable_area <- mask(suitable_locations, eez) * cell_area
 # Sum suitable are by EEZ zonal statistics 
-eez_suitable_area <- zonal(suitable_area, eez_raster, fun = "sum", na.rm = TRUE)
-colnames(eez_suitable_area) <- c("eez_id", "suitable_area_km2")
+eez_suitable <- zonal(suitable_area, eez_raster, fun = "sum", na.rm = TRUE)
 ```
 
-```{r}
+## Results
+**Oyster Suitability**
+
+The highest-ranked region was:
+
+Central California (CA-C)
+~4,940 km² of suitable area
+(~34% of all suitable habitat)
+```{r,  echo = FALSE}
+
+colnames(eez_suitable) <- c("eez_id", "suitable_area_km2")
+
 # join with eez data
-eez$suitable_area_km2 <- eez_suitable_area$suitable_area_km2[match(eez$rgn, eez_suitable_area$eez_id)]
+eez$suitable_area_km2 <- 
+  eez_suitable$suitable_area_km2[match(eez$rgn, 
+                                        eez_suitable$eez_id)]
 
 # Rank EEZ data
 eez_ranked <- eez[order(-eez$suitable_area_km2), ]
@@ -211,6 +229,7 @@ eez_table <- kable(summary_table,
 eez_table
 ```
 
+**Figure 1.** Oyster Aquaculture Suitability by EEZ
 ```{r, message=FALSE}
 #| fig.width: 10
 #| fig.height: 8
@@ -238,9 +257,17 @@ tm_shape(eez_ranked) +
  
 ```
 
-# Workflow for other species using a function
+## Repeat for Datemussels Using a Function
 
-```{r}
+Datemussel conditions:
+
+  - Temperature: 9.1–18.6°C
+
+  - Depth: 0–20 m
+
+A general function automated the workflow for any species.
+
+```{r, include = FALSE}
 
 find_suitable_aquaculture <- function(sst_raster, 
                                       depth_raster, 
@@ -316,15 +343,9 @@ results <- list(
 }
 ```
 
-# Apply function to species of choice
+## Datemussel Suitability
 
-## Adula californiensis (Philippi, 1847)
-
--   Common Name: California datemussel
--   Low Fishing Vulnerability
-    -   Depth range: 0-20 meters
-    -   Temperature: 9.1-18.6 C
--   Source: SeaLifeBase
+Using the species-specific function:
 
 ```{r}
 # Mussels (different requirements)
@@ -343,13 +364,13 @@ mussel_results <- find_suitable_aquaculture(
 kable(mussel_results$summary_table)
 ```
 
+**Figure 2.** Datemussel Suitability by EEZ
 ```{r, message=FALSE}
-# Plot Mussel EEZ
-#| fig.width: 15
+#| fig.width: 10
 #| fig.height: 8
 
+# Plot Mussel EEZ
 tm_basemap("Esri.OceanBasemap", alpha = 0.7) +
-#tm_shape(mussel_results$suitable_in_eez) +
   tm_raster() +
   tm_shape(mussel_results$eez_ranked) +
   tm_polygons("suitable_area_km2",
@@ -357,26 +378,34 @@ tm_basemap("Esri.OceanBasemap", alpha = 0.7) +
               title = "Suitable Area (km²)", boarder.col = "black",
               border.lwd = 0.5) +
   tm_layout(main.title ="Suitable Mussel Aquaculuture Area by EEZ",
-            main.title.size =1.2,legend.outsides =TRUE,frame =FALSE) +
+            main.title.size =1.2,
+            legend.outsides =TRUE,
+            frame =FALSE) +
   tm_text("rgn", # Label by region
           size = .8, # Adjust size
           col = "white", # Adjust text color
           fontface = "bold", # Labels are bolded
           xmod = -.5) + # Adjust .5 from the left
   tm_compass(type = "4star", 
-           position = c("right", "top"),
-           size = 2) +
-tm_scale_bar(position = c("left", "bottom"),
-             text.size = 0.7) 
+           position = c("right", "top")) +
+tm_scale_bar(position = c("left", "bottom")) 
 ```
 
-# Reflections
+## Discussion
 
-Reflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed
+This analysis demonstrates how geospatial suitability modeling can inform strategic aquaculture planning. Central California consistently emerged as the most promising region for both oysters and datemussels.
 
-This analysis identified suitable locations for oyster aquaculture along the West Coast EEZs by integrating sea surface temperature (SST) and bathymetric data. The workflow demonstrated how geospatial analysis can support marine resource management decisions by combining environmental constraints with jurisdictional boundaries. In the analysis we found that 2.3% (based on cellsize) of the West Coast EEZ area meets the suitability criteria for oyster cultivation (11-30°C SST, 0-70m depth). CA-C (Central California) ranked highest with 4940.04 km² of suitable area, suggesting it as the priority zone for aquaculture development.
+However, several considerations remain:
 
-# Cite
+  - **Biological constraints:** Growth rates, disease sensitivity, and larval dispersal were not modeled.
+
+  - **Socio-political constraints:** Tribal waters, marine protected areas, and fisheries conflicts are not accounted for.
+
+  - **Water quality:** Nutrient loading, pollution, and harmful algal blooms vary spatially and should be included in future analyses.
+
+Future work could incorporate ecological risk assessments or multi-criteria decision analysis to better integrate environmental and human dimensions.
+
+### References
 
 Hall, S. J., Delaporte, A., Phillips, M. J., Beveridge, M. & O’Keefe, M. Blue Frontiers: Managing the Environmental Costs of Aquaculture (The WorldFish Center, Penang, Malaysia, 2011).
 

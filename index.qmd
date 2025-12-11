@@ -1,6 +1,6 @@
 ---
-title: "Website Under construction!"
-image: images/headshot.jpeg
+#title: "Website Under construction!"
+image: images/IxelCroped.jpg
 about: 
   template: jolla
   image-shape: round

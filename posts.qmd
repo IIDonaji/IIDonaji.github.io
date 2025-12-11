@@ -1,0 +1,16 @@
+---
+# Page title that appears at the top
+title: "Projects + Blog"
+
+# Listing configuration - tells Quarto how to display blog posts
+listing:
+  contents: posts      # folder where blog posts are stored
+  type: grid               # display style: grid, default, or table
+  sort: "date desc"        # sort posts by date, newest first
+  categories: true         # show category tags for filtering posts
+
+# Draft status - IMPORTANT!
+# draft: true  = page won't be published (hidden from site)
+# draft: false = page will be published (visible on site)
+draft: false
+---

@@ -17,13 +17,11 @@ format: html
 
 <!-- [or do all theses] {.bondiblue-text} -->
 
-
 <!-- ::: {.bondiblue-text} -->
 
 <!-- here is one -->
 
 <!-- heres another -->
-
 
 <!-- ::: -->
 
