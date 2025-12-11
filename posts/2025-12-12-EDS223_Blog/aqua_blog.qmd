@@ -18,14 +18,14 @@ editor_options:
   chunk_output_type: console
 ---
 
-![**Image([Commercial Fishing Boats, Santa Barbara Harbor, California, USA.](https://santabarbaraca.gov/things-do/waterfront)).**](figs/HarborfromWflyingW300.png.webp)
+![**Image:[Commercial Fishing Boats, Santa Barbara Harbor, California, USA.](https://santabarbaraca.gov/things-do/waterfront)).**](figs/HarborfromWflyingW300.png.webp)
 
 
 Marine aquaculture is rapidly expanding as coastal nations seek sustainable ways to meet seafood demand. Identifying *where* aquaculture should occur is a major challenge optimal sites must balance ecological suitability, production needs, and regulatory boundaries.  
 
 
 ## Research Question 
-What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and California datemussel.
+What Exclusive Economic Zones (eez) on the west Coast of the US are best suited to developing marine aquaculture for several species of oysters and Dungeness crab (*Metacarcinus magister* (Dana, 1852)).
 
 
 ### Data Sources
@@ -36,7 +36,7 @@ I combined three geospatial datasets:
 - **Sea Surface Temperature (SST):** 2008–2012 annual averages  
 - **Exclusive Economic Zones:** Cleaned U.S. West Coast EEZ shapefile  
 
-Environmental requirements were taken from fisheries and species-specific literature, including SeaLifeBase (2025).
+Environmental requirements were taken from fisheries and species-specific literature, including SeaLifeBase [(2025)].
 
 All geospatial processing was performed in **R** using `terra`, `stars`, and `sf`.
 
@@ -153,9 +153,9 @@ cat("✓ Successfully stacked!\n")
 
 **Environmental ranges used:**
 
-  - **Temperature:** 11–30°C
+  - **Sea Surface Temperature Range:** 11–30°C
 
-  - **Depth:** 0–70 m
+  - **Depth Range:** 0–70 m
 
 ```{r}
 # Reclassify SST (11-30°C suitable for oysters)
@@ -257,13 +257,16 @@ tm_shape(eez_ranked) +
  
 ```
 
-## Repeat for Datemussels Using a Function
+# Repeat previous steps with species of choice by creating a Function
+![**Image:[© Neil McDaniel](https://www.inaturalist.org/photos/446850127)).**](figs/medium.jpd)
 
-Datemussel conditions:
+Here we use the Dungeness Crab one of the most important seafood industries along the west coast of North America. Dungeness typical range extends from Alaska's Aleutian Islands to Point Conception, near Santa Barbara, California. Commonly found on soft bottom in very low intertidal areas to a depth of 360 meter and prefer a Sea surface temperature of 9°C
 
-  - Temperature: 9.1–18.6°C
+Dungeness Crab Suitable Conditions:
 
-  - Depth: 0–20 m
+  - **Seas Surface Temperature Range:** 3-19°C
+
+  - **Depth Range:** 0 –360 meters
 
 A general function automated the workflow for any species.
 
@@ -343,9 +346,9 @@ results <- list(
 }
 ```
 
-## Datemussel Suitability
+## Dungeness Crab Suitability
 
-Using the species-specific function:
+Using the generated species-specific function:
 
 ```{r}
 # Mussels (different requirements)
@@ -353,11 +356,11 @@ mussel_results <- find_suitable_aquaculture(
   sst_raster = sst_mean_celsius,
   depth_raster = depth_resample,
   eez_sf = eez,
-  sst_min = 9.1,
-  sst_max = 18.6,
+  sst_min = 3,
+  sst_max = 19,
   depth_min = 0,
-  depth_max = 20,
-  species_name = "California Datemussel"
+  depth_max = 360,
+  species_name = "Dungeness Crab"
 )
 
 # Access results
@@ -407,12 +410,14 @@ Future work could incorporate ecological risk assessments or multi-criteria deci
 
 ### References
 
-Hall, S. J., Delaporte, A., Phillips, M. J., Beveridge, M. & O’Keefe, M. Blue Frontiers: Managing the Environmental Costs of Aquaculture (The WorldFish Center, Penang, Malaysia, 2011).
+Hall, S. J., Delaporte, A., Phillips, M. J., Beveridge, M. & O’Keefe, M. Blue Frontiers: Managing the Environmental Costs of Aquaculture [(The WorldFish Center, Penang, Malaysia, 2011)](https://worldfishcenter.org/publication/blue-frontiers-managing-environmental-costs-aquaculture-0).
 
-Gentry, R. R., Froehlich, H. E., Grimm, D., Kareiva, P., Parke, M., Rust, M., Gaines, S. D., & Halpern, B. S. Mapping the global potential for marine aquaculture. Nature Ecology & Evolution, 1, 1317-1324 (2017).︎
+Maselko, J., Bishop, G., & Murphy, P. (2013). Ghost Fishing in the Southeast Alaska Commercial Dungeness Crab Fishery. North American Journal of Fisheries Management, 33(2), 422–431.doi.org/10.1080/02755947.2013.763875
 
-GEBCO Compilation Group (2022) GEBCO_2022 Grid (doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c)
+Gentry, R. R., Froehlich, H. E., Grimm, D., Kareiva, P., Parke, M., Rust, M., Gaines, S. D., & Halpern, B. S. Mapping the global potential for marine aquaculture. Nature Ecology & Evolution, 1, 1317-1324 [(2017)](doi.org/10.1038/s41559-017-0257-9v).︎
 
-Commercially Important Species Occurring in United States (contiguous states). (2025). Sealifebase.ca. https://www.sealifebase.ca/country/CountryChecklist.php?c_code=840&vhabitat=commercial
+GEBCO Compilation Group (2022) GEBCO_2022 Grid [(doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c)](https://www.gebco.net/data-products/gridded-bathymetry-data/gebco-2022)
 
-Oliver, R. (2025, November 25). Homework Assignment 4. Github.io. https://eds-223-geospatial.github.io/assignments/HW4.html
+Commercially Important Species Occurring in United States (contiguous states). (2025). [(Sealifebase.ca.)] (https://www.sealifebase.ca/country/CountryChecklist.php?c_code=840&vhabitat=commercial)
+
+Oliver, R. (2025, November 25). Homework Assignment 4. [(Github.io.)](https://eds-223-geospatial.github.io/assignments/HW4.html)
