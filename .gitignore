@@ -1,6 +1,6 @@
 # Ignore the 'data' directory
-aqua_data/
-stats_data/
+data/
+
 .Rproj.user
 .Rhistory
 .RData
