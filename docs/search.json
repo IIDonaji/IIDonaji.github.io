@@ -25,7 +25,7 @@
     "href": "posts.html",
     "title": "Projects + Blog",
     "section": "",
-    "text": "index\n\n\n\n\n\n\nIxel M.\n\n\n\n\n\n\n\n\n\n\n\nUrban Insect Biodiversity: Effects of Drought-Tolerant Plants\n\n\n\n\n\n\nIxel M., Ixel\n\n\n\n\n\n\n\n\n\n\n\nPrioritizing Aquaculture Potential Along the U.S. West Coast\n\n\n\nR\n\nGeospatial Analysis\n\nAquaculture\n\n\n\nUsing environmental suitability modeling to identify the best Exclusive Economic Zones (EEZs) for developing marine aquaculture.\n\n\n\nIxel M., Ixel\n\n\nDec 12, 2025\n\n\n\n\n\n\nNo matching items"
+    "text": "index\n\n\n\n\n\n\nIxel M.\n\n\n\n\n\n\n\n\n\n\n\nUrban Insect Biodiversity: Effects of Drought-Tolerant Plants\n\n\n\nR\n\nStatistical Modeling\n\n\n\nA technical blog demonstrating how to use a statistical model to answer an environmental data science question.\n\n\n\nIxel M., Ixel\n\n\nDec 12, 2025\n\n\n\n\n\n\n\n\n\n\n\nPrioritizing Aquaculture Potential Along the U.S. West Coast\n\n\n\nR\n\nGeospatial Analysis\n\nAquaculture\n\n\n\nUsing environmental suitability modeling to identify the best Exclusive Economic Zones (EEZs) for developing marine aquaculture.\n\n\n\nIxel M., Ixel\n\n\nDec 12, 2025\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -145,5 +145,103 @@
     "title": "Prioritizing Aquaculture Potential Along the U.S. West Coast",
     "section": "Dungeness Crab Suitability Results",
     "text": "Dungeness Crab Suitability Results\nUsing the generated species-specific function:\n\n\nCode\n# Crab (difference requirements)\ncrab_results &lt;- find_suitable_aquaculture(\n  sst_raster = sst_mean_celsius,\n  depth_raster = depth_resample,\n  eez_sf = eez,\n  sst_min = 3,\n  sst_max = 19,\n  depth_min = 0,\n  depth_max = 360,\n  species_name = \"Dungeness Crab\"\n)\n\n# Access results\nkable(crab_results$summary_table)\n\n\n\n\n\nRank\nEEZ\nSuitable_Area_km2\n\n\n\n\n1\nWA\n290.06\n\n\n2\nCA-S\n142.52\n\n\n3\nCA-C\n120.89\n\n\n4\nOR\n76.65\n\n\n5\nCA-N\n49.51\n\n\n\n\n\nMap 2. Dungeness Crab Suitability by EEZ\n\n\nCode\n# Plot Crab EEZ\ntm_basemap(\"Esri.OceanBasemap\", alpha = 0.7) +\n  tm_raster() +\n  tm_shape(crab_results$eez_ranked) +\n  tm_polygons(\"suitable_area_km2\",\n              palette = \"-mako\",\n              title = \"Suitable Area (km²)\", boarder.col = \"black\",\n              border.lwd = 0.5) +\n  tm_layout(main.title =\"Suitable Crab Aquaculuture Area by EEZ\",\n            main.title.size =1.2,\n            legend.outsides =TRUE,\n            frame =FALSE) +\n  tm_text(\"rgn\", # Label by region\n          size = .8, # Adjust size\n          col = \"white\", # Adjust text color\n          fontface = \"bold\", # Labels are bolded\n          xmod = -.5) + # Adjust .5 from the left\n  tm_compass(type = \"4star\", \n           position = c(\"right\", \"top\")) +\ntm_scale_bar(position = c(\"left\", \"bottom\"))"
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "",
+    "text": "Urban areas are expanding globally, yet we know little about how landscaping choice affect urban biodiversity. Los Angeles, a naturally arid Mediterranean climate, presents a unique opportunity to examine whether drought-tolerant landscaping supports insect diversity.\n\n\nThe data used for this analysis was obtained from Adams et al. (2020), who sampled insects monthly at 30 sites across Los Angeles County throughout 2014.\n\n\n\nDo drought-tolerant plants and temperature affect insect species richness in urban Los Angeles, after accounting for urbanization intensity?"
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#background-information",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#background-information",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "",
+    "text": "Urban areas are expanding globally, yet we know little about how landscaping choice affect urban biodiversity. Los Angeles, a naturally arid Mediterranean climate, presents a unique opportunity to examine whether drought-tolerant landscaping supports insect diversity.\nResearch Questions:\n\nDo drought-tolerant plants increase insect species richness in urban Los Angeles?\n\n$$ \n\\begin{align}\nDrought-Tolerant Plants \\\\\nH₀: β₁ = 0 \\\\\n\nHᴀ: β₁ &gt; 0 \n\n\\end{align} \n$$\n\nDo drought-tolerant plants and local temperature interact to affect insect species richness in urban Los Angeles?\n\n$$ \n\\begin{align}\nTemperature \\\\ \nH₀: β₂ = 0 \\\\\nHᴀ: β₂ ≠ 0 \n\n\\end{align} \n$$\nHypothesis:\nSites with drought-tolerant plants have higher insect species richness than sites without drought-tolerant plants, after accounting for temperature and Urban Type."
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#model-validation-parameter-recovery",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#model-validation-parameter-recovery",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "Model Validation: Parameter Recovery",
+    "text": "Model Validation: Parameter Recovery\nTo demonstrate the model is correctly specified, first simulated data with known parameter values, then fit the model to recover those parameters.\nBelow we will use the glm.nb function from the MASS package to estimate negative binomial regressions:\n\nset.seed(123) # For reproducibility\n\n# set True Coefficients and parameters\nbeta_0 &lt;- 1.0 # mean richness (baseline)\nbeta_1 &lt;- 0.35 # Drought Tolerant plants presence\nbeta_2 &lt;- 0.08 # mean temp\nbeta_3 &lt;- 0.05 # Moderate vs low urban type\nbeta_4 &lt;- -0.10 # High vs low urban type \ntheta &lt;- 3 # Dispersion (NB size parameter)\n\n# Sample size\nn &lt;- 100000 \n\n# Generate predictors\nDrought &lt;- factor(sample(c(\"No\", \"Yes\"), n, replace = TRUE,\n                    prob = c(0.67, 0.33)), # 33% yes, 67% no\n                   levels = c(\"No\", \"Yes\"))\n\nmean_temp&lt;- runif(n, min = 18.5, max = 20.1)\n\nurban_Type &lt;- factor(sample(c(\"Less\", \"Moderate\", \"High\"), n, replace = TRUE),\n  levels = c(\"Less\", \"Moderate\", \"High\")\n)\n\n# Expected mean (inverse link of log) \nmu &lt;- exp(beta_0 + beta_1 * (Drought == \"Yes\") + \n            beta_2 * mean_temp + \n            beta_3 * (urban_Type == \"Moderate\") +\n            beta_4 * (urban_Type == \"High\"))  \n\n# Generate random NB numbers\nmean_richness &lt;- rnbinom(n = n, size = theta, mu = mu)\n\n#  Fit model to simulated data\nsimulation_model &lt;- glm.nb(mean_richness ~ Drought + mean_temp + urban_Type)\n\n# Print Coefficient\ncoef(simulation_model)\n\n       (Intercept)         DroughtYes          mean_temp urban_TypeModerate \n        1.07951124         0.35712595         0.07558029         0.05557216 \n    urban_TypeHigh \n       -0.09838406"
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#code-data",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#code-data",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "Code & Data",
+    "text": "Code & Data\nAll analysis code and data are available at:\n[GitHub repo link](https://github.com/IIDonaji/EDS-222-Final-Project)\nAnalysis conducted in R version [] using:\n\nMASS (glm.nb)\ntidyverse (data manipulation)\nggplot2 (visualization)\nggdag (causal diagrams)"
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#research-questions",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#research-questions",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "",
+    "text": "Do drought-tolerant plants and temperature affect insect species richness in urban Los Angeles, after accounting for urbanization intensity?"
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#hypothesis",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#hypothesis",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "",
+    "text": "Sites with drought-tolerant plants have higher insect species richness than sites without drought-tolerant plants, after accounting for temperature and Urban Type."
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#direct-effect-on-species-richness",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#direct-effect-on-species-richness",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "Direct effect on species richness:",
+    "text": "Direct effect on species richness:\n\nDrought-tolerant plants (main predictor): Assume these plants provide better habitat for insects in LA’s arid climate.\nMean Temperature: Local Microclimate may directly affect insect activity and survival.\nUrban Type: Development intensity affects habitat quality and availability."
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#confounding-relationships",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#confounding-relationships",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "Confounding Relationships:",
+    "text": "Confounding Relationships:\n\nUrbanization influences both plant choice (people in different urban contexts make different landscaping decisions) and local temperature (urban heat island effect), therefore we must control for urban type to isolate the effects of drought tolerant plants."
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#importance",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#importance",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "Importance:",
+    "text": "Importance:\nTo estimate the true effect of drought-tolerant plants on species richness, we include both temperature and urbanization as covariates in our model. This accounts for confounding and allows us to answer:\n  \"Do drought plants increase richness *independent of* urbanization and temperature?\"\n\n\n\n\n\n\n\n\nFigure 1: Causal diagram showing hypothesized relationships affecting species richness"
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#what-the-arrows-mean",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#what-the-arrows-mean",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "What the Arrows Mean:",
+    "text": "What the Arrows Mean:\n\nUrbanization → Drought Plants “Urbanization affects which plants people choose”\nUrbanization → Temperature\n“Urban heat island: cities are hotter”\nUrbanization → Richness “Urbanization directly affects habitat quality”\nDrought Plants → Richness “Our main hypothesis: drought plants help insects”\nTemperature → Richness “Temperature affects insect survival”\n\nThe causal model shows that urbanization is a key confounder: it affects both plant choice and local temperature while also directly impacting species richness.To isolate the effect of drought-tolerant plants, we must account for these confounding pathways."
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#discussion",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#discussion",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "Discussion",
+    "text": "Discussion\nOur results provide strong evidence that drought-tolerant landscaping supports higher insect diversity in urban Los Angeles. This finding has important implications:\n\nClimate-appropriate landscaping matters:\n\nPlants adapted to local climate provide better habitat\n\nPractical application:\n\nHomeowners and urban planners can support biodiversity through plant selection\n\nLimitations:\n\nObservational data (can’t prove causation definitively)\nLimited to Los Angeles (may not generalize)\nAveraged across seasons (can’t examine temporal dynamics)\n\nFuture directions:\n\nExperimental manipulation of plant types\nMechanism testing (why do drought plants help?)\nMulti-city comparisons"
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#conclusion",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#conclusion",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "Conclusion",
+    "text": "Conclusion\nUsing negative binomial regression on site-aggregated data, we found that drought-tolerant plants increase insect species richness by approximately [X]% in urban Los Angeles. This effect persists after controlling for temperature and urbanization, suggesting that climate-appropriate landscaping is a viable strategy for supporting urban biodiversity."
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#dag-explination",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#dag-explination",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "DAG explination:",
+    "text": "DAG explination:\n\nDirect effect on species richness:\n\nDrought-tolerant plants (main predictor):\n\nAssume these plants provide better habitat for insects in LA’s arid climate.\n\nMean Temperature:\n\nLocal Microclimate may directly affect insect activity and survival.\n\nUrban Type:\n\nDevelopment intensity affects habitat quality and availability.\n\n\nConfounding Relationships:\n\nUrbanization influences both plant choice (people in different urban contexts make different landscaping decisions) and local temperature (urban heat island effect), therefore we must control for urban type to isolate the effects of drought tolerant plants.\n\n\n\nImportance:\nTo estimate the true effect of drought-tolerant plants on species richness, we include both temperature and urbanization as covariates in our model. This accounts for confounding and allows us to answer:\n  \"Do drought plants increase richness *independent of* urbanization and temperature?\""
+  },
+  {
+    "objectID": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#about-the-data",
+    "href": "posts/2025-12-12-EDS222_Blog/Insect_Diversity.html#about-the-data",
+    "title": "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants",
+    "section": "",
+    "text": "The data used for this analysis was obtained from Adams et al. (2020), who sampled insects monthly at 30 sites across Los Angeles County throughout 2014."
   }
 ]
