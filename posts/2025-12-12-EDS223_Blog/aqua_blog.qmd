@@ -236,7 +236,7 @@ eez_table <- kable(summary_table,
 eez_table
 ```
 
-**Figure 1.** Oyster Aquaculture Suitability by EEZ
+**Map 1.** Oyster Aquaculture Suitability by EEZ
 ```{r, message=FALSE}
 #| fig.width: 10
 #| fig.height: 8
@@ -354,13 +354,13 @@ results <- list(
 }
 ```
 
-## Dungeness Crab Suitability
+## Dungeness Crab Suitability Results
 
 Using the generated species-specific function:
 
 ```{r}
-# Mussels (different requirements)
-mussel_results <- find_suitable_aquaculture(
+# Crab (difference requirements)
+crab_results <- find_suitable_aquaculture(
   sst_raster = sst_mean_celsius,
   depth_raster = depth_resample,
   eez_sf = eez,
@@ -372,23 +372,23 @@ mussel_results <- find_suitable_aquaculture(
 )
 
 # Access results
-kable(mussel_results$summary_table)
+kable(crab_results$summary_table)
 ```
 
-**Figure 2.** Datemussel Suitability by EEZ
+**Map 2.** Dungeness Crab Suitability by EEZ
 ```{r, message=FALSE}
 #| fig.width: 10
 #| fig.height: 8
 
-# Plot Mussel EEZ
+# Plot Crab EEZ
 tm_basemap("Esri.OceanBasemap", alpha = 0.7) +
   tm_raster() +
-  tm_shape(mussel_results$eez_ranked) +
+  tm_shape(crab_results$eez_ranked) +
   tm_polygons("suitable_area_km2",
               palette = "-mako",
               title = "Suitable Area (km²)", boarder.col = "black",
               border.lwd = 0.5) +
-  tm_layout(main.title ="Suitable Mussel Aquaculuture Area by EEZ",
+  tm_layout(main.title ="Suitable Crab Aquaculuture Area by EEZ",
             main.title.size =1.2,
             legend.outsides =TRUE,
             frame =FALSE) +
@@ -404,7 +404,7 @@ tm_scale_bar(position = c("left", "bottom"))
 
 ## Discussion
 
-This analysis demonstrates how geospatial suitability modeling can inform strategic aquaculture planning. Central California consistently emerged as the most promising region for both oysters and datemussels.
+This analysis demonstrates how geospatial suitability modeling can inform strategic aquaculture planning. Central California consistently emerged as the most promising region for both oysters and Dungeness Crab.
 
 However, several considerations remain:
 
