@@ -1,50 +1,39 @@
 ---
-title: Visualizing Fire Scars Through False Color Imagery and the Social Impacts of the Eaton and Fire Palasides
+title: "Remote Sensing and Community Resilience: Analyzing Fire Scars and the Social Impacts of the Eaton and Palasides Fires Palasides"
 format: html
+image: true
 jupyter: eds220-env
 ---
 
-```{r}
-library(reticulate)
- use_python("c:/Users/Donaji/.conda/envs/eds220-env/python.exe", required = TRUE)
-```
+[**Click Here to Github Repository**](https://github.com/IIDonaji/eds220-hwk4)
 
+# About
 
-```{python}
-import sys
-```
-
-[**Click Here to Github Repository**](https://github.com/IIDonaji/eds220-hwk4) 
-
-
-# About 
-
-![palisades fire](https://upload.wikimedia.org/wikipedia/commons/1/1a/PalisadesFire_fromDowntown.png) 
-Figure1. Palisades Fire as seen from Downtown Los Angeles (Image captured via PTZ Camera/ VMS system)
+![palisades fire](https://upload.wikimedia.org/wikipedia/commons/1/1a/PalisadesFire_fromDowntown.png) Figure1. Palisades Fire as seen from Downtown Los Angeles (Image captured via PTZ Camera/ VMS system)
 
 The Eaton and Palisades Fires that occurred in early January 2025 devastated thousands of homes, displaced tens of thousands of residents, and caused severe ecological and infrastructural damage. Using a combination of geospatial and tabular datasets, this notebook explores fire scars through false-color imagery derived from remote sensing data. Specifically, it uses Landsat Collection 2 Level-2 atmospherically corrected surface reflectance data collected by the Landsat 8 satellite and provided in NetCDF format, along with fire perimeter vector data in Shapefile format. Additionally, this analysis examines the social dimensions of the Eaton and Palisades Fires using the 2024 Environmental Justice Index (EJI) data for California, provided in geodatabase format.
 
-The analysis centers on four critical technical aspect required for data integration: 
+The analysis centers on four critical technical aspect required for data integration:
 
-1. Data Harmonization through Coordinate Reference Systsem (CRS) reprojection to align all disparet geospatial layers. 
+1.  Data harmonization through coordinate reference systsem (CRS), which requires reprojecting spatial objects to align all geospatial layers.
 
-2. Vector-to-Raster Integration, using the fire perimeter shapefile to spatially clip the mutidimensional Landsat NetCDF data. 
+2.  Vector-to-raster integration using the fire perimeter shapefile to spatially clip the mutidimensional Landsat NetCDF data.
 
-3. Mutli_Band Visulaization, focusing on genrating a true-color image (RGB) by selecing and robustly scaling the correct spectral bands from the NetCDF structure. 
+3.  Mutli-band visulaization, focusing on generating a true-color image (RGB) by selecting and robustly scaling the correct spectral bands from the NetCDF structure.
 
-4. Geospatial Data Cleaning, which invovle indetifying NaN values to ensure data integrity and resolve plotting errors.
+4.  Geospatial data cleaning, which involves identifying `NaN` values to ensure data integrity and resolve plotting errors.
 
 ## About the Data:
 
-1. **Landsat Collection 2 Level-2:**
+1.  **Landsat Collection 2 Level-2:**
 
 Atmospherically corrected surface reflectance data, collected by Landsat 8 satellite. Data retrieved from [Microsof Planetary Computer data catalogue](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2) and clipped to an area surrounding the fire perimeters. For visualization and educational purposes.
 
-2. **Dissolved Eaton and Palisades Fire Perimeters:**
+2.  **Dissolved Eaton and Palisades Fire Perimeters:**
 
 Features layers are publicly available from [LA County REST web](https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about) ArcGIS Hub. Contain heat perimeters for the Palisades and Eaton Fires.
 
-3. **EJI Data**
+3.  **EJI Data**
 
 The 2024 EJI geodatabase data for California is publicly available in [Agency for Toxic Substance Disease Registery (ATSDR)](https://www.atsdr.cdc.gov/place-health/php/eji/eji-data-download.html) and contains environmental, economic, and demographic data at the census track level.
 
@@ -66,19 +55,19 @@ import contextily as ctx
 
 # Data Loading and Intergration for Wildfire Impact Analysis
 
-The following code loads three key geospatial datasets for analyzing the January 2025 Southern California wildfires: 
+The following code loads three key geospatial datasets for analyzing the January 2025 Southern California wildfires:
 
-1. Wildfire Perimeter Data: 
+1.  Wildfire Perimeter Data:
 
-  - Imports shapefiles containing the mapped boundaries of the Eaton and Palisades fires as of January 21, 2025, using GeoPandas for vector geometry handling. 
+-   Imports shapefiles containing the mapped boundaries of the Eaton and Palisades fires as of January 21, 2025, using GeoPandas for vector geometry handling.
 
-2. Satellite Imagery: 
+2.  Satellite Imagery:
 
-  - Loads Landsat 8 multispectral satellite data (NetCDF format) captured on February 23, 2025, covering both fire-affected areas using `xarray` for efficient multidimensional array processing.
+-   Loads Landsat 8 multispectral satellite data (NetCDF format) captured on February 23, 2025, covering both fire-affected areas using `xarray` for efficient multidimensional array processing.
 
-3. Environmental Justice Index (EJI): 
+3.  Environmental Justice Index (EJI):
 
-  - Imports California's 2024 Environmental Justice Index data from a geodatabase, which provides socioeconomic and environmental health vulnerability metrics at the census tract level. 
+-   Imports California's 2024 Environmental Justice Index data from a geodatabase, which provides socioeconomic and environmental health vulnerability metrics at the census tract level.
 
 Together, these datasets enable spatial analysis that combining fire extent, post-fire satellite observations, and community vulnerability indicators to assess how wildfire impacts vary across different populations.
 
@@ -105,17 +94,17 @@ cali_eji = gpd.read_file(os.path.join("data", "EJI_2024_California/EJI_2024_Cali
 
 The following code performs initial data inspection to understand the structure and contents of the loaded datasets:
 
-1.  **Fire Perimeter Metadata:** 
+1.  **Fire Perimeter Metadata:**
 
-  - Displays the DataFrame structure for both Eaton and Palisades fire shapefiles, including column names, data types, non-null counts, and memory usage to verify successful data loading and understand available attributes.
+-   Displays the `DataFrame` structure for both Eaton and Palisades fire shapefiles, including column names, data types, non-null counts, and memory usage to verify successful data loading and understand available attributes.
 
-2.  **NetCDF Dimension Analysis:** 
+2.  **NetCDF Dimension Analysis:**
 
-  - Examines the Landsat 8 dataset's organizational structure by printing its dimensions (spatial and temporal extents), coordinate systems (x, y coordinates and potentially time), and available data variables (spectral bands and derived products).
+-   Examines the Landsat 8 dataset's organizational structure by printing its dimensions (spatial and temporal extents), coordinate systems (x, y coordinates and potentially time), and available data variables (spectral bands and derived products).
 
-3.  **Environmental Justice Index Structure:** 
+3.  **Environmental Justice Index Structure:**
 
-  - Reviews the California EJI geodatabase structure, including census tract identifiers, vulnerability indicators, and demographic attributes to understand available metrics for analyzing disproportionate wildfire impacts on vulnerable communities.
+-   Reviews the California EJI `geodatabase` structure, including census tract identifiers, vulnerability indicators, and demographic attributes to understand available metrics for analyzing disproportionate wildfire impacts on vulnerable communities.
 
 This exploratory step is essential for understanding data organization before performing spatial analysis, ensuring the datasets are properly formatted and identifying which attributes and bands are available for subsequent wildfire impact assessment.
 
@@ -137,21 +126,27 @@ print(f"\nCalifornia Environmental Justice Index:\n")
 cali_eji.info()
 ```
 
-The above outputs show Eaton and Palisades fire perimeter datasets are stored as GeoDataFrames containing 20 and 21 spatial features, respectively, representing mapped fire boundary components. Each dataset includes geometric information along with attributes describing feature type and measurements of area and perimeter length, confirming that both datasets are well-structured for spatial analysis of fire extent. The remote sensing data are provided in NetCDF format and consist of a two-dimensional spatial grid with 1,418 rows and 2,742 columns, along with multiple spectral bands—including visible, near-infrared, and shortwave infrared—that are commonly used to assess burn severity and vegetation change. Together, these bands enable the creation of false-color composites and other raster-based analyses of post-fire conditions. In addition, the California Environmental Justice Index dataset contains over 9,000 geographic features and an extensive set of demographic and environmental variables, making it suitable for evaluating how wildfire impacts intersect with social vulnerability. Combined, these datasets provide complementary spatial, spectral, and socioeconomic information necessary to analyze both the physical footprint of the fires and their potential environmental justice implications.
+The above outputs show the Eaton and Palisades fire perimeter datasets stored as `GeoDataFrames` containing 20 and 21 spatial features, respectively, representing mapped fire boundary components. Each dataset includes geometric information along with attributes describing feature type and measurements of area and perimeter length, confirming that both datasets are well-structured for spatial analysis of fire extent. The remote sensing data are provided in NetCDF format and consist of a two-dimensional spatial grid with 1,418 rows and 2,742 columns, along with multiple spectral bands including visible, near-infrared, and shortwave infrared—that are commonly used to assess burn severity and vegetation change. Together, these bands enable the creation of false-color composites and other raster-based analyses of post-fire conditions.
+
+In addition, the California Environmental Justice Index dataset contains over 9,000 geographic features and an extensive set of demographic and environmental variables, making it suitable for evaluating how wildfire impacts intersect with social vulnerability. Combined, these datasets provide complementary spatial, spectral, and socioeconomic information necessary to analyze both the physical footprint of the fires and their potential environmental justice implications.
 
 ## Coordinate Reference System (CRS) Verification and Standardization:
 
-A key step when working with spatial data is making sure the coordinate reference systems match for accurate spatial analysis. Here vector data (fire parameters & census tracts) will be combined with raster data (satellite imagery). 
+A key step when working with spatial data is making sure the coordinate reference systems match for accurate spatial analysis. Here vector data (fire parameters & census tracts) will be combined with raster data (satellite imagery).
 
 The following code checks and standardizes the CRS's across all datasets to ensure spatial compatibility:
 
-  1. **CRS Inspection:** 
-  
-    - Prints the current CRS for each dataset (fire perimeters, EJI data, and Landsat imagery) to identify any coordinate system mismatches that would prevent accurate spatial operations. 
-  
-  2. **CRS Standardization:** 
-  
-    - Reprojects all datasets to a common coordinate reference system, ensuring that spatial overlays, intersections, and distance calculations are geometrically valid for integrated wildfire impact analysis.
+1.  **CRS Inspection:**
+
+```         
+- Prints the current CRS for each dataset (fire perimeters, EJI data, and Landsat imagery) to identify any coordinate system mismatches that would prevent accurate spatial operations. 
+```
+
+2.  **CRS Standardization:**
+
+```         
+- Reprojects all datasets to a common coordinate reference system, ensuring that spatial overlays, intersections, and distance calculations are geometrically valid for integrated wildfire impact analysis.
+```
 
 ```{python}
 #| tags: []
@@ -163,7 +158,7 @@ print(f"California EJI CRS: {cali_eji.crs}")
 print(f"Landsat 8 CRS: {landsat8.rio.crs}")
 ```
 
-**Notice:** the `landsat8` NetCDF produced a None output, this mean the `xarray.Dataset` is not currently geospatial referenced.
+**Notice:** the `landsat8` NetCDF produced a None output. This means the `xarray.Dataset` is not currently geospatial referenced.
 
 The following steps will have to done before standardizing the CRS's:
 
@@ -173,15 +168,15 @@ The following steps will have to done before standardizing the CRS's:
 
 **The code below standardizes the CRS by using the Palisades fire perimeter as the reference CRS:**
 
-Reference CRS Selection: 
+Reference CRS Selection:
 
 Palisades fire perimeter's CRS (EPSG:3857) set as the standard coordinate system for all subsequent spatial analysis.
 
-1.  **EJI Reprojection:** 
+1.  **EJI Reprojection:**
 
 Transforms the California EJI data from its native Albers Equal Area Conic projection (ESRI:102003) to match the fire perimeter CRS, ensuring geometric compatibility for spatial operations like intersections and overlays.
 
-2.  **Raster Data Reprojection:** 
+2.  **Raster Data Reprojection:**
 
 Assigns the appropriate CRS to the Landsat 8 data (if missing) and reprojects it to match the reference CRS, ensuring all datasets share a common coordinate system for integrated spatial analysis.
 
@@ -227,9 +222,9 @@ Replace any NaN (missing) values in the dataset with zeros to prevent plotting e
 
 -   Satellite imagery often contains NaN values where data collection failed (due to clouds, sensor issues, etc.). These NaN values cause warnings and conversion errors during plotting. Filling them with zero ensures clean visualization without interrupting the color scaling.
 
-**Step 2: Align Coordinate Systems** 
+**Step 2: Align Coordinate Systems**
 
- - Here we will have to change the fire perimeters to match the Landsat imagery's CRS for accurate overlay.
+-   Here we will have to change the fire perimeters to match the Landsat imagery's CRS for accurate overlay.
 
 **Step 3: Create False Color Composite Map**
 
@@ -307,7 +302,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-#### Figure Description
+#### False Color Composition Map Description
 
 The map features a false-color composite created from Landsat 8 data, depicting the regions affected by the Eaton and Palisades Fires. By combining SWIR, NIR, and red spectral bands, the image accentuates differences between healthy vegetation and burned terrain. Areas with intact vegetation appear bright green due to strong NIR reflectance, while fire-damaged zones appear in shades of reddish brown. Yellow and red outlines mark the Eaton and Palisades fire perimeters, clearly showing the extent of each fire. This type of false-color imagery is widely used to assess burn severity and understand how landscapes recover over time.
 
@@ -315,13 +310,13 @@ The map features a false-color composite created from Landsat 8 data, depicting 
 
 This section demonstrates how to identify which census tracts were impacted by each fire and visualize socioeconomic vulnerability patterns in the affected areas.
 
-**Step 1: Spatial Join ** 
+**Step 1: Spatial Join**
 
-- Finding Intersecting Census Tracts Use a spatial join to identify which census tracts intersect with each fire perimeter:
+-   Finding Intersecting Census Tracts Use a spatial join to identify which census tracts intersect with each fire perimeter:
 
-  -   `gpd.sjoin()` performs a spatial join to match features from two datasets based on their geographic relationship
-  
-  -   `predicate="intersects` means "include any census tract that touches or overlaps the fire boundary"
+    -   `gpd.sjoin()` performs a spatial join to match features from two datasets based on their geographic relationship
+
+    -   `predicate="intersects` means "include any census tract that touches or overlaps the fire boundary"
 
 -   This returns complete census tracts, even if only a small portion overlaps the fire
 
@@ -355,6 +350,7 @@ ax.set_yticks([])
 plt.show
 ```
 
+The resulting geopandas.GeoDataFrame (eji_palisades) spans a larger territory than the actual Palisades Fire perimeter because it includes the full boundaries of any census tract that intersects the fire boundary. This expansion occurs because the intersects predicate selects all tracts that either touch or partially overlap the fire area, thus extending the overall dataset coverage beyond the immediate burn zone.
 
 ```{python}
 # CRS do not match; reproject to match Eaton CRS
@@ -386,20 +382,21 @@ ax.set_yticks([])
 plt.show
 ```
 
-**Step 2: Clipping ** 
+Similarly, the geopandas.GeoDataFrame (eji_eaton) encompasses a substantially larger region than the Eaton Fire itself. This is a consequence of how geographic data frames are generated: using the intersects predicate selects the complete boundaries of every census tract that touches or crosses the fire perimeter, causing the final data extent to exceed the exact fire scar.
 
-Precise Fire Impact Areas Clip the census tracts to show only the portions actually within each fire perimeter:
+**Step 2: Precise Fire Impact Areas**
 
-  -   Clipping cuts the census tract geometries at the fire boundary, showing only the affected portions
-  
-  -   Spatial join includes entire census tracts, which can overestimate the impacted area
-  
-  -   For visualizing communities directly affected by fire, clipping provides more accurate spatial representation
+Clip the census tracts to show only the portions actually within each fire perimeter:
 
-**Step 3: Visualize** 
+-   Clipping (`.clip`) cuts the census tract geometries at the fire boundary, showing only the affected portions
 
-- Map Clipped Areas showing the precise areas affected by each fire.
+-   Spatial join (`.sjoin`) includes entire census tracts, which can overestimate the impacted area
 
+-   For visualizing communities directly affected by fire, clipping provides more accurate spatial representation
+
+**Step 3: Visualize**
+
+-   Map of clipped areas showing the precise areas affected by each fire.
 
 ```{python}
 #| tags: []
@@ -408,6 +405,7 @@ eji_palisades = gpd.sjoin(cali_eji, palisades, predicate="intersects")
 
 # Find census tracts that intersect with Eaton fire
 eji_eaton = gpd.sjoin(cali_eji, eaton, predicate="intersects")
+
 # Clip census tracts to Palisades fire boundary
 eji_palisades_clip = gpd.clip(cali_eji, palisades)
 
@@ -439,16 +437,15 @@ ax.set_yticks([])
 plt.show()
 ```
 
-**Step 4:Geographic Context ** 
+**Step 4:Geographic Context**
 
-- With `Basemap` add a real-world basemap to show where the fires occurred in LA County
+-   With `Basemap` add a real-world basemap to show where the fires occurred in LA County
 
-  -   Provides real-world geographic context (roads, cities, landmarks)
-  
-  -   Makes it easier to understand where fires occurred relative to populated areas
+    -   Provides real-world geographic context (roads, cities, landmarks)
+
+    -   Makes it easier to understand where fires occurred relative to populated areas
 
 -   This where `contextily` become needed `ctx` automatically fetches map tiles that match your data's extent and CRS
-
 
 ```{python}
 #| tags: []
@@ -475,24 +472,26 @@ plt.tight_layout()
 plt.show()
 ```
 
-**Step 5: Map Socioeconomic Vulnerability ** 
+**Step 5: Map Socioeconomic Vulnerability**
 
-- Compare vulnerability indicators between the two fire areas using the Environmental Justice Index data.
+-   Compare vulnerability indicators between the two fire areas using the Environmental Justice Index data.
+
+-   To accurately map the socioeconomic vulnerability variable ($EPL\_POV200$), the census tract data was clipped to the precise perimeter of each fire. This step ensured that the resulting GeoDataFrame only included data relevant to the affected areas.
 
 **Why this matters?** These visualization reveals whether the fires disproportionately affected vulnerable communities, which has important implications for:
 
-  - Resource allocation for recovery efforts. 
-  
-  - Identifying communities needing additional support. 
-  
-  - Understanding environmental justice dimensions of wildfire impacts.
-  
+-   Resource allocation for recovery efforts.
+
+-   Identifying communities needing additional support.
+
+-   Understanding environmental justice dimensions of wildfire impacts.
+
 ```{python}
 #| tags: []
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 10))
 
 # Select an EJI variable (e.g., poverty percentile)
-eji_variable = 'EPL_POV200'
+eji_variable = 'EPL_POV200' 
 
 # Find common color scale range for both maps
 vmin = min(eji_palisades_clip[eji_variable].min(), eji_eaton_clip[eji_variable].min())
@@ -532,14 +531,16 @@ cbar.set_label('Poverty Percentile')
 plt.show()
 ```
 
+### Discription of Poverty Distribution Map
 
+The analysis of fire impact across socioeconomic groups showed significant variation between the two events. The Palisades Fire disproportionately affected lower-poverty communities, particularly those closer to the coastline. Conversely, the Eaton Fire impacted a higher overall percentage of low income communities, with the highest-poverty tracts generally located in the mountainous areas. This disparity highlights how wildfire consequences are strongly influenced by the socioeconomic status and geographic location of the affected neighborhoods.
 
 # Data References
 
-Bren School of Environmental Science and Management. (2025). landsat8-2025-02-23-palisades-eaton.nc [Dataset]. Accessed November 20, 2025, from https://drive.google.com/drive/u/1/folders/1USqhiMLyN8GE05B8WJmHabviJGnmAsLP
+Bren School of Environmental Science and Management. (2025). landsat8-2025-02-23-palisades-eaton.nc \[Dataset\]. Accessed November 20, 2025, from https://drive.google.com/drive/u/1/folders/1USqhiMLyN8GE05B8WJmHabviJGnmAsLP
 
-Centers for Disease Control and Prevention and Agency for Toxic Substances Disease Registry. (2024). 2024 Environmental Justice Index. [Dataset]. Accessed December 2, 2025, from https://atsdr.cdc.gov/place-health/php/eji/eji-data-download.html
+Centers for Disease Control and Prevention and Agency for Toxic Substances Disease Registry. (2024). 2024 Environmental Justice Index. \[Dataset\]. Accessed December 2, 2025, from https://atsdr.cdc.gov/place-health/php/eji/eji-data-download.html
 
-County of Los Angeles Enterprise GIS. (2025). Palisades and Eaton Dissolved Fire Perimeters (2025) [Dataset]. County of Los Angeles. Accessed November 20, 2025, from https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about
+County of Los Angeles Enterprise GIS. (2025). Palisades and Eaton Dissolved Fire Perimeters (2025) \[Dataset\]. County of Los Angeles. Accessed November 20, 2025, from https://egis-lacounty.hub.arcgis.com/maps/ad51845ea5fb4eb483bc2a7c38b2370c/about
 
 Microsoft Planetary Computer. (n.d.). Landsat Collection 2 Level-2. Accessed November 20, 2025, from https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2
