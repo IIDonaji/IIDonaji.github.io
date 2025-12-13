@@ -11,6 +11,7 @@ format:
     standalone: true
     toc: true
     code-fold: true
+  
 editor: 
   markdown: 
     wrap: 72
@@ -18,19 +19,21 @@ editor_options:
   chunk_output_type: console
 ---
 
-![**Image:[Commercial Fishing Boats, Santa Barbara Harbor, California,
-USA.](https://santabarbaraca.gov/things-do/waterfront)).**](figs/Harbor.png.webp)
+## Purpose
+
+![**Image: Commercial Fishing Boats, Santa Barbara Harbor, California,
+USA.**](figs/Harbor.png.webp)
 
 Marine aquaculture is rapidly expanding as coastal nations seek
 sustainable ways to meet seafood demand. Identifying *where* aquaculture
 should occur is a major challenge optimal sites must balance ecological
 suitability, production needs, and regulatory boundaries.
 
-## Target Question Being Addressed in this Analysis:
+### Research Question:
 
-What Exclusive Economic Zones (eez) on the west Coast of the US are best
+What Exclusive Economic Zones (EEZ) on the West Coast of the US are best
 suited to developing marine aquaculture for several species of oysters
-and Dungeness Crab *Metacarcinus magister* (Dana, 1852).
+and Dungeness Crab *Metacarcinus magister* (Dana, 1852)?
 
 ### Data Sources
 
@@ -46,7 +49,7 @@ species-specific literature, including SeaLifeBase \[(2025)\].
 All geospatial processing was performed in **R** using `terra`, `stars`,
 and `sf`.
 
-### Methods
+## Methods
 
 In this geospatial analysis the following key concepts were addressed
 
@@ -57,8 +60,11 @@ In this geospatial analysis the following key concepts were addressed
 
 #### 1. Prepare SST and Depth Data
 
-I stacked five annual SST rasters (2008–2012), calculated the mean, and
-converted Kelvin to Celsius:
+Certain packages were required prior to the analysis. I loaded in the
+necessary libraries to proceed with data importation. Then, I read in
+the depth and EEZ shapefiles using `read_stars` and `st_read`,
+respectively, Finally, I stacked five annual SST rasters (2008–2012)
+using `rast()`.
 
 ```{r,include = FALSE}
 #| output: false
@@ -81,13 +87,13 @@ library(viridisLite)
 # Prepare Data
 
 # Bathymetry
-depth <- read_stars(here::here("posts/2025-12-12-EDS223_Blog/aqua_data/depth.tif"))
+depth <- read_stars(here::here("posts","2025-12-12-EDS223_Blog", "data", "depth.tif"))
 
 # Exclusive Economic Zones (eez)
-eez <- st_read(here::here("posts/2025-12-12-EDS223_Blog/aqua_data/wc_regions_clean.shp"))
+eez <- st_read(here::here("posts", "2025-12-12-EDS223_Blog", "data","wc_regions_clean.shp"))
 
 # Sea Surface Temperature (SST) load as a list of .tiff files 
-sst <- list.files(path= here::here("posts/2025-12-12-EDS223_Blog/aqua_data"),
+sst <- list.files(path= here::here("posts", "2025-12-12-EDS223_Blog", "data"),
                   pattern= "average_annual", # file name matching pattern
                    full.names = TRUE) # Reference entire file name matching this pattern
 
@@ -95,6 +101,10 @@ sst <- list.files(path= here::here("posts/2025-12-12-EDS223_Blog/aqua_data"),
 sst <- terra::rast(sst)
 names(sst) #checking list
 ```
+
+It was also important to cross reference each spatial object so that
+each coordinate reference system (CRS) matches to prevent misalignment
+(refer to repository linked above for additional information).
 
 ```{r,include = FALSE}
 
@@ -116,6 +126,9 @@ if (st_crs(eez)$wkt != crs(sst)) {
 }
 ```
 
+Here, I calculated the mean SST using `app()` across all year rasters,
+then converted temperatures from Kelvin to Celsius.
+
 ```{r}
 # Calculate the SST average 
 mean_sst <- app(sst[[c("average_annual_sst_2008",
@@ -129,7 +142,8 @@ mean_sst <- app(sst[[c("average_annual_sst_2008",
 sst_mean_celsius <- mean_sst - 273.15
 ```
 
-Bathymetry was cropped and resampled to match SST resolution:
+Then, I cropped the bathymetry layer to the average SST raster and
+resampled to match the SST resolution.
 
 ```{r}
 # First convert depth stars to SpatRaster
@@ -166,12 +180,18 @@ cat("✓ Successfully stacked!\n")
 
 ## Identify Suitable Habitat for Oysters
 
-According to Oysters research, following conditions are needed for
-optimal growth: **Environmental ranges used:**
+According to the literature, the following conditions are required for
+optimal growth in oyster species:
 
--   **Sea Surface Temperature Range:** 11–30°C
+-   **Sea Surface Temperature (SST) Range:** 11–30°C
 
 -   **Depth Range:** 0–70 m
+
+Here, I classified suitable ranges for oyster-specific depth and SST by
+applying an if-else statement to categorize values based on a
+conditional. I assigned a value of 0 for values that fell outside the
+required range and assigned a value of 1 for values that were within the
+range.
 
 ```{r}
 # Reclassify SST (11-30°C suitable for oysters)
@@ -192,8 +212,11 @@ suitable_locations <- sst_suitable * depth_suitable
 
 ## Quantify Suitable Area Within Each EEZ
 
-I rasterized EEZ polygons, masked suitability value, and computed
-cell-area:
+I rasterized EEZ polygons, masked suitability values, and computed
+cell-area using zonal statistics. Here, I rasterized the EEZ shapefile
+based on suitable locations for each region (rgn). Then, I created a
+mask to isolate suitable locations within EEZs and summed the suitable
+area of each EEZ region.
 
 ```{r}
 # Rasterize the EEZ data (creates zone IDs)
@@ -210,10 +233,10 @@ eez_suitable <- zonal(suitable_area, eez_raster, fun = "sum", na.rm = TRUE)
 
 **Oyster Suitability**
 
-The highest-ranked region was:
-
-Central California (CA-C) \~4,940 km² of suitable area (\~34% of all
-suitable habitat)
+The highest-ranked region was Central California with about 4,940 km² of
+suitable area (\~34% of all suitable habitat). The lowest ranked region
+was Northern California with about 454.30 km² (3.1% of all suitable
+area).
 
 ```{r,  echo = FALSE}
 
@@ -229,7 +252,7 @@ eez_ranked <- eez[order(-eez$suitable_area_km2), ]
 
 summary_table <- data.frame(
   Rank = 1:nrow(eez_ranked),
-  EEZ_Name = eez_ranked$rgn_key,
+  EEZ_Name = eez_ranked$rgn,
   Suitable_Area_km2 = round(eez_ranked$suitable_area_km2, 2),
   Percent_of_Total = round(100 * eez_ranked$suitable_area_km2 / 
                            sum(eez_ranked$suitable_area_km2), 1)
@@ -295,9 +318,19 @@ Dungeness Crab Suitable Conditions:
 
 -   **Depth Range:** 0 –360 meters
 
-A general function automated the workflow for any species.
+The workflow described above is applicable to many important marine
+species in mariculture. As a result, the workflow can be generalized
+into a single function for a species of interest and its given SST and
+depth ranges. A general function automated the workflow for any species.
 
-```{r, include = FALSE}
+```{r}
+
+# The function takes the following arguments:
+# sst raster file
+# depth raster file
+# minimum and maximum sea surface temperature
+# minimum and maximum depth
+# species name
 
 find_suitable_aquaculture <- function(sst_raster, 
                                       depth_raster, 
@@ -354,7 +387,7 @@ eez_sf$suitable_area_km2 <-
 # Create summary table
 summary_table <- data.frame(
    Rank = 1:nrow(eez_ranked),
-    EEZ = eez_ranked$rgn_key,
+    EEZ = eez_ranked$rgn,
     Suitable_Area_km2 = round(eez_ranked$suitable_area_km2, 2)
   )
   
@@ -375,7 +408,9 @@ results <- list(
 
 ## Dungeness Crab Suitability Results
 
-Using the generated species-specific function:
+Here, I apply the function `find_suitable_aquaculture` to determine
+suitable area within each West Coast EEZ using the appropriate
+species-specific ranges.
 
 ```{r}
 # Crab (difference requirements)
@@ -423,6 +458,32 @@ tm_scale_bar(position = c("left", "bottom"))
 ```
 
 ## Discussion
+
+Among the Exclusive Economic Zones (EEZs) along the West Coast,
+**Central California offers the greatest potential for oyster
+cultivation** with an estimated suitable area of $4940.04 \text{ km}^2$,
+likely due to favorable Sea Surface Temperature (SST) and depth
+conditions. Conversely, **Northern California is the least suitable**,
+providing only $454.30 \text{ km}^2$. While colder, the Washington EEZ
+contains a relatively large suitable area ($3313.16 \text{ km}^2$),
+surpassing Northern California, which suggests a high proportion of
+quality mollusk aquaculture habitat there. Southern California and
+Oregon also show considerable, though varying, suitability.
+
+The analysis of suitable habitat for Dungeness crab along the West Coast
+reveals significant regional differences in the Exclusive Economic Zones
+(EEZs). **Washington** emerged as the most suitable region, providing
+the largest area of favorable conditions at $290.06 \text{ km}^2$. The
+second and third most suitable EEZs were **Southern California**
+($142.52 \text{ km}^2$) and **Central California**
+($120.89 \text{ km}^2$), respectively. **Oregon** contained a moderate
+amount of suitable habitat at $76.65 \text{ km}^2$. Notably, **Northern
+California** possessed the smallest suitable area, indicating the least
+favorable conditions in this zone.
+
+Overall, the findings suggest that the environmental parameters along
+the Washington coast currently offer the most extensive suitable habitat
+for the Dungeness crab among the surveyed EEZs.
 
 This analysis demonstrates how geospatial suitability modeling can
 inform strategic aquaculture planning. Central California consistently
