@@ -4,7 +4,7 @@ description: "Using environmental suitability modeling to identify the best Excl
 image: medium.jpg
 date: "12/12/2025"
 categories: [R, Geospatial Analysis, Aquaculture]
-draft: false
+draft: false 
 format: 
   html:
     embed-resources: true

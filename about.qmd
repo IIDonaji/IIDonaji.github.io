@@ -1,6 +1,8 @@
 ---
 title: "About"
 draft: true
+format: 
+  closeread-html
 ---
 
 ## Background
