@@ -161,7 +161,7 @@ species richness and temperature across the year for each site, yielding
 
 ```{r,include = FALSE}
 # Data Loading
-insect_div <- read_csv(here::here("posts/2025-12-12-EDS222_Blog/stats_data/InsectData.csv"))
+insect_div <- read_csv(here::here("posts/2025-12-12-EDS222_Blog/data/InsectData.csv"))
 #view(insect_div)
 ```
 

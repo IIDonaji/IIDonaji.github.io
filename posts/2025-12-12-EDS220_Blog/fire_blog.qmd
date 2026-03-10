@@ -2,6 +2,7 @@
 title: "Remote Sensing and Community Resilience: Analyzing Fire Scars and the Social Impacts of the Eaton and Palasides Fires Palasides"
 format: html
 image: true
+python: /c/Users/Donaji/.conda/envs/eds220-env/python
 jupyter: eds220-env
 ---
 

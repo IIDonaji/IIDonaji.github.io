@@ -4,19 +4,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Alice&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Ribeye&display=swap');
 
 //* /* ctrl shift c comment all stuff
-// color
+// Color
+// define Sass vars
 $jadegreen: #14A664 
 $bondiblue: #0095B6
 $Aliveblue: #F0F8FF
 $Aerospaeorange: #FF4F00
 
-// define wuarto variables
-$body-bg: $Aliceblue;
-$navabat-bg: $cream;
-$navabar-fg: 
-$navabar-hl:
+// can define values with units, e.g. $my-font-size: 25px;
 
-$link-color:
+// Base document colors/define quarto variables
+$navbar-bg:  // navbar
+$navbar-fg:  // navbar foreground elements
+$navbar-hl:  // highlight color when hovering over navbar links
+$body-bg:  // page background 
+$body-color:  // page text 
+$footer-bg:  // footer 
+$link-color:  // hyperlinks 
+
+// Inline code
+$code-bg:  // inline code background color
+$code-color: // inline code text color
 
 /*-- scss:rules --*/ 
 h1, h2, {

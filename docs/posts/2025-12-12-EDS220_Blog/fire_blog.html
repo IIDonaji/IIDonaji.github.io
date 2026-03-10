@@ -76,7 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-94e1090c4e1a0caf4320d0d73c2cf675.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-fc015c21c37ea6ddd02ac108f484fb27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -159,10 +161,6 @@ window.Quarto = {
   <li class="nav-item">
     <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../posts.html"> 
@@ -269,7 +267,7 @@ window.Quarto = {
 </section>
 <section id="import-the-following-necessary-packages" class="level1">
 <h1>Import the following necessary packages:</h1>
-<div id="6f438328" class="cell" data-tags="[]" data-execution_count="1">
+<div id="09e18c71" class="cell" data-tags="[]" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -303,7 +301,7 @@ window.Quarto = {
 <li>Imports California’s 2024 Environmental Justice Index data from a geodatabase, which provides socioeconomic and environmental health vulnerability metrics at the census tract level.</li>
 </ul>
 <p>Together, these datasets enable spatial analysis that combining fire extent, post-fire satellite observations, and community vulnerability indicators to assess how wildfire impacts vary across different populations.</p>
-<div id="81fd9dee" class="cell" data-execution_count="2">
+<div id="3f3185b5" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load wildfire perimeter data for the Eaton and Palisades fires (January 21, 2025)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>eaton <span class="op">=</span> gpd.read_file(</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  os.path.join(<span class="st">"data"</span>,<span class="st">"eaton_perimeter"</span>, </span>
@@ -343,7 +341,7 @@ window.Quarto = {
 <li>Reviews the California EJI <code>geodatabase</code> structure, including census tract identifiers, vulnerability indicators, and demographic attributes to understand available metrics for analyzing disproportionate wildfire impacts on vulnerable communities.</li>
 </ul>
 <p>This exploratory step is essential for understanding data organization before performing spatial analysis, ensuring the datasets are properly formatted and identifying which attributes and bands are available for subsequent wildfire impact assessment.</p>
-<div id="c1b695a5" class="cell" data-execution_count="3">
+<div id="40038e5d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display DataFrame structure and metadata for both fire perimeters</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Eaton Fire Perimeter: "</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>eaton.info()</span>
@@ -418,7 +416,7 @@ memory usage: 11.6+ MB</code></pre>
 <li><strong>CRS Standardization:</strong></li>
 </ol>
 <pre><code>- Reprojects all datasets to a common coordinate reference system, ensuring that spatial overlays, intersections, and distance calculations are geometrically valid for integrated wildfire impact analysis.</code></pre>
-<div id="b6794d2a" class="cell" data-tags="[]" data-execution_count="4">
+<div id="653d36ee" class="cell" data-tags="[]" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check CRS for all datasets</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Coordinate Reference Systems:"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Eaton Fire CRS: </span><span class="sc">{</span>eaton<span class="sc">.</span>crs<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -452,7 +450,7 @@ Landsat 8 CRS: None</code></pre>
 </ol>
 <p>Assigns the appropriate CRS to the Landsat 8 data (if missing) and reprojects it to match the reference CRS, ensuring all datasets share a common coordinate system for integrated spatial analysis.</p>
 <p>This approach first recovers the Landsat’s native CRS from its metadata, then harmonizes all datasets to ensure spatial compatibility.</p>
-<div id="c75a9be0" class="cell" data-tags="[]" data-execution_count="5">
+<div id="40b5fd3a" class="cell" data-tags="[]" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recover embedded spatial reference information</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Spatial reference (CRS_WKT):'</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(landsat8.spatial_ref.crs_wkt)</span>
@@ -526,7 +524,7 @@ Landsat 8 CRS: EPSG:3857</code></pre>
 <li><p>Water appears very dark or black</p></li>
 </ul>
 <p>In this composite, healthy vegetation appears bright red, burned areas appear dark brown/black, and urban areas appear gray-green, making fire damage easily visible.</p>
-<div id="2aab8590" class="cell" data-tags="[]" data-execution_count="6">
+<div id="11ff905d" class="cell" data-tags="[]" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span> (<span class="dv">8</span>, <span class="dv">10</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot false color image swir22/nir08/red </span></span>
@@ -597,7 +595,7 @@ Landsat 8 CRS: EPSG:3857</code></pre>
 </ul></li>
 <li><p>This returns complete census tracts, even if only a small portion overlaps the fire</p></li>
 </ul>
-<div id="8c2f6aee" class="cell" data-execution_count="7">
+<div id="8c6852a8" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CRS do not match; reproject to match palisades CRS</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>crs_reference <span class="op">=</span> palisades.crs</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>eji <span class="op">=</span> cali_eji.to_crs(crs_reference)</span>
@@ -605,7 +603,7 @@ Landsat 8 CRS: EPSG:3857</code></pre>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Only include EJI census tracts that intersect the Palisades fire perimeter</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>eji_palisades <span class="op">=</span> gpd.sjoin(eji, palisades, predicate <span class="op">=</span> <span class="st">"intersects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="fbefc369" class="cell" data-execution_count="8">
+<div id="afca067a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define figure and axis dimensions</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">8</span>))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -633,7 +631,7 @@ Landsat 8 CRS: EPSG:3857</code></pre>
 </div>
 </div>
 <p>The resulting geopandas.GeoDataFrame (eji_palisades) spans a larger territory than the actual Palisades Fire perimeter because it includes the full boundaries of any census tract that intersects the fire boundary. This expansion occurs because the intersects predicate selects all tracts that either touch or partially overlap the fire area, thus extending the overall dataset coverage beyond the immediate burn zone.</p>
-<div id="30a6aa77" class="cell" data-execution_count="9">
+<div id="cc69eaae" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CRS do not match; reproject to match Eaton CRS</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>crs_reference <span class="op">=</span> eaton.crs</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>eji <span class="op">=</span> cali_eji.to_crs(crs_reference)</span>
@@ -641,7 +639,7 @@ Landsat 8 CRS: EPSG:3857</code></pre>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Only include EJI census tracts that intersect the Eaton fire perimeter</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>eji_eaton <span class="op">=</span> gpd.sjoin(eji, eaton, predicate <span class="op">=</span> <span class="st">"intersects"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="4d903afb" class="cell" data-execution_count="10">
+<div id="7acd7086" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define figure and axis dimensions</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">8</span>))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -680,7 +678,7 @@ Landsat 8 CRS: EPSG:3857</code></pre>
 <ul>
 <li>Map of clipped areas showing the precise areas affected by each fire.</li>
 </ul>
-<div id="9de2f0d3" class="cell" data-tags="[]" data-execution_count="11">
+<div id="ed27bc7c" class="cell" data-tags="[]" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find census tracts that intersect with Palisades fire</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>eji_palisades <span class="op">=</span> gpd.sjoin(cali_eji, palisades, predicate<span class="op">=</span><span class="st">"intersects"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -740,7 +738,7 @@ Landsat 8 CRS: EPSG:3857</code></pre>
 </ul></li>
 <li><p>This where <code>contextily</code> become needed <code>ctx</code> automatically fetches map tiles that match your data’s extent and CRS</p></li>
 </ul>
-<div id="71cab9ee" class="cell" data-tags="[]" data-execution_count="12">
+<div id="075cfe6e" class="cell" data-tags="[]" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">10</span>))</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -781,7 +779,7 @@ Landsat 8 CRS: EPSG:3857</code></pre>
 <li><p>Identifying communities needing additional support.</p></li>
 <li><p>Understanding environmental justice dimensions of wildfire impacts.</p></li>
 </ul>
-<div id="45d7d463" class="cell" data-tags="[]" data-execution_count="13">
+<div id="9de61f84" class="cell" data-tags="[]" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">10</span>))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Select an EJI variable (e.g., poverty percentile)</span></span>
@@ -1248,6 +1246,19 @@ Landsat 8 CRS: EPSG:3857</code></pre>
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright 2025, Ixel M.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This website is built with <i class="fa-solid fa-heart" title="a heart" aria-label="heart"></i>, <a href="https://github.com/iidonaji/iidonaji.github.io/" target="_blank"><i class="fa-brands fa-github" title="GitHub octocat logo" aria-label="github"></i></a>, <a href="https://www.r-project.org/about.html" target="_blank"><i class="fa-brands fa-r-project" title="R Project" aria-label="r-project"></i></a> and <a href="https://quarto.org/" target="_blank">Quarto</a></p>
+</div>
+  </div>
+</footer>
 
 
 
