@@ -10,22 +10,29 @@ website:
     #title: False #-> disaples for navbar but main
    #logo: images/
   # logo-alt: discribes for accsessability speech impare
-    right:
+    right: # accepts right/left/center; you can also place items individually on the left, right, and center
       - href: index.qmd
         text: Home
-      - href: about.qmd
+      - about.qmd
+#     - href: resources.qmd 
+#       text: Resources
       - href: posts.qmd
         text: Blog
+  page-footer:
+    background: light # or `dark` or omit this option altogether (footer color will match page body color)
+    left: Copyright 2025, Ixel M. 
+    right: This website is built with {{< fa heart title= "a heart" >}}, [{{< fa brands github title= "GitHub octocat logo" >}}](https://github.com/iidonaji/iidonaji.github.io/){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} and [Quarto](https://quarto.org/){target=_blank}
        # add your listing page file to your navbar, just like you would any other new web page
-      # - href: resources.qmd
-      #   text: Resources
-# supplying just one them ("lux")
+# supplying just one theme ("lux")
 format:
   html:
-    theme: lux
-   #css: styles.css
+    theme: lux # change to css: styles.css # Sam removed the `css: styles.css` option that was included by default, since she will be writing all sass and css in this single styles.scss file
+    # if you want to keep lux theme and only want to change color you can just do the follow;
+#   theme:
+#  - lux
+#  - styles.scss
     toc: true
     page-layout: full
-    mainfont: Alice
+    mainfont: Alice # assign default font in all text elements on website
 
 editor: visual
