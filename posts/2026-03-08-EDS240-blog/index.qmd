@@ -18,8 +18,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-
-![**Mexican free-tailed bat or Brazilian free-tailed bat (Tadarida brasiliensis)** Picture: Michael Durham/Minden Pictures.BCI](figs/Mexican-freetail.jpg)
+![**Mexican free-tailed bat or Brazilian free-tailed bat (Tadarida
+brasiliensis)** Picture: Michael Durham/Minden
+Pictures.BCI](figs/Mexican-freetail.jpg)
 
 # Introduction:
 
@@ -48,7 +49,8 @@ Using this community-generated data, my visualization explores the
 hidden patterns of bat observations across the state and highlights the
 role these often-overlooked animals play in California's ecosystems.
 
-![Final infographic outcomeBCI](figs/infographic.png)
+![Final infographic
+outcome](images/infographic-pt3.png){fig-align="center"}
 
 To understand what citizen scientists have revealed about California's
 bats, I analyzed 1,843 observations collected between 1998 and 2025.
@@ -116,7 +118,8 @@ celebrating. Below I break down the visual process of each plot and how
 it went from Rstudio to Affinity Designer where all other design
 elements where incorporated, adjusted, or altered.
 
-The following code shows the pre-data process done before making simple plots
+The following code shows the pre-data process done before making simple
+plots
 
 ```{r}
 #| eval: false
@@ -347,16 +350,33 @@ april <-  ggplot(monthly, aes(x = month, y = n)) +
 print(april)
 ```
 
-
 ## Bringing it All Together: Typography, Color, and Accessibility
 
-With three distinct visualizations built, the final design challenges was weaving them into a cohesive visual story. I brought all elements into Affinity Designer, where typography, color, and layout decisons were refined together rather than in isolation. 
+With three distinct visualizations built, the final design challenges
+was weaving them into a cohesive visual story. I brought all elements
+into Affinity Designer, where typography, color, and layout decisons
+were refined together rather than in isolation.
 
-For typography, I paired Century Schoolbook for titles with Garamond for body text and captions. Century Schoolbook's sturdy, classic serifs give the title hierarchy weight and presence, while Garamond's elegant, lighter letterforms keep the supporting text readable without competing for attention. Both are serif fonts, which gives the infographic a consistent, editorial quality — fitting for a science communication piece.
+For typography, I paired Century Schoolbook for titles with Garamond for
+body text and captions. Century Schoolbook's sturdy, classic serifs give
+the title hierarchy weight and presence, while Garamond's elegant,
+lighter letterforms keep the supporting text readable without competing
+for attention. Both are serif fonts, which gives the infographic a
+consistent, editorial quality — fitting for a science communication
+piece.
 
-Color decisions were made at the infographic level rather than the plot level. The dawn gradient background — transitioning from deep night sky to warm morning light — anchors the entire composition thematically and gives each visualization a natural home: the dark density map sits in both night and day, the radial sun glows at the dawn horizon.
+Color decisions were made at the infographic level rather than the plot
+level. The dawn gradient background — transitioning from deep night sky
+to warm morning light — anchors the entire composition thematically and
+gives each visualization a natural home: the dark density map sits in
+both night and day, the radial sun glows at the dawn horizon.
 
-Accessibility shaped several choices throughout. The magma palette on the density map and the orange-to-gold gradient on the radial chart both maintain strong contrast across their ranges. I avoided relying on color alone to communicate meaning — each plot uses position, labels, or annotations as a secondary channel.
+Accessibility shaped several choices throughout. The magma palette on
+the density map and the orange-to-gold gradient on the radial chart both
+maintain strong contrast across their ranges. I avoided relying on color
+alone to communicate meaning — each plot uses position, labels, or
+annotations as a secondary channel.
 
-Finally, framing bats as "hidden neighbors" rather than threats was itself an accessibility choice — making the subject approachable and empathy-building for audiences who might otherwise disengage.
-
+Finally, framing bats as "hidden neighbors" rather than threats was
+itself an accessibility choice — making the subject approachable and
+empathy-building for audiences who might otherwise disengage.
