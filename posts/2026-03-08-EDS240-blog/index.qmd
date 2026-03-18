@@ -62,12 +62,12 @@ Using this community-generated data, my visualization explores the
 hidden patterns of bat observations across the state and highlights the
 role these often-overlooked animals play in California's ecosystems.
 
-![Final infographic outcome.](images/infographic-pt4.png)
-
-To understand what citizen scientists have revealed about California's
-bats, I analyzed 1,843 observations collected between 1998 and 2025.
-This informed the design of my infographic, and three patterns emerged
-that paint a picture of remarkable diversity coexisting with human
+![Final infographic
+outcome.](images/infographic-pt4-03.png){width="18.76in"}To understand
+what citizen scientists have revealed about California's bats, I
+analyzed 1,843 observations collected between 1998 and 2025. This
+informed the design of my infographic, and three patterns emerged that
+paint a picture of remarkable diversity coexisting with human
 communities across the state.
 
 ## **What species are out there?**
