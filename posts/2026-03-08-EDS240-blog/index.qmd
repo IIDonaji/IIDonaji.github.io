@@ -206,6 +206,7 @@ Designer](images/top_species.png)
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-asp: 1
+#| #| fig-alt: "A horizontal stacked bar chart showing the top 10 most observed bat species in California. Bars are split between identified species in purple and awaiting identification in light blue. The Mexican Free-tailed Bat dominates with 251 observations, the highest of any species. 64% of all observations are identified to species level."
 
 
 # Top Species Observed plot
@@ -279,6 +280,7 @@ annotation in my infographic.
 #| echo: true
 #| code-summary: "Show the code"
 #| fig-asp: 1
+#| #| fig-alt: "A kernel density map of California showing bat observation hotspots. Brighter magma-colored areas indicate higher concentrations of reported sightings, clustering along the coast, Bay Area, and Southern California. Individual observation points are overlaid as small white dots resembling stars against a dark background."
 
 # Observation heatmap steps
 # CRS (California Albers - uses meters, works with density .ppp)
@@ -336,6 +338,7 @@ not just being a data plot but providing a thematic visual element.
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-asp: 1
+#| #| fig-alt: "A circular radial chart showing monthly bat observation counts across the year. Bars radiate outward from the center for each month. April has the longest bar indicating peak observations. Bar colors are a dark violet."
 
 # Prepare monthly data
 monthly <- bats_clean %>%
