@@ -197,6 +197,9 @@ certain and the community engagement. Note: At this point my color theme
 wasn't set yet, but I was experimenting with the `BuPu` color palette
 from the `RColorBrewer` package were I got these color hexcodes.
 
+![Initial Barplot before redesigning in Affinity
+Designer](images/top_species.png)
+
 ```{r}
 #| eval: false
 #| echo: true
@@ -267,7 +270,9 @@ spatial point pattern object (`ppp`). From there, `density.pp()` handled
 the math, and `{stars}` bridged the result back to a plottable `{sf}`
 object. I opt-out the legend because the raw density numbers (like
 0.0000003) are meaningless to a general audience. Instead I added a text
-annotated in my info
+annotation in my infographic.
+
+![](images/bat_sightings.png)
 
 ```{r}
 #| eval: false
@@ -320,8 +325,10 @@ reinforces that bat observations are cyclical. Spring leads to summer
 leads to fall lead back to spring. The April peak becomes visual
 prominent as the longest "spoke" on the wheel, and viewers can
 intuitively grasp the year-round presence of bats even during winter
-months. It also let me implement a creative design to on my infographic
-by not just being a data plot but providing a thematic visual element.
+months. It also let me implement a creative design on my infographic by
+not just being a data plot but providing a thematic visual element.
+
+![Radial chart before](images/Seasonalobs.png)
 
 ```{r}
 #| eval: false
@@ -373,9 +380,9 @@ was weaving them into a cohesive visual story. I brought all elements
 into Affinity Designer, where typography, color, and layout decisions
 were refined together rather than in isolation.
 
-For typography, I paired Century Schoolbook for titles with Garamond for
-body text and captions. Century Schoolbook's sturdy, classic serifs give
-the title hierarchy weight and presence, while Garamond's elegant,
+For typography, I paired Century Schoolbook for the titles with Garamond
+for body text and captions. Century Schoolbook's sturdy, classic serifs
+give the title hierarchy weight and presence while Garamond's elegant,
 lighter letter forms keep the supporting text readable without competing
 for attention. Both are serif fonts, which gives the infographic a
 consistent, editorial quality, fitting for a science communication
