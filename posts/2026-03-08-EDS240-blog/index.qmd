@@ -2,7 +2,7 @@
 title: "Echos in The Night: California's Hidden Neighbors"
 subtitle: "Discovering California Bats through Citizen Science"
 image: medium.jpg
-date: "03/09/2026"
+date: "03/17/2026"
 categories: [R, Data-viz,MEDS]
 draft: false 
 format: 
@@ -18,8 +18,8 @@ editor_options:
   chunk_output_type: console
 ---
 
-
-![**Mexican free-tailed bat or Brazilian free-tailed bat (Tadarida brasiliensis)** Picture: Michael Durham/Minden Pictures.BCI](figs/Mexican-freetail.jpg)
+[![Mexican free-tailed bat or Brazilian free-tailed bat (Tadarida
+brasiliensis)](figs/Mexican-freetail.jpg){fig-alt="Picture: Michael Durham/Minden Pictures.BCI"}](https://www.batcon.org/bat/tadarida-brasiliensis/)
 
 # Introduction:
 
@@ -28,17 +28,31 @@ California's climate shifts, mosquito season has been starting earlier,
 fueled by warmer and wetter conditions. Fortunately, an unexpected group
 of nighttime heroes is already on the job: bats. These nocturnal
 neighbors are powerful pest-control allies, consuming enormous numbers
-of insects each night—often eating 25–50% of their body mass before
-sunrise. In doing so, bats save the agricultural industry billions of
-dollars each year in reduced pesticide use and crop damage.
+of insects each night, often eating 25–50% of their body mass before
+sunrise.[^1] In doing so, bats save the agricultural industry billions
+of dollars each year in reduced pesticide use and crop damage.
+
+[^1]: FUJITA, M.S. and TUTTLE, M.D. (1991), Flying Foxes (Chiroptera:
+    Pteropodidae): Threatened Animals of Key Ecological and Economic
+    Importance. Conservation Biology, 5: 455-463.
+    <https://doi.org/10.1111/j.1523-1739.1991.tb00352.x>
 
 Insect-eating bats make up the majority of California's bat species, and
 their ecological contributions extend far beyond pest control. Some bats
 pollinate economically important plants, while others serve as
-indicators of ecosystem health. For example,species like the northern
-hoary bat roost exclusively in tree foliage, making their presence a
-sign of high-quality habitat. Yet despite these important ecosystem
-services, bats remain largely invisible to most people.
+indicators of ecosystem health.[^2][^3] For example, species like the
+northern hoary bat roost exclusively in tree foliage, making their
+presence a sign of high-quality habitat. Yet despite these important
+ecosystem services, bats remain largely invisible to most people.
+
+[^2]: Kunz, T.H., Braun de Torrez, E., Bauer, D., Lobova, T. and
+    Fleming, T.H. (2011), Ecosystem services provided by bats. Annals of
+    the New York Academy of Sciences, 1223: 1-38.
+    <https://doi.org/10.1111/j.1749-6632.2011.06004.x>
+
+[^3]: Russo, D. and Leonardo A. (2015), Sensitivity of bats to
+    urbanization: a review. Mammalian Biology 80: 205-212.
+    https://doi.org/10.1016/j.mambio.2014.10.003
 
 This is where citizen science becomes invaluable. Over the past 27
 years, 975 observers on iNaturalist have documented bat sightings across
@@ -48,7 +62,7 @@ Using this community-generated data, my visualization explores the
 hidden patterns of bat observations across the state and highlights the
 role these often-overlooked animals play in California's ecosystems.
 
-![Final infographic outcomeBCI](figs/infographic.png)
+![Final infographic outcome](images/infographic-pt3-03.png)
 
 To understand what citizen scientists have revealed about California's
 bats, I analyzed 1,843 observations collected between 1998 and 2025.
@@ -56,36 +70,40 @@ This informed the design of my infographic, and three patterns emerged
 that paint a picture of remarkable diversity coexisting with human
 communities across the state.
 
-**What species are out there?** The data reveals at least 993
-research-grade confirmed bat species documented by community observers,
-with the Mexican Free-tailed Bat leading observations. What's
-particularly compelling is that 36% of observations are still awaiting
-species-level identification—labeled as "Unidentified Mouse-eared Bat"
-or "Unidentified Evening Bat." Rather than being a data limitation, this
-tells an important story about citizen science in action: everyday
-people are actively documenting bat encounters even without expert
-knowledge, contributing valuable presence data that experts can later
-verify and refine.
+## **What species are out there?**
 
-**Where are they found?** The heatmap and spatial pattern map reveals
-bats aren't confined to remote wilderness,they're distributed across
-California's diverse landscapes, from coastal edges to inland valleys.
-Observation density clusters around populated areas, which likely
-reflects observer effort (more people = more observations). One
-important caveat I wanted to be transparent about: this map reflects
-where people report bat sightings, not necessarily where bats live.
-iNaturalist data carries an inherent urban bias — more people means more
-observations. Coastal cities appear as hotspots partly because that's
-where most California residents live. I acknowledged this directly in
-the map's caption rather than letting the visualization imply a false
-objectivity.
+The data reveal at least 993 research-grade confirmed bat species
+documented by community observers, with the Mexican Free-tailed Bat
+leading observations. What's particularly compelling is that 36% of
+observations are still awaiting species-level identification, labeled as
+"Unidentified Mouse-eared Bat" or "Unidentified Evening Bat." Rather
+than being a data limitation, this tells an important story about
+citizen science in action: everyday people are actively documenting bat
+encounters even without expert knowledge, contributing valuable presence
+data that experts can later verify and refine.
 
-**When are they most active?** The seasonal pattern shows a clear peak
-in April, with strong activity continuing through fall. This spring
-surge aligns with bat breeding season and the emergence of insects after
-winter—exactly when insectivorous bats need maximum calories.
-Observations continue year-round, though, suggesting California's mild
-climate supports active bat populations even in winter months.
+## **Where are they found?**
+
+The heatmap and spatial pattern map reveals bats aren't confined to
+remote wilderness, they're distributed across California's diverse
+landscapes, from coastal edges to inland valleys. Observation density
+clusters around populated areas, which likely reflects observer effort
+(more people = more observations). One important caveat I wanted to be
+transparent about: this map reflects where people report bat sightings,
+not necessarily where bats live. iNaturalist data carries an inherent
+urban bias, more people means more observations. Coastal cities appear
+as hotspots partly because that's where most California residents live.
+I acknowledged this directly in the map's caption rather than letting
+the visualization imply a false objectivity.
+
+## **When are they most active?**
+
+The seasonal pattern shows a clear peak in April, with strong activity
+continuing through fall. This spring surge aligns with bat breeding
+season and the emergence of insects after winter, exactly when
+insectivorous bats need maximum calories. Observations continue
+year-round, though, suggesting California's mild climate supports active
+bat populations even in winter months.
 
 Together, these patterns reveal that citizen science isn't just
 documenting bat presence, it's uncovering where conservation attention
@@ -96,7 +114,7 @@ beneficial species.
 
 My initial goal was to highlight bats in urban communities specifically
 to show city-dwellers that bats are right outside their windows. But the
-data had other plans.iNaturalist's location data varies wildly in
+data had other plans. iNaturalist's location data varies wildly in
 precision. Some observations include exact street addresses, while
 others are vague county-level descriptions like "San Diego County, CA."
 When I filtered for observations containing "Los Angeles" or "San
@@ -104,19 +122,20 @@ Diego," I inadvertently captured national parks, wildlife refuges, and
 regional wilderness areas, hardly urban ecosystems. I tried
 text-matching exclusions, then considered spatial analysis tools to clip
 observations to census-defined urban boundaries, but each approach felt
-like forcing a narrative the data didn't support. With only 67 truly
-urban observations after aggressive filtering, I faced a choice: tell a
-thin story about cities, or embrace what the data was actually showing
-me.
+like forcing a narrative the data didn't support. Given that only 67
+truly urban observations remained after aggressive filtering, I chose to
+focus on the pattern strongly supported by the data rather than force a
+limited urban narrative that would have introduced significant bias.
 
 I chose honesty over my initial vision. The 1,843 statewide observations
-tell a more compelling story anyway—bats thrive across California's
+tell a more compelling story anyway, bats thrive across California's
 incredibly diverse landscapes, and that diversity itself is worth
 celebrating. Below I break down the visual process of each plot and how
 it went from Rstudio to Affinity Designer where all other design
 elements where incorporated, adjusted, or altered.
 
-The following code shows the pre-data process done before making simple plots
+The following code shows the pre-data process done before making simple
+plots
 
 ```{r}
 #| eval: false
@@ -226,29 +245,29 @@ print(top_species)
 
 ## Map Iterations
 
-The geographic visualization went through several iterations. My first
-instinct was to plot bat sightings as individual points on a California
-map, simple honest, and direct, but with a thousand of observation, the
-results felt messy, particularly in dense areas like the Bay and Los
-Angeles. I then tried a Density contour plot that obscured the
-California state boundary. I almost settled with hexagonal binning that
-aggregates observations into equal-area cells, revealing hotspots but it
-was difficult to see high observations over low observations. After some
-feedback and discussing my vision with my colleagues I found the
-`{spatstat}` package, which calculates the relative concentration of
-observations across continuous space rather than binning points into
-arbitrary boundaries like counties or grids. The results is a smooth
-heatmap where warmer colors reflect higher observations density -giving
-the map a visual language that echos the infographics broader
-dawn-to-dusk color story. Getting there requires a few technical
-hurdles. The density calculation only works with projections that use
-meters as their unit, so I transformed all the data to California Albers
-(EPSG;3310) before converting observations to a spatial point pattern
-object (`ppp`). From there, `density.pp()` handled the math, and
-`{stars}` bridged the result back to a plottable `{sf}` object. I
-opt-out the legend because the raw density numbers (like 0.0000003) are
-meaningless to a general audience. Instead I added a text annotated in
-my infographic.
+The geographic visualization went through several iterations. Initially,
+I plotted bat sightings as individual points across California, a simple
+and direct approach; however. with thousands of observations, the
+visualization became overly dense, particularly in regions such as the
+Bay Area and Los Angeles. I then tried a Density contour plot that
+obscured the California state boundary. I almost settled with hexagonal
+binning that aggregates observations into equal-area cells, revealing
+hotspots but it was difficult to see high observations over low
+observations. After some feedback and discussing my vision with my
+colleagues I found the `{spatstat}` package, which calculates the
+relative concentration of observations across continuous space rather
+than binning points into arbitrary boundaries like counties or grids.
+The results is a smooth heatmap where warmer colors reflect higher
+observations density -giving the map a visual language that echos the
+infographics broader dawn-to-dusk color story. Getting there requires a
+few technical hurdles. The density calculation only works with
+projections that use meters as their unit, so I transformed all the data
+to California Albers (EPSG:3310) before converting observations to a
+spatial point pattern object (`ppp`). From there, `density.pp()` handled
+the math, and `{stars}` bridged the result back to a plottable `{sf}`
+object. I opt-out the legend because the raw density numbers (like
+0.0000003) are meaningless to a general audience. Instead I added a text
+annotated in my info
 
 ```{r}
 #| eval: false
@@ -347,16 +366,33 @@ april <-  ggplot(monthly, aes(x = month, y = n)) +
 print(april)
 ```
 
-
 ## Bringing it All Together: Typography, Color, and Accessibility
 
-With three distinct visualizations built, the final design challenges was weaving them into a cohesive visual story. I brought all elements into Affinity Designer, where typography, color, and layout decisons were refined together rather than in isolation. 
+With three distinct visualizations built, the final design challenges
+was weaving them into a cohesive visual story. I brought all elements
+into Affinity Designer, where typography, color, and layout decisions
+were refined together rather than in isolation.
 
-For typography, I paired Century Schoolbook for titles with Garamond for body text and captions. Century Schoolbook's sturdy, classic serifs give the title hierarchy weight and presence, while Garamond's elegant, lighter letterforms keep the supporting text readable without competing for attention. Both are serif fonts, which gives the infographic a consistent, editorial quality — fitting for a science communication piece.
+For typography, I paired Century Schoolbook for titles with Garamond for
+body text and captions. Century Schoolbook's sturdy, classic serifs give
+the title hierarchy weight and presence, while Garamond's elegant,
+lighter letter forms keep the supporting text readable without competing
+for attention. Both are serif fonts, which gives the infographic a
+consistent, editorial quality, fitting for a science communication
+piece.
 
-Color decisions were made at the infographic level rather than the plot level. The dawn gradient background — transitioning from deep night sky to warm morning light — anchors the entire composition thematically and gives each visualization a natural home: the dark density map sits in both night and day, the radial sun glows at the dawn horizon.
+Color decisions were made at the infographic level rather than the plot
+level. The dawn gradient background, transitioning from deep night sky
+to warm morning light, anchors the entire composition thematically and
+gives each visualization a natural home: the dark density map sits in
+both night and day, the radial sun glows at the dawn horizon.
 
-Accessibility shaped several choices throughout. The magma palette on the density map and the orange-to-gold gradient on the radial chart both maintain strong contrast across their ranges. I avoided relying on color alone to communicate meaning — each plot uses position, labels, or annotations as a secondary channel.
+Accessibility shaped several choices throughout. The magma palette on
+the density map and the orange-to-gold gradient on the radial chart both
+maintain strong contrast across their ranges. I avoided relying on color
+alone to communicate meaning, each plot uses position, labels, or
+annotations as a secondary channel.
 
-Finally, framing bats as "hidden neighbors" rather than threats was itself an accessibility choice — making the subject approachable and empathy-building for audiences who might otherwise disengage.
-
+Finally, framing bats as "hidden neighbors" rather than threats was
+itself an accessibility choice, making the subject approachable and
+empathy-building for audiences who might otherwise disengage.
