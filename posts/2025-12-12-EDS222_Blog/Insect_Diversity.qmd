@@ -1,5 +1,5 @@
 ---
-title: "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants"
+title: "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants A Negative Binomial Approach"
 description: "A technical blog demonstrating how to use a statistical model to answer an environmental data science question."
 author: "Ixel"
 date: "12/12/2025"
@@ -34,15 +34,22 @@ library(ggdag)
 # Background Information
 
 Urban areas are expanding globally, yet we know little about how
-landscaping choice affect urban biodiversity. Los Angeles, a naturally
-arid Mediterranean climate, presents a unique opportunity to examine
-whether drought-tolerant landscaping supports insect diversity.
+landscaping choices affect urban biodiversity. Cities are environmental
+gradients that consistently shape habitat quality and biodiversity [^1].
+Los Angeles, a naturally arid Mediterranean climate, presents a unique
+opportunity to examine whether drought-tolerant landscaping supports
+insect diversity. Adams et al.(2020)[^2] sampled insects monthly at 30
+sites across LA County in 2014, capturing variation in urbanization
+intensity and landscaping type, making it well-suited to test this
+question.
 
-## About the data:
+[^1]: Nancy B. Grimm et al.,(2008) Global Change and the Ecology of
+    Cities.Science
+    319(5864),756-760.[DOI:10.1126/science.1150195](https://www.science.org/doi/10.1126/science.1150195)
 
-The data used for this analysis was obtained from Adams et al. (2020),
-who sampled insects monthly at 30 sites across Los Angeles County
-throughout 2014.
+[^2]: Adams, Benjamin et al.,(2020) Local and landscape scale variables
+    shape insect diversity in an urban biodiversity hot spot
+    30(4).[DOI:e02089.10.1002/eap.2089](https://esajournals.onlinelibrary.wiley.com/doi/10.1002/eap.2089)
 
 ## **Research Questions:**
 
@@ -52,8 +59,8 @@ intensity?
 
 # Directed Acyclic Graph (DAG)
 
-A conceptual model (Figure 1.) represents the hypothesized causal
-relationships among variables:
+A conceptual model representing the hypothesized causal relationships
+among variables:
 
 ```{r, echo = FALSE}
 #| label: fig-dag
@@ -100,51 +107,52 @@ ggdag(insect_dag, text = FALSE, use_labels = "label") +
 
 ### **Direct effect on species richness:**
 
--   **Drought-tolerant plants** (main predictor):
+- **Drought-tolerant plants** (main predictor):
 
 Assume these plants provide better habitat for insects in LA's arid
 climate.
 
--   **Mean Temperature:**
+- **Mean Temperature:**
 
-Local Microclimate may directly affect insect activity and survival.
+Local microclimate may directly affect insect activity and survival.
 
--   **Urban Type:**
+- **Urban Type:**
 
 Development intensity affects habitat quality and availability.
 
 ### **Confounding Relationships:**
 
--   Urbanization influences *both* plant choice (people in different
-    urban contexts make different landscaping decisions) *and* local
-    temperature (urban heat island effect), therefore we must control
-    for urban type to isolate the effects of drought tolerant plants.
+- Urbanization influences *both* plant choice (people in different urban
+  contexts make different landscaping decisions) *and* local temperature
+  (urban heat island effect), therefore we must control for urban type
+  to isolate the effects of drought tolerant plants.
 
 ### **Importance:**
 
 To estimate the *true effect* of drought-tolerant plants on species
 richness, we include both temperature and urbanization as covariates in
-our model. This accounts for confounding and allows us to answer:
+the model. This accounts for the confounder and allows us to answer:
 
 ```         
-  "Do drought plants increase richness *independent of* urbanization and temperature?"
+  "Do drought plants increase richness *independent* of urbanization and temperature?"
+  
 ```
 
 ## **What the Arrows Mean:**
 
--   Urbanization → Drought Plants "Urbanization affects which plants
-    people choose"
+- Urbanization → Drought Plants "Urbanization affects which plants
+  people choose"
 
--   Urbanization → Temperature\
-    "Urban heat island: cities are hotter"
+- Urbanization → Temperature\
+  "Urban heat island: cities are hotter"
 
--   Urbanization → Richness "Urbanization directly affects habitat
-    quality"
+- Urbanization → Richness "Urbanization directly affects habitat
+  quality"
 
--   Drought Plants → Richness "Our main hypothesis: drought plants help
-    insects"
+- Drought Plants → Richness "Our main hypothesis: drought plants help
+  insects"
 
--   Temperature → Richness "Temperature affects insect survival"
+- Temperature → Richness "Temperature affects insect survival"
 
 The causal model shows that urbanization is a key confounder: it affects
 both plant choice and local temperature while also directly impacting
@@ -225,72 +233,22 @@ glimpse(site_data)
 
 # Exploratory Visualizations
 
-```{r, echo=FALSE, message=FALSE}
-#| fig-width: 8
-#| fig-height: 5
-#| warning: false
-
-# Plot 1: Main hypothesis - Drought effect 
-p1 <- ggplot(site_data, aes(x = Drought, y = mean_richness, fill = Drought)) +
-  geom_boxplot(alpha = 0.7, width = 0.5) +
-  geom_jitter(width = 0.1, alpha = 0.5, size = 2) +
-  scale_fill_manual(values = c("No" = "#E69F00", "Yes" = "#009E73")) +
-  labs(title = "Effect of Drought-Tolerant Plants",
-       subtitle = "each dot = one site",
-       x = "Drought-Tolerant Plants",
-       y = "Mean Species Richness") +
-  theme_minimal() +
-  theme(legend.position = "none")
-
-# Plot 2: Temperature effect 
-p2 <- ggplot(site_data, aes(x = mean_temp, y = mean_richness)) +
-  geom_point(aes(color = Drought), size = 3, alpha = 0.7) +
-  geom_smooth(method = "lm", se = TRUE, color = "black", size = 1) +
-  scale_color_manual(values = c("No" = "#E69F00", "Yes" = "#009E73"),
-                     name = "Drought Plants") +
-  labs(title = "Temperature and Species Richness",
-       subtitle = "Linear relationship across all sites",
-       x = "Mean Temperature (°C)",
-       y = "Mean Species Richness") +
-  theme_minimal()
-
-# Plot 3: Urban Type effect 
-p3 <- ggplot(site_data, aes(x = Urban_Type, y = mean_richness)) +
-  geom_boxplot(fill = "lightblue", alpha = 0.6) +
-  geom_jitter(width = 0.2, alpha = 0.5, size = 2) +
-  labs(title = "Urbanization and Species Richness",
-       subtitle = "Type 1 = Natural, Type 9 = Highly Urbanized",
-       x = "Urban Type",
-       y = "Mean Species Richness") +
-  theme_minimal()
-
-# Combined figure for blog 
-combined <- (p1 | p2) / p3 +
-  plot_annotation(
-    tag_levels = 'A',
-    title = "Exploratory Analysis: Three Key Predictors",
-    theme = theme(plot.title = element_text(size = 14, face = "bold"))
-  )
-
-print(combined)
-```
+![Data distribution before modeling.](images/combined_exploratory.png)
 
 # Data Simulation According to Model Assumptions
 
 **Using a Negative Binomial generalized linear model:**
 
-$$
-\begin{align}  
-&\text{y} \sim \text{Negative Binomial}\,(\mu, \sigma) \\
+$$\begin{align}  
+&\text{y} \sim \text{Negative Binomial}\,(\mu, \theta) \\
 &log(\mu) = \beta_{0} + \beta_{1}\, \text{x} 
-\end{align}
-$$
+\end{align}$$
 
 **Why Negative Binomial?**
 
--   Count data (species richness)
--   More flexible than Poisson for ecological data
--   Accounts for potential overdispersion
+- Count data (species richness)
+- More flexible than Poisson for ecological data
+- Accounts for potential overdispersion
 
 **Scientific Hypothesis:**
 
@@ -305,8 +263,7 @@ $$
 &\text{Drought-Tolerant Plants} \\
 &H_0: \beta_1 = 0\ \text{Drought-tolerant plants have no effect} \\
 &H_a: \beta_1 > 0\ \text{Drought-tolerant plants increase species richness} \\ 
-\end{align} 
-$$ **Interpretation:**
+\end{align} $$ **Interpretation:**
 
 $\beta_1$ represents the effect of having drought-tolerant plants (Yes
 vs. No) on log species richness, holding temperature and urbanization
@@ -322,8 +279,7 @@ $$
 &\text{Temperature} \\ 
 &H_0: \beta_2 = 0 \ \text{Temperature has no effect on species richness} \\
 &H_a: \beta_2 \neq 0\ \text{Temperature affect species richness} \\
-\end{align} 
-$$
+\end{align} $$
 
 **Interpretation:**
 
@@ -341,16 +297,15 @@ $$
 &\text{Urban Type} \\ 
 &H_0: \beta_3 = \beta_4 = 0 \ \text{Urban has no effect} \\
 &H_a: \beta_2 \neq 0\ \text{Urban Type effect richness} \\
-\end{align} 
-$$
+\end{align} $$
 
 **Note:**
 
 Urban_Category has 3 levels (Less/Moderate/High), so we're testing 2
 coefficients:
 
--   $\beta_3$ = Moderate vs. Less Urbanized
--   $\beta_4$ = High vs. Less Urbanized
+- $\beta_3$ = Moderate vs. Less Urbanized
+- $\beta_4$ = High vs. Less Urbanized
 
 ## Model Validation: Parameter Recovery
 
@@ -421,11 +376,11 @@ kable(comparison, digits = 3,
 
 **Results:**
 
--   **Drought effect**:
+- **Drought effect**:
 
 True $\beta_1$ = 0.35, Estimated $\beta_1$ = 0.35
 
--   **Temperature effect**:
+- **Temperature effect**:
 
 True $\beta_2$ = 0.08, Estimated $\beta_2$ = 0.076
 
@@ -437,12 +392,10 @@ real data.
 
 # Fit Negative Binomial model to Insect Data
 
-$$
-\begin{align}  
+$$\begin{align}  
 &\text{Richness} \sim \text{Negative Binomial}\,(\mu, \sigma) \\
 &log(\mu) = \beta_{0} + \beta_{1}\, \text{Drought-tolerant Plants} + \beta_{2}\, \text{Mean Temperature} + \beta_{3} \, \text{Urban Type(Moderate)} + \beta_{4}\text{Urban Type (High)}\\
-\end{align}
-$$
+\end{align}$$
 
 ```{r, message=FALSE, warning=FALSE}
 richness_model <- glm.nb(mean_richness ~ Drought + mean_temp + Urban_Type, 
@@ -485,71 +438,23 @@ pred_df <- predict_rich_df %>%
 head(pred_df) %>% kable(digits = 3)
 ```
 
-```{r, message=FALSE}
-#| fig-width: 8
-#| fig-height: 5
+![Figure 2: (facet by Urban Type) Predicted insect species richness as a
+function of mean temperature and drought-tolerant plant presence across
+urban type (1= natural, 9 = highly urbanized). Shaded bands represent
+95% confidence intervals.](images/main_plot-01.png)
 
-# Main plot: Temperature × Drought interaction
-ggplot(pred_df, aes(x = mean_temp, y = pred, color = Drought, fill = Drought)) +
-  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2, color = NA) +
-  geom_line(size = 1.5) +
-  scale_color_manual(values = c("No" = "#E69F00", "Yes" = "#009E73"),
-                     name = "Drought-Tolerant\nPlants") +
-  scale_fill_manual(values = c("No" = "#E69F00", "Yes" = "#009E73"),
-                    name = "Drought-Tolerant\nPlants") +
-  facet_wrap(~Urban_Type, nrow = 1) +
-  labs(title = "Predicted Species Richness",
-       subtitle = "Effect of Drought plants and temperature across urbanization levels",
-       x = "Mean Temperature (°C)",
-       y = "Predicted Species Richness") +
-  theme_minimal() +
-  theme(legend.position = "bottom",
-        strip.text = element_text(size = 11, face = "bold"))
-
-
-```
-
-```{r, message=FALSE}
-#| fig-width: 8
-#| fig-height: 5
-
-# Simpler plot as above Just show Drought effect (average across temp and urban)
-pred_summary <- pred_df %>%
-  group_by(Drought, mean_temp) %>%
-  summarise(
-    pred_mean = mean(pred),
-    lower_mean = mean(lower),
-    upper_mean = mean(upper),
-    .groups = "drop"
-  )
-
-ggplot(pred_summary, aes(x = mean_temp, y = pred_mean, 
-                         color = Drought, fill = Drought)) +
-  geom_ribbon(aes(ymin = lower_mean, ymax = upper_mean), 
-              alpha = 0.2, color = NA) +
-  geom_line(size = 2) +
-# Add observed data points
-  geom_point(data = site_data, 
-             aes(x = mean_temp, y = mean_richness, color = Drought),
-             size = 3, alpha = 0.6, inherit.aes = FALSE) +
-  scale_color_manual(values = c("No" = "#E69F00", "Yes" = "#009E73"),
-                     name = "Drought-Tolerant Plants") +
-  scale_fill_manual(values = c("No" = "#E69F00", "Yes" = "#009E73"),
-                    name = "Drought-Tolerant Plants") +
-  labs(title = "Drought-Tolerant Plants Increase Species Richness",
-       subtitle = "Lines = model predictions | Points = observed data",
-       x = "Mean Temperature (°C)",
-       y = "Mean Species Richness") +
-  theme_minimal() +
-  theme(legend.position = "bottom",
-        plot.title = element_text(face = "bold", size = 14))
-```
+![Figure 3 ( average across urban types): Predicted mean insect species
+richness across the observed temperature range for sites with (green)
+and without (orange) drought-tolerant plants. Lines show model
+predictions average across urban types; points are observed site-level
+data. Shaded bands represent 95% confidence
+intervals.](images/simple_plot.png)
 
 ## Discussion
 
-Our results provide strong evidence that drought-tolerant landscaping
-supports higher insect diversity in urban Los Angeles. This finding has
-important implications:
+This results suggest a positive association between drought-tolerant
+landscaping and insect diversity, though the wide confidence intervals
+indicate uncertainty in the estimate.
 
 1.  **Climate-appropriate landscaping matters:**
 
@@ -562,19 +467,19 @@ selection
 
 3.  **Limitations:**
 
-    -   Observational data (can't prove causation definitively)
+    - Observational data (can't prove causation definitively)
 
-    -   Limited to Los Angeles (may not generalize)
+    - Limited to Los Angeles (may not generalize)
 
-    -   Averaged across seasons (can't examine temporal dynamics)
+    - Averaged across seasons (can't examine temporal dynamics)
 
 4.  **Future directions:**
 
-    -   Experimental manipulation of plant types
+    - Experimental manipulation of plant types
 
-    -   Mechanism testing (why do drought plants help?)
+    - Mechanism testing (why do drought plants help?)
 
-    -   Multi-city comparisons
+    - Multi-city comparisons
 
 ## Conclusion
 
@@ -619,21 +524,13 @@ controlling for temperature and urbanization, suggesting that
 climate-appropriate landscaping is a viable strategy for supporting
 urban biodiversity.
 
-## Code & Data
+## Code & Raw Data
 
-All analysis code and data are available at:
-
-[GitHub repo link](https://github.com/IIDonaji/EDS-222-Final-Project)
+Find the full analysis code and data in my
+[GitHub repository here](https://github.com/IIDonaji/EDS-222-Final-Project)
 
 Analysis conducted in R version \[4.5.1\] using:
 
--   MASS (glm.nb)
--   tidyverse (data manipulation)
--   ggdag (causal diagrams)
-
-# Cite
-
-Adams, Benjamin; Li, Enjie; Bahlai, Christine et al. (2020). Local and
-landscape scale variables shape insect diversity in an urban
-biodiversity hotspot. \[Dataset\]. Dryad.
-https://doi.org/10.5061/dryad.7d7wm37rd
+- MASS (glm.nb)
+- tidyverse (data manipulation)
+- ggdag (causal diagrams)
