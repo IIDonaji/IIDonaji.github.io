@@ -54,8 +54,9 @@ question.
 [^2]: Adams, Benjamin et al.,(2020) Local and landscape scale variables
     shape insect diversity in an urban biodiversity hot spot
     30(4).[DOI:e02089.10.1002/eap.2089](https://esajournals.onlinelibrary.wiley.com/doi/10.1002/eap.2089)
-    
-Find the full analysis code and data in my [GitHub repository here](https://github.com/IIDonaji/EDS-222-Final-Project)
+
+Find the full analysis code and data in my [GitHub repository
+here](https://github.com/IIDonaji/EDS-222-Final-Project)
 
 ## **Research Questions:**
 
@@ -113,25 +114,21 @@ ggdag(insect_dag, text = FALSE, use_labels = "label") +
 
 ### **Direct effect on species richness:**
 
-- **Drought-tolerant plants** (main predictor):
+- **Drought-tolerant plants** (main predictor): Assume these plants
+  provide better habitat for insects in LA's arid climate.
 
-Assume these plants provide better habitat for insects in LA's arid
-climate.
+- **Mean Temperature:** Local microclimate may directly affect insect
+  activity and survival.
 
-- **Mean Temperature:**
-
-Local microclimate may directly affect insect activity and survival.
-
-- **Urban Type:**
-
-Development intensity affects habitat quality and availability.
+- **Urban Type:** Development intensity affects habitat quality and
+  availability.
 
 ### **Confounding Relationships:**
 
-- Urbanization influences *both* plant choice (people in different urban
-  contexts make different landscaping decisions) *and* local temperature
-  (urban heat island effect), therefore we must control for urban type
-  to isolate the effects of drought tolerant plants.
+Urbanization influences *both* plant choice (people in different urban
+contexts make different landscaping decisions) *and* local temperature
+(urban heat island effect), therefore we must control for urban type to
+isolate the effects of drought tolerant plants.
 
 ### **Importance:**
 
@@ -146,19 +143,18 @@ the model. This accounts for the confounder and allows us to answer:
 
 ## **What the Arrows Mean:**
 
-- Urbanization → Drought Plants "Urbanization affects which plants
-  people choose"
+- Urbanization → Drought Plants: Urbanization affects which plants
+  people choose.
 
-- Urbanization → Temperature\
-  "Urban heat island: cities are hotter"
+- Urbanization → Temperature: Urban heat island (cities are hotter).
 
-- Urbanization → Richness "Urbanization directly affects habitat
-  quality"
+- Urbanization → Richness: Urbanization directly affects habitat
+  quality.
 
-- Drought Plants → Richness "Our main hypothesis: drought plants help
-  insects"
+- Drought Plants → Richness: Our main hypothesis (drought tolerant
+  plants help insects).
 
-- Temperature → Richness "Temperature affects insect survival"
+- Temperature → Richness: Temperature affects insect survival.
 
 The causal model shows that urbanization is a key confounder: it affects
 both plant choice and local temperature while also directly impacting
@@ -231,13 +227,7 @@ site_data <- insect_clean %>%
 glimpse(site_data)
 ```
 
-![Figure 2: xploratory analysis of mean insect species richness across
-30 sites in Los Angeles County. (A) Sites with drought-tolerant plants
-show higher median richness than those without. (B) Weak negative
-relationship between mean temperature and species richness across all
-sites. (C) Species richness varies across urban types, with no clear
-monotonic trend from natural (Type 1) to highly urbanized (Type
-9).](images/combined_exploratory.png)
+![Figure 2: Exploratory analysis of mean insect species richness across 30 sites in Los Angeles County. (A) Sites with drought-tolerant plants show higher median richness than those without. (B) Weak negative relationship between mean temperature and species richness across all sites. (C) Species richness varies across urban types, with no clear monotonic trend from natural (Type 1) to highly urbanized (Type 9).](https://github.com/IIDonaji/EDS-222-Final-Project/blob/main/figures/combined_exploratory.png)
 
 # Data Simulation According to Model Assumptions
 
@@ -254,20 +244,19 @@ $$\begin{align}
 - More flexible than Poisson for ecological data
 - Accounts for potential overdispersion
 
-**Scientific Hypothesis:**
+**Scientific Hypothesis 1:**
 
 Sites with drought-tolerant plants have higher insect species richness
 than sites without drought-tolerant plants, after controlling for
 temperature and urbanization level.
 
-**Statistical Hypotheses 1:**
-
-$$ 
+**Statistical Hypotheses 1:** $$ 
 \begin{align}
-&\text{Drought-Tolerant Plants} \\
 &H_0: \beta_1 = 0\ \text{Drought-tolerant plants have no effect} \\
 &H_a: \beta_1 > 0\ \text{Drought-tolerant plants increase species richness} \\ 
-\end{align} $$ **Interpretation:**
+\end{align} $$
+
+**Interpretation 1:**
 
 $\beta_1$ represents the effect of having drought-tolerant plants (Yes
 vs. No) on log species richness, holding temperature and urbanization
@@ -276,14 +265,10 @@ constant.
 **Scientific Hypothesis 2:** Local mean temperature is associated with
 insect species richness.
 
-**Statistical Hypotheses:**
-
-$$ 
-\begin{align}
-&\text{Temperature} \\ 
-&H_0: \beta_2 = 0 \ \text{Temperature has no effect on species richness} \\
-&H_a: \beta_2 \neq 0\ \text{Temperature affect species richness} \\
-\end{align} $$
+**Statistical Hypotheses 2:** $$\begin{align}
+&H_0: \beta_2 = 0 \quad \text{Temperature has no effect on species richness} \\
+&H_a: \beta_2 \neq 0\quad \text{Temperature affect species richness} 
+\end{align}$$
 
 **Interpretation:**
 
@@ -294,14 +279,13 @@ log species richness, holding drought plants and urbanization constant.
 
 Urban Type affects insect species richness.
 
-**Statistical Hypothesis:**
+**Statistical Hypothesis 3:**
 
 $$ 
 \begin{align}
-&\text{Urban Type} \\ 
 &H_0: \beta_3 = \beta_4 = 0 \ \text{Urban has no effect} \\
 &H_a: \beta_2 \neq 0\ \text{Urban Type effect richness} \\
-\end{align} $$
+\end{align}$$
 
 **Note:**
 
@@ -311,7 +295,7 @@ coefficients:
 - $\beta_3$ = Moderate vs. Less Urbanized
 - $\beta_4$ = High vs. Less Urbanized
 
-## Model Validation: Parameter Recovery
+# Model Validation: Parameter Recovery
 
 To demonstrate the model is correctly specified, first simulated data
 with known parameter values, then fit the model to recover those
@@ -358,7 +342,9 @@ mean_richness <- rnbinom(n = n, size = theta, mu = mu)
 simulation_model <- glm.nb(mean_richness ~ Drought + mean_temp + urban_Type)
 
 # Print Coefficient
-coef(simulation_model)
+coef(simulation_model) %>% 
+  enframe(name = "Parameter", value = "Estimate") %>% 
+  kable(digits = 3, caption = "Simulated Model Coefficients")
 
 ```
 
@@ -380,13 +366,10 @@ kable(comparison, digits = 3,
 
 **Results:**
 
-- **Drought effect**:
+- **Drought effect**: True $\beta_1$ = 0.35, Estimated $\beta_1$ = 0.35
 
-True $\beta_1$ = 0.35, Estimated $\beta_1$ = 0.35
-
-- **Temperature effect**:
-
-True $\beta_2$ = 0.08, Estimated $\beta_2$ = 0.076
+- **Temperature effect**: True $\beta_2$ = 0.08, Estimated $\beta_2$ =
+  0.076
 
 All true parameter values fell within the 95% confidence intervals of
 the estimates, demonstrating that the model is correctly specified and
@@ -405,13 +388,18 @@ $$\begin{align}
 richness_model <- glm.nb(mean_richness ~ Drought + mean_temp + Urban_Type, 
                           data = site_data)
 
-summary(richness_model)
-confint(richness_model)
+summary(richness_model)$coefficients %>% 
+  kable(digits = 3, caption = "Model Summary")
+```
+
+```{r, message=FALSE, warning=FALSE}
+confint(richness_model)%>% 
+  kable(digits = 3, caption = "95% Confidence Intervals")
 ```
 
 # Test Hypothesis
 
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 # Make predictions 
 
 # Predict richness across Drought levels
@@ -439,20 +427,12 @@ pred_df <- predict_rich_df %>%
   )
 
 # Preview predictions
-head(pred_df) %>% kable(digits = 3)
+head(pred_df) %>% kable(digits = 3, caption = "Predicted Species Richness (first 6 rows)")
 ```
 
-![Figure 3 (facet by Urban Type): Predicted insect species richness as a
-function of mean temperature and drought-tolerant plant presence across
-urban type (1= natural, 9 = highly urbanized). Shaded bands represent
-95% confidence intervals.](images/main_plot-01.png)
+![Figure 3 (facet by Urban Type): Predicted insect species richness as a function of mean temperature and drought-tolerant plant presence across urban type (1= natural, 9 = highly urbanized). Shaded bands represent 95% confidence intervals.](https://github.com/IIDonaji/EDS-222-Final-Project/blob/main/figures/main_plot.png)
 
-![Figure 4 ( average across urban types): Predicted mean insect species
-richness across the observed temperature range for sites with (green)
-and without (orange) drought-tolerant plants. Lines show model
-predictions average across urban types; points are observed site-level
-data. Shaded bands represent 95% confidence
-intervals.](images/simple_plot.png)
+![Figure 4 ( average across urban types): Predicted mean insect species richness across the observed temperature range for sites with (green) and without (orange) drought-tolerant plants. Lines show model predictions average across urban types; points are observed site-level data. Shaded bands represent 95% confidence intervals.](https://github.com/IIDonaji/EDS-222-Final-Project/blob/main/figures/simple_plot.png)
 
 ## Discussion
 
@@ -507,7 +487,7 @@ model_summary <- summary(richness_model)
 p_value <- model_summary$coefficients["DroughtYes", "Pr(>|z|)"]
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 results_table <- data.frame(
   Parameter = "Drought-Tolerant Plants",
   Coefficient = round(beta_drought, 3),
@@ -518,7 +498,8 @@ results_table <- data.frame(
   P_Value = format.pval(p_value, digits = 3)
 )
 
-print(results_table)
+results_table %>% 
+  kable(digits = 3, caption = "Model Results: Effect of Drought-Tolerant Plants")
 ```
 
 Using negative binomial regression on site-aggregated data, we found
