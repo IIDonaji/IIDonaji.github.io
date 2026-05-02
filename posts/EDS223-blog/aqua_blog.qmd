@@ -1,7 +1,7 @@
 ---
-title: "Prioritizing Aquaculture Potential Along the U.S. West Coast"
+title: "Identifying Priority EEZ Regions for Oyster and Lingcod Aquaculture Using SST and Bathymetric Data"
 description: "Using environmental suitability modeling to identify the best Exclusive Economic Zones (EEZs) for developing marine aquaculture."
-image: medium.jpg
+image: longcog.jpg
 date: "12/12/2025"
 categories: [R, Geospatial Analysis, Aquaculture]
 draft: false 
@@ -22,41 +22,47 @@ editor_options:
 ## Purpose
 
 ![**Image: Commercial Fishing Boats, Santa Barbara Harbor, California,
-USA.**](figs/Harbor.png.webp)
+USA.**](Harbor.png)
 
-Marine aquaculture is rapidly expanding as coastal nations seek
-sustainable ways to meet seafood demand. Identifying *where* aquaculture
-should occur is a major challenge optimal sites must balance ecological
-suitability, production needs, and regulatory boundaries.
+Global seafood demand is projected to increase by 70% by 2050, yet 
+wild capture fisheries have plateaued near their maximum sustainable 
+yield (Gentry et al., 2017). Marine aquaculture has emerged as a 
+critical pathway to meet this demand, offering a more sustainable 
+protein source than land-based meat production (Hall et al., 2011). 
+Along the U.S. West Coast, this opportunity is particularly significant, the region supports some of the most productive marine ecosystems in the world, driven by seasonal upwelling along the California Current System.
+
+However, identifying *where* aquaculture should occur is not 
+straightforward. Optimal sites must balance ecological suitability, 
+species-specific environmental tolerances, and jurisdictional 
+boundaries. Poorly sited operations risk low yields, ecosystem 
+disruption, and regulatory conflict. Geospatial suitability modeling 
+offers a systematic, reproducible framework for narrowing down priority 
+zones before costly on-the-ground assessments are made.
 
 ### Research Question:
 
-What Exclusive Economic Zones (EEZ) on the West Coast of the US are best
+What Exclusive Economic Zones (EEZ) on the U.S. West Coast of the are best
 suited to developing marine aquaculture for several species of oysters
-and Dungeness Crab *Metacarcinus magister* (Dana, 1852)?
+and Lingcod *Ophiodon elongatus* (Girard, 1854)?
 
 ### Data Sources
 
 I combined three geospatial datasets:
 
--   **Bathymetry:** GEBCO 2022 global depth raster\
--   **Sea Surface Temperature (SST):** 2008–2012 annual averages\
--   **Exclusive Economic Zones:** Cleaned U.S. West Coast EEZ shapefile
+- **Bathymetry:** GEBCO 2022 global depth raster\
+- **Sea Surface Temperature (SST):** 2008–2012 annual averages\
+- **Exclusive Economic Zones:** Cleaned U.S. West Coast EEZ shapefile
 
-Environmental requirements were taken from fisheries and
-species-specific literature, including SeaLifeBase \[(2025)\].
-
-All geospatial processing was performed in **R** using `terra`, `stars`,
-and `sf`.
+Species-specific environmental requirements were sourced from FishBase 
+(2025)for Lingcod and SeaLifeBase (2025) for oyster, along with peer-reviewed fisheries literature. All geospatial processing 
+was performed in **R** using `terra`, `stars`, and `sf`.
 
 ## Methods
 
-In this geospatial analysis the following key concepts were addressed
-
--   combining vector/raster data
--   resampling raster data
--   masking raster data
--   map algebra
+Key geospatial techniques included combining vector and raster data,
+resampling rasters to a common resolution, masking by jurisdictional
+boundaries, and applying map algebra to identify jointly suitable
+habitat.
 
 #### 1. Prepare SST and Depth Data
 
@@ -87,13 +93,13 @@ library(viridisLite)
 # Prepare Data
 
 # Bathymetry
-depth <- read_stars(here::here("posts","2025-12-12-EDS223_Blog", "data", "depth.tif"))
+depth <- read_stars(here::here("posts","EDS223_Blog", "data", "depth.tif"))
 
 # Exclusive Economic Zones (eez)
-eez <- st_read(here::here("posts", "2025-12-12-EDS223_Blog", "data","wc_regions_clean.shp"))
+eez <- st_read(here::here("posts", "EDS223_Blog", "data","wc_regions_clean.shp"))
 
 # Sea Surface Temperature (SST) load as a list of .tiff files 
-sst <- list.files(path= here::here("posts", "2025-12-12-EDS223_Blog", "data"),
+sst <- list.files(path= here::here("posts", "EDS223_Blog", "data"),
                   pattern= "average_annual", # file name matching pattern
                    full.names = TRUE) # Reference entire file name matching this pattern
 
@@ -183,9 +189,9 @@ cat("✓ Successfully stacked!\n")
 According to the literature, the following conditions are required for
 optimal growth in oyster species:
 
--   **Sea Surface Temperature (SST) Range:** 11–30°C
+- **Sea Surface Temperature (SST) Range:** 11–30°C
 
--   **Depth Range:** 0–70 m
+- **Depth Range:** 0–70 m
 
 Here, I classified suitable ranges for oyster-specific depth and SST by
 applying an if-else statement to categorize values based on a
@@ -276,18 +282,21 @@ eez_table
 ```{r, message=FALSE}
 #| fig.width: 10
 #| fig.height: 8
+#| fig-cap: "Suitable oyster aquaculture area by U.S. West Coast EEZ, based on mean SST (2008–2012) and bathymetric depth. Central California (CA-C) ranked highest with 4,940 km²."
 
 # Map with tmap basic
-tm_basemap("Esri.OceanBasemap", alpha = 0.7) +
+# Map with tmap basic
+tm_basemap("CartoDB.Positron", alpha = 0.7) +
 tm_shape(eez_ranked) +
   tm_polygons("suitable_area_km2",
               palette = "-mako",
+               style = "cont",
               title = "Suitable Area (km²)",
               border.col = "black",
               border.lwd = 0.5) +
   tm_layout(main.title = "Suitable Oyster Aquaculuture Area by EEZ",
             main.title.size = 1.2,
-            legend.outsides = TRUE,
+            legend.outside = TRUE,
             frame = FALSE) + 
     tm_text("rgn", # Label by region
           size = .8, # Adjust size
@@ -302,26 +311,24 @@ tm_shape(eez_ranked) +
 
 # Repeat previous steps with species of choice by creating a Function
 
-![**Image:[© Neil
-McDaniel](https://www.inaturalist.org/photos/446850127)).**](figs/medium.jpg)
+![**Image: Lingcod (*Ophiodon elongatus*), California
+Coast.**](longcog.jpg)
 
-Here we use the Dungeness Crab one of the most important seafood
-industries along the west coast of North America. Dungeness typical
-range extends from Alaska's Aleutian Islands to Point Conception, near
-Santa Barbara, California. Commonly found on soft bottom in very low
-intertidal areas to a depth of 360 meter and prefer a Sea surface
-temperature of 9°C
+Lingcod (*Ophiodon elongatus*) is one of the most commercially and
+recreationally important groundfish on the U.S. West Coast, prized for
+its firm white flesh, it's the fish behind the classic Pacific fish and
+chips. Native from Alaska to Baja California, Lingcod are demersal
+predators that occupy rocky reef habitats at depths typically between
+10–100 m and prefer cool temperate waters.
 
-Dungeness Crab Suitable Conditions:
+**Lingcod Suitable Conditions (FishBase, 2026):**
 
--   **Seas Surface Temperature Range:** 3-19°C
+- **Sea Surface Temperature Range:** 7–18°C
+- **Depth Range:** 0–100 m
 
--   **Depth Range:** 0 –360 meters
-
-The workflow described above is applicable to many important marine
-species in mariculture. As a result, the workflow can be generalized
-into a single function for a species of interest and its given SST and
-depth ranges. A general function automated the workflow for any species.
+The suitability workflow is generalizable to any species with documented
+SST and depth tolerances. Below, the same function is applied to Lingcod
+using its species-specific environmental ranges.
 
 ```{r}
 
@@ -406,47 +413,45 @@ results <- list(
 }
 ```
 
-## Dungeness Crab Suitability Results
+## Lingcod Suitability Results
 
-Here, I apply the function `find_suitable_aquaculture` to determine
-suitable area within each West Coast EEZ using the appropriate
-species-specific ranges.
+Here I apply `find_suitable_aquaculture()` to Lingcod using its
+cold-water, shallow demersal habitat requirements.
 
 ```{r}
-# Crab (difference requirements)
-crab_results <- find_suitable_aquaculture(
+# Lingcod suitable habitat
+lingcod_results <- find_suitable_aquaculture(
   sst_raster = sst_mean_celsius,
   depth_raster = depth_resample,
   eez_sf = eez,
-  sst_min = 3,
-  sst_max = 19,
-  depth_min = 0,
-  depth_max = 360,
-  species_name = "Dungeness Crab"
+  sst_min = 7,
+  sst_max = 18,
+  depth_min = -100,
+  depth_max = 0,
+  species_name = "Lingcod"
 )
 
 # Access results
-kable(crab_results$summary_table)
+kable(lingcod_results$summary_table)
 ```
-
-**Map 2.** Dungeness Crab Suitability by EEZ
 
 ```{r, message=FALSE}
 #| fig.width: 10
 #| fig.height: 8
-
+#| fig-cap: "Suitable Lingcod aquaculture area by U.S. West Coast EEZ based on mean SST (2008–2012, 7–18°C) and depth (0–100 m). Washington ranked highest with 10,569 km²."
 # Plot Crab EEZ
-tm_basemap("Esri.OceanBasemap", alpha = 0.7) +
-  tm_raster() +
-  tm_shape(crab_results$eez_ranked) +
+tm_basemap("CartoDB.Positron", alpha = 0.7) +
+ tm_shape(lingcod_results$eez_ranked) +
   tm_polygons("suitable_area_km2",
               palette = "-mako",
-              title = "Suitable Area (km²)", boarder.col = "black",
+              style = "cont",
+              title = "Suitable Area (km²)",
+              border.col = "black",
               border.lwd = 0.5) +
-  tm_layout(main.title ="Suitable Crab Aquaculuture Area by EEZ",
-            main.title.size =1.2,
-            legend.outsides =TRUE,
-            frame =FALSE) +
+  tm_layout(main.title = "Suitable Lingcod Aquaculture Area by EEZ",
+            main.title.size = 1.2,
+            legend.outside = TRUE,
+            frame = FALSE) +
   tm_text("rgn", # Label by region
           size = .8, # Adjust size
           col = "white", # Adjust text color
@@ -459,75 +464,49 @@ tm_scale_bar(position = c("left", "bottom"))
 
 ## Discussion
 
-Among the Exclusive Economic Zones (EEZs) along the West Coast,
-**Central California offers the greatest potential for oyster
-cultivation** with an estimated suitable area of $4940.04 \text{ km}^2$,
-likely due to favorable Sea Surface Temperature (SST) and depth
-conditions. Conversely, **Northern California is the least suitable**,
-providing only $454.30 \text{ km}^2$. While colder, the Washington EEZ
-contains a relatively large suitable area ($3313.16 \text{ km}^2$),
-surpassing Northern California, which suggests a high proportion of
-quality mollusk aquaculture habitat there. Southern California and
-Oregon also show considerable, though varying, suitability.
+Among the West Coast EEZs, **Central California ranked highest for
+oyster cultivation** with 4,940 km² of suitable area, reflecting its
+warmer nearshore SSTs and broad shallow shelf. **Northern California
+ranked lowest** at 454 km², where strong coastal upwelling keeps
+temperatures near the lower bound of oyster tolerance.
 
-The analysis of suitable habitat for Dungeness crab along the West Coast
-reveals significant regional differences in the Exclusive Economic Zones
-(EEZs). **Washington** emerged as the most suitable region, providing
-the largest area of favorable conditions at $290.06 \text{ km}^2$. The
-second and third most suitable EEZs were **Southern California**
-($142.52 \text{ km}^2$) and **Central California**
-($120.89 \text{ km}^2$), respectively. **Oregon** contained a moderate
-amount of suitable habitat at $76.65 \text{ km}^2$. Notably, **Northern
-California** possessed the smallest suitable area, indicating the least
-favorable conditions in this zone.
+Lingcod showed a strikingly different spatial pattern. **Washington
+ranked first** with 10,569 km² of suitable habitat, followed by Oregon
+(8,318 km²) and Central California (7,776 km²). This northward shift
+reflects Lingcod's cold-water preference, the cooler SSTs that limit
+oyster suitability in Washington and Oregon fall squarely within
+Lingcod's optimal thermal range. Together, the two species illustrate
+how environmental tolerances drive fundamentally different regional
+priorities for aquaculture development.
 
-Overall, the findings suggest that the environmental parameters along
-the Washington coast currently offer the most extensive suitable habitat
-for the Dungeness crab among the surveyed EEZs.
-
-This analysis demonstrates how geospatial suitability modeling can
-inform strategic aquaculture planning. Central California consistently
-emerged as the most promising region for both oysters and Dungeness
-Crab.
-
-However, several considerations remain:
-
--   **Biological constraints:** Growth rates, disease sensitivity, and
-    larval dispersal were not modeled.
-
--   **Socio-political constraints:** Tribal waters, marine protected
-    areas, and fisheries conflicts are not accounted for.
-
--   **Water quality:** Nutrient loading, pollution, and harmful algal
-    blooms vary spatially and should be included in future analyses.
-
-Future work could incorporate ecological risk assessments or
-multi-criteria decision analysis to better integrate environmental and
-human dimensions.
+Several limitations apply. SST and depth alone cannot capture substrate
+type, Lingcod strongly prefer rocky reef habitat, which this analysis
+cannot resolve. Marine protected areas, tribal waters, harmful algal
+bloom frequency, and shipping lane conflicts are also unaccounted for.
+Future analyses could incorporate substrate classification and
+multi-criteria decision frameworks to better reflect real-world siting
+constraints.
 
 ### References
 
-Hall, S. J., Delaporte, A., Phillips, M. J., Beveridge, M. & O’Keefe, M.
-Blue Frontiers: Managing the Environmental Costs of Aquaculture [(The
-WorldFish Center, Penang, Malaysia,
-2011)](https://worldfishcenter.org/publication/blue-frontiers-managing-environmental-costs-aquaculture-0).
+Lam, L. S., Basnett, B. L., Haltuch, M. A., Cope, J., Andrews, K., Nichols, K. M., Longo, G. C., Samhouri, J. F., & Hamilton, S. L. (2021). Geographic variability in lingcod Ophiodon elongatus life history and demography along the US West Coast: oceanographic drivers and management implications. Marine Ecology Progress Series, )
+[670, 203–222.](ttps://www.jstor.org/stable/27060679)
 
-Maselko, J., Bishop, G., & Murphy, P. (2013). Ghost Fishing in the
-Southeast Alaska Commercial Dungeness Crab Fishery. North American
-Journal of Fisheries Management, 33(2),
-422–431.doi.org/10.1080/02755947.2013.763875
+Head, M.A., Keller, A.A. & Lam, L.S.(2023). Evaluating drivers of spatial variability in lingcod, Ophiodon elongatus, reproduction along the US West Coast. Environ Biol Fish [106, 2157–2176 ]( https://doi.org/10.1007/s10641-023-01496-w)
 
-Gentry, R. R., Froehlich, H. E., Grimm, D., Kareiva, P., Parke, M.,
-Rust, M., Gaines, S. D., & Halpern, B. S. Mapping the global potential
+Gentry, R. R., et al., Mapping the global potential(2017)
 for marine aquaculture. Nature Ecology & Evolution, 1, 1317-1324
-[(2017)](doi.org/10.1038/s41559-017-0257-9v).︎
+[doi.org/10.1038/s41559-017-0257-9v](doi.org/10.1038/s41559-017-0257-9v).︎
 
-GEBCO Compilation Group (2022) GEBCO_2022 Grid
-[(doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c)](https://www.gebco.net/data-products/gridded-bathymetry-data/gebco-2022)
+GEBCO Compilation Group,(2022) 
+[GEBCO_2022 Grid](https://www.gebco.net/data-products/gridded-bathymetry-data/gebco-2022)
 
-Commercially Important Species Occurring in United States (contiguous
-states). (2025). \[(Sealifebase.ca.)\]
-(https://www.sealifebase.ca/country/CountryChecklist.php?c_code=840&vhabitat=commercial)
+Palomares, M.L.D. and D. Pauly. Editors. (2025). SeaLifeBase.
+[www.sealifebase.org](https://www.sealifebase.ca/country/CountryChecklist.php?c_code=840&vhabitat=commercial)
 
-Oliver, R. (2025, November 25). Homework Assignment 4.
-[(Github.io.)](https://eds-223-geospatial.github.io/assignments/HW4.html)
+Froese, R. and D. Pauly. Editors. (2025). [www.fishbase.org](https://www.fishbase.org/summary/509)
+
+Blue Frontiers: Managing the Environmental Costs of Aquaculture [(The World Fish Center, Penang,Malaysia,2011)](https://worldfishcenter.org/publication/blue-frontiers-managing-environmental-costs-aquaculture-0).
+
+Oliver, R. (2025, November 25). Homework Assignment
+4.[(Github.io.)](https://eds-223-geospatial.github.io/assignments/HW4.html)

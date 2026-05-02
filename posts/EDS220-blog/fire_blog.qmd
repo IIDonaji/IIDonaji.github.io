@@ -1,7 +1,7 @@
 ---
 title: "Remote Sensing and Community Resilience: Analyzing Fire Scars and the Social Impacts of the Eaton and Palasides Fires Palasides"
 format: html
-image: true
+image: https://upload.wikimedia.org/wikipedia/commons/1/1a/PalisadesFire_fromDowntown.png
 python: /c/Users/Donaji/.conda/envs/eds220-env/python
 jupyter: eds220-env
 ---
@@ -60,15 +60,15 @@ The following code loads three key geospatial datasets for analyzing the January
 
 1.  Wildfire Perimeter Data:
 
--   Imports shapefiles containing the mapped boundaries of the Eaton and Palisades fires as of January 21, 2025, using GeoPandas for vector geometry handling.
+- Imports shapefiles containing the mapped boundaries of the Eaton and Palisades fires as of January 21, 2025, using GeoPandas for vector geometry handling.
 
 2.  Satellite Imagery:
 
--   Loads Landsat 8 multispectral satellite data (NetCDF format) captured on February 23, 2025, covering both fire-affected areas using `xarray` for efficient multidimensional array processing.
+- Loads Landsat 8 multispectral satellite data (NetCDF format) captured on February 23, 2025, covering both fire-affected areas using `xarray` for efficient multidimensional array processing.
 
 3.  Environmental Justice Index (EJI):
 
--   Imports California's 2024 Environmental Justice Index data from a geodatabase, which provides socioeconomic and environmental health vulnerability metrics at the census tract level.
+- Imports California's 2024 Environmental Justice Index data from a geodatabase, which provides socioeconomic and environmental health vulnerability metrics at the census tract level.
 
 Together, these datasets enable spatial analysis that combining fire extent, post-fire satellite observations, and community vulnerability indicators to assess how wildfire impacts vary across different populations.
 
@@ -97,15 +97,15 @@ The following code performs initial data inspection to understand the structure 
 
 1.  **Fire Perimeter Metadata:**
 
--   Displays the `DataFrame` structure for both Eaton and Palisades fire shapefiles, including column names, data types, non-null counts, and memory usage to verify successful data loading and understand available attributes.
+- Displays the `DataFrame` structure for both Eaton and Palisades fire shapefiles, including column names, data types, non-null counts, and memory usage to verify successful data loading and understand available attributes.
 
 2.  **NetCDF Dimension Analysis:**
 
--   Examines the Landsat 8 dataset's organizational structure by printing its dimensions (spatial and temporal extents), coordinate systems (x, y coordinates and potentially time), and available data variables (spectral bands and derived products).
+- Examines the Landsat 8 dataset's organizational structure by printing its dimensions (spatial and temporal extents), coordinate systems (x, y coordinates and potentially time), and available data variables (spectral bands and derived products).
 
 3.  **Environmental Justice Index Structure:**
 
--   Reviews the California EJI `geodatabase` structure, including census tract identifiers, vulnerability indicators, and demographic attributes to understand available metrics for analyzing disproportionate wildfire impacts on vulnerable communities.
+- Reviews the California EJI `geodatabase` structure, including census tract identifiers, vulnerability indicators, and demographic attributes to understand available metrics for analyzing disproportionate wildfire impacts on vulnerable communities.
 
 This exploratory step is essential for understanding data organization before performing spatial analysis, ensuring the datasets are properly formatted and identifying which attributes and bands are available for subsequent wildfire impact assessment.
 
@@ -163,9 +163,9 @@ print(f"Landsat 8 CRS: {landsat8.rio.crs}")
 
 The following steps will have to done before standardizing the CRS's:
 
--   Use `spatial_ref.crs_wkt` to recover the geospatial information and reveal the dataset is EPSG: 32611.
+- Use `spatial_ref.crs_wkt` to recover the geospatial information and reveal the dataset is EPSG: 32611.
 
--   Use `rio.write_crs()` to assign the recovered CRS metadata to the Landsat dataset, making it a properly georeferenced object for spatial operations. Then,reproject the California EJI data to match the Palisades fire perimeter's CRS (EPSG:3857). Reproject the Landsat data from its native UTM Zone 11N to the same reference system as well.
+- Use `rio.write_crs()` to assign the recovered CRS metadata to the Landsat dataset, making it a properly georeferenced object for spatial operations. Then,reproject the California EJI data to match the Palisades fire perimeter's CRS (EPSG:3857). Reproject the Landsat data from its native UTM Zone 11N to the same reference system as well.
 
 **The code below standardizes the CRS by using the Palisades fire perimeter as the reference CRS:**
 
@@ -221,35 +221,35 @@ This section demonstrates how to create a false color image that highlights burn
 
 Replace any NaN (missing) values in the dataset with zeros to prevent plotting errors:
 
--   Satellite imagery often contains NaN values where data collection failed (due to clouds, sensor issues, etc.). These NaN values cause warnings and conversion errors during plotting. Filling them with zero ensures clean visualization without interrupting the color scaling.
+- Satellite imagery often contains NaN values where data collection failed (due to clouds, sensor issues, etc.). These NaN values cause warnings and conversion errors during plotting. Filling them with zero ensures clean visualization without interrupting the color scaling.
 
 **Step 2: Align Coordinate Systems**
 
--   Here we will have to change the fire perimeters to match the Landsat imagery's CRS for accurate overlay.
+- Here we will have to change the fire perimeters to match the Landsat imagery's CRS for accurate overlay.
 
 **Step 3: Create False Color Composite Map**
 
 Combine shortwave infrared, near-infrared, and red bands to create a false color image that makes burned areas stand out, then overlay fire perimeters:
 
--   `landsat8[["swir22", "nir08", "red"]]`- Selects the three specific spectral bands in order
+- `landsat8[["swir22", "nir08", "red"]]`- Selects the three specific spectral bands in order
 
--   `.to_array()` - Converts the selected bands into a format suitable for RGB plotting
+- `.to_array()` - Converts the selected bands into a format suitable for RGB plotting
 
--   `.plot.imshow()` - Creates the image visualization
+- `.plot.imshow()` - Creates the image visualization
 
--   `robust=True` - Handles outliers (like bright clouds) by using percentile-based scaling instead of absolute min/max values, preventing extreme values from washing out the rest of the image
+- `robust=True` - Handles outliers (like bright clouds) by using percentile-based scaling instead of absolute min/max values, preventing extreme values from washing out the rest of the image
 
--   `ax=ax` - Plots on our created axis so we can add fire perimeters on top
+- `ax=ax` - Plots on our created axis so we can add fire perimeters on top
 
 **Why these bands?** This combination (SWIR2-NIR-Red) creates a false color composite where:
 
--   Healthy vegetation appears bright red (high NIR reflection)
+- Healthy vegetation appears bright red (high NIR reflection)
 
--   Burned areas appear dark brown/black (low reflection across all bands)
+- Burned areas appear dark brown/black (low reflection across all bands)
 
--   Urban areas appear gray-green
+- Urban areas appear gray-green
 
--   Water appears very dark or black
+- Water appears very dark or black
 
 In this composite, healthy vegetation appears bright red, burned areas appear dark brown/black, and urban areas appear gray-green, making fire damage easily visible.
 
@@ -313,13 +313,13 @@ This section demonstrates how to identify which census tracts were impacted by e
 
 **Step 1: Spatial Join**
 
--   Finding Intersecting Census Tracts Use a spatial join to identify which census tracts intersect with each fire perimeter:
+- Finding Intersecting Census Tracts Use a spatial join to identify which census tracts intersect with each fire perimeter:
 
-    -   `gpd.sjoin()` performs a spatial join to match features from two datasets based on their geographic relationship
+  - `gpd.sjoin()` performs a spatial join to match features from two datasets based on their geographic relationship
 
-    -   `predicate="intersects` means "include any census tract that touches or overlaps the fire boundary"
+  - `predicate="intersects` means "include any census tract that touches or overlaps the fire boundary"
 
--   This returns complete census tracts, even if only a small portion overlaps the fire
+- This returns complete census tracts, even if only a small portion overlaps the fire
 
 ```{python}
 # CRS do not match; reproject to match palisades CRS
@@ -389,15 +389,15 @@ Similarly, the geopandas.GeoDataFrame (eji_eaton) encompasses a substantially la
 
 Clip the census tracts to show only the portions actually within each fire perimeter:
 
--   Clipping (`.clip`) cuts the census tract geometries at the fire boundary, showing only the affected portions
+- Clipping (`.clip`) cuts the census tract geometries at the fire boundary, showing only the affected portions
 
--   Spatial join (`.sjoin`) includes entire census tracts, which can overestimate the impacted area
+- Spatial join (`.sjoin`) includes entire census tracts, which can overestimate the impacted area
 
--   For visualizing communities directly affected by fire, clipping provides more accurate spatial representation
+- For visualizing communities directly affected by fire, clipping provides more accurate spatial representation
 
 **Step 3: Visualize**
 
--   Map of clipped areas showing the precise areas affected by each fire.
+- Map of clipped areas showing the precise areas affected by each fire.
 
 ```{python}
 #| tags: []
@@ -440,13 +440,13 @@ plt.show()
 
 **Step 4:Geographic Context**
 
--   With `Basemap` add a real-world basemap to show where the fires occurred in LA County
+- With `Basemap` add a real-world basemap to show where the fires occurred in LA County
 
-    -   Provides real-world geographic context (roads, cities, landmarks)
+  - Provides real-world geographic context (roads, cities, landmarks)
 
-    -   Makes it easier to understand where fires occurred relative to populated areas
+  - Makes it easier to understand where fires occurred relative to populated areas
 
--   This where `contextily` become needed `ctx` automatically fetches map tiles that match your data's extent and CRS
+- This where `contextily` become needed `ctx` automatically fetches map tiles that match your data's extent and CRS
 
 ```{python}
 #| tags: []
@@ -475,17 +475,17 @@ plt.show()
 
 **Step 5: Map Socioeconomic Vulnerability**
 
--   Compare vulnerability indicators between the two fire areas using the Environmental Justice Index data.
+- Compare vulnerability indicators between the two fire areas using the Environmental Justice Index data.
 
--   To accurately map the socioeconomic vulnerability variable ($EPL\_POV200$), the census tract data was clipped to the precise perimeter of each fire. This step ensured that the resulting GeoDataFrame only included data relevant to the affected areas.
+- To accurately map the socioeconomic vulnerability variable ($EPL\_POV200$), the census tract data was clipped to the precise perimeter of each fire. This step ensured that the resulting GeoDataFrame only included data relevant to the affected areas.
 
 **Why this matters?** These visualization reveals whether the fires disproportionately affected vulnerable communities, which has important implications for:
 
--   Resource allocation for recovery efforts.
+- Resource allocation for recovery efforts.
 
--   Identifying communities needing additional support.
+- Identifying communities needing additional support.
 
--   Understanding environmental justice dimensions of wildfire impacts.
+- Understanding environmental justice dimensions of wildfire impacts.
 
 ```{python}
 #| tags: []
