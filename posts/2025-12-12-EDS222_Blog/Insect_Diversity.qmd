@@ -29,6 +29,10 @@ library(dplyr)
 library(kableExtra)
 library(MASS)
 library(ggdag)
+
+# Data Loading
+insect_div <- read_csv(here::here("posts/2025-12-12-EDS222_Blog/data/insect_raw.csv"))
+#view(insect_div)
 ```
 
 # Background Information
@@ -50,6 +54,8 @@ question.
 [^2]: Adams, Benjamin et al.,(2020) Local and landscape scale variables
     shape insect diversity in an urban biodiversity hot spot
     30(4).[DOI:e02089.10.1002/eap.2089](https://esajournals.onlinelibrary.wiley.com/doi/10.1002/eap.2089)
+    
+Find the full analysis code and data in my [GitHub repository here](https://github.com/IIDonaji/EDS-222-Final-Project)
 
 ## **Research Questions:**
 
@@ -64,7 +70,7 @@ among variables:
 
 ```{r, echo = FALSE}
 #| label: fig-dag
-#| fig-cap: "Causal diagram showing hypothesized relationships affecting species richness"
+#| fig-cap: "Figure 1: Causal diagram showing hypothesized relationships affecting species richness"
 #| fig-width: 8
 #| fig-height: 5
 
@@ -167,12 +173,6 @@ To avoid pseudoreplication from repeated monthly sampling, we averaged
 species richness and temperature across the year for each site, yielding
 30 independent observations.
 
-```{r,include = FALSE}
-# Data Loading
-insect_div <- read_csv(here::here("posts/2025-12-12-EDS222_Blog/data/InsectData.csv"))
-#view(insect_div)
-```
-
 ```{r, include = FALSE}
 # Cleaning & Preparation
 
@@ -231,9 +231,13 @@ site_data <- insect_clean %>%
 glimpse(site_data)
 ```
 
-# Exploratory Visualizations
-
-![Data distribution before modeling.](images/combined_exploratory.png)
+![Figure 2: xploratory analysis of mean insect species richness across
+30 sites in Los Angeles County. (A) Sites with drought-tolerant plants
+show higher median richness than those without. (B) Weak negative
+relationship between mean temperature and species richness across all
+sites. (C) Species richness varies across urban types, with no clear
+monotonic trend from natural (Type 1) to highly urbanized (Type
+9).](images/combined_exploratory.png)
 
 # Data Simulation According to Model Assumptions
 
@@ -438,12 +442,12 @@ pred_df <- predict_rich_df %>%
 head(pred_df) %>% kable(digits = 3)
 ```
 
-![Figure 2: (facet by Urban Type) Predicted insect species richness as a
+![Figure 3 (facet by Urban Type): Predicted insect species richness as a
 function of mean temperature and drought-tolerant plant presence across
 urban type (1= natural, 9 = highly urbanized). Shaded bands represent
 95% confidence intervals.](images/main_plot-01.png)
 
-![Figure 3 ( average across urban types): Predicted mean insect species
+![Figure 4 ( average across urban types): Predicted mean insect species
 richness across the observed temperature range for sites with (green)
 and without (orange) drought-tolerant plants. Lines show model
 predictions average across urban types; points are observed site-level
@@ -524,12 +528,7 @@ controlling for temperature and urbanization, suggesting that
 climate-appropriate landscaping is a viable strategy for supporting
 urban biodiversity.
 
-## Code & Raw Data
-
-Find the full analysis code and data in my
-[GitHub repository here](https://github.com/IIDonaji/EDS-222-Final-Project)
-
-Analysis conducted in R version \[4.5.1\] using:
+#### Analysis conducted in R version \[4.5.1\] using:
 
 - MASS (glm.nb)
 - tidyverse (data manipulation)
