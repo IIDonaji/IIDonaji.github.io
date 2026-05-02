@@ -71,7 +71,7 @@ among variables:
 
 ```{r, echo = FALSE}
 #| label: fig-dag
-#| fig-cap: "Figure 1: Causal diagram showing hypothesized relationships affecting species richness"
+#| fig-cap: "Causal diagram showing hypothesized relationships affecting species richness"
 #| fig-width: 8
 #| fig-height: 5
 
