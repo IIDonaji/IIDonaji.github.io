@@ -227,7 +227,13 @@ site_data <- insect_clean %>%
 glimpse(site_data)
 ```
 
-![Figure 2: Exploratory analysis of mean insect species richness across 30 sites in Los Angeles County. (A) Sites with drought-tolerant plants show higher median richness than those without. (B) Weak negative relationship between mean temperature and species richness across all sites. (C) Species richness varies across urban types, with no clear monotonic trend from natural (Type 1) to highly urbanized (Type 9).](https://github.com/IIDonaji/EDS-222-Final-Project/blob/main/figures/combined_exploratory.png)
+![Figure 2: Exploratory analysis of mean insect species richness across
+30 sites in Los Angeles County. (A) Sites with drought-tolerant plants
+show higher median richness than those without. (B) Weak negative
+relationship between mean temperature and species richness across all
+sites. (C) Species richness varies across urban types, with no clear
+monotonic trend from natural (Type 1) to highly urbanized (Type
+9).](figs/combined_exploratory.png)
 
 # Data Simulation According to Model Assumptions
 
@@ -430,9 +436,17 @@ pred_df <- predict_rich_df %>%
 head(pred_df) %>% kable(digits = 3, caption = "Predicted Species Richness (first 6 rows)")
 ```
 
-![Figure 3 (facet by Urban Type): Predicted insect species richness as a function of mean temperature and drought-tolerant plant presence across urban type (1= natural, 9 = highly urbanized). Shaded bands represent 95% confidence intervals.](https://github.com/IIDonaji/EDS-222-Final-Project/blob/main/figures/main_plot.png)
+![Figure 3 (facet by Urban Type): Predicted insect species richness as a
+function of mean temperature and drought-tolerant plant presence across
+urban type (1= natural, 9 = highly urbanized). Shaded bands represent
+95% confidence intervals.](figs/main_plot.png)
 
-![Figure 4 ( average across urban types): Predicted mean insect species richness across the observed temperature range for sites with (green) and without (orange) drought-tolerant plants. Lines show model predictions average across urban types; points are observed site-level data. Shaded bands represent 95% confidence intervals.](https://github.com/IIDonaji/EDS-222-Final-Project/blob/main/figures/simple_plot.png)
+![Figure 4 ( average across urban types): Predicted mean insect species
+richness across the observed temperature range for sites with (green)
+and without (orange) drought-tolerant plants. Lines show model
+predictions average across urban types; points are observed site-level
+data. Shaded bands represent 95% confidence
+intervals.](figs/simple_plot.png)
 
 ## Discussion
 
