@@ -1,9 +1,8 @@
 ---
 title: "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants A Negative Binomial Approach"
 description: "A technical blog demonstrating how to use a statistical model to answer an environmental data science question."
-author: "Ixel"
 date: "12/12/2025"
-categories: [R, Statistical Modeling]
+categories: [Quarto, MEDS, R, Statistical Modeling]
 image: fig4_combined_exploratory.png
 draft: false
 format: 
