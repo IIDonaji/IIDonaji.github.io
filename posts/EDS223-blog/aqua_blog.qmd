@@ -24,26 +24,28 @@ editor_options:
 ![**Image: Commercial Fishing Boats, Santa Barbara Harbor, California,
 USA.**](Harbor.png)
 
-Global seafood demand is projected to increase by 70% by 2050, yet 
-wild capture fisheries have plateaued near their maximum sustainable 
-yield (Gentry et al., 2017). Marine aquaculture has emerged as a 
-critical pathway to meet this demand, offering a more sustainable 
-protein source than land-based meat production (Hall et al., 2011). 
-Along the U.S. West Coast, this opportunity is particularly significant, the region supports some of the most productive marine ecosystems in the world, driven by seasonal upwelling along the California Current System.
+Global seafood demand is projected to increase by 70% by 2050, yet wild
+capture fisheries have plateaued near their maximum sustainable yield
+(Gentry et al., 2017). Marine aquaculture has emerged as a critical
+pathway to meet this demand, offering a more sustainable protein source
+than land-based meat production (Hall et al., 2011). Along the U.S. West
+Coast, this opportunity is particularly significant, the region supports
+some of the most productive marine ecosystems in the world, driven by
+seasonal upwelling along the California Current System.
 
-However, identifying *where* aquaculture should occur is not 
-straightforward. Optimal sites must balance ecological suitability, 
-species-specific environmental tolerances, and jurisdictional 
-boundaries. Poorly sited operations risk low yields, ecosystem 
-disruption, and regulatory conflict. Geospatial suitability modeling 
-offers a systematic, reproducible framework for narrowing down priority 
+However, identifying *where* aquaculture should occur is not
+straightforward. Optimal sites must balance ecological suitability,
+species-specific environmental tolerances, and jurisdictional
+boundaries. Poorly sited operations risk low yields, ecosystem
+disruption, and regulatory conflict. Geospatial suitability modeling
+offers a systematic, reproducible framework for narrowing down priority
 zones before costly on-the-ground assessments are made.
 
 ### Research Question:
 
-What Exclusive Economic Zones (EEZ) on the U.S. West Coast of the are best
-suited to developing marine aquaculture for several species of oysters
-and Lingcod *Ophiodon elongatus* (Girard, 1854)?
+What Exclusive Economic Zones (EEZ) on the U.S. West Coast of the are
+best suited to developing marine aquaculture for several species of
+oysters and Lingcod *Ophiodon elongatus* (Girard, 1854)?
 
 ### Data Sources
 
@@ -53,9 +55,10 @@ I combined three geospatial datasets:
 - **Sea Surface Temperature (SST):** 2008–2012 annual averages\
 - **Exclusive Economic Zones:** Cleaned U.S. West Coast EEZ shapefile
 
-Species-specific environmental requirements were sourced from FishBase 
-(2025)for Lingcod and SeaLifeBase (2025) for oyster, along with peer-reviewed fisheries literature. All geospatial processing 
-was performed in **R** using `terra`, `stars`, and `sf`.
+Species-specific environmental requirements were sourced from FishBase
+(2025)for Lingcod and SeaLifeBase (2025) for oyster, along with
+peer-reviewed fisheries literature. All geospatial processing was
+performed in **R** using `terra`, `stars`, and `sf`.
 
 ## Methods
 
@@ -93,13 +96,13 @@ library(viridisLite)
 # Prepare Data
 
 # Bathymetry
-depth <- read_stars(here::here("posts","EDS223_Blog", "data", "depth.tif"))
+depth <- read_stars(here::here("posts","EDS223-blog", "data", "depth.tif"))
 
 # Exclusive Economic Zones (eez)
-eez <- st_read(here::here("posts", "EDS223_Blog", "data","wc_regions_clean.shp"))
+eez <- st_read(here::here("posts", "EDS223-blog", "data","wc_regions_clean.shp"))
 
 # Sea Surface Temperature (SST) load as a list of .tiff files 
-sst <- list.files(path= here::here("posts", "EDS223_Blog", "data"),
+sst <- list.files(path= here::here("posts", "EDS223-blog", "data"),
                   pattern= "average_annual", # file name matching pattern
                    full.names = TRUE) # Reference entire file name matching this pattern
 
@@ -489,24 +492,34 @@ constraints.
 
 ### References
 
-Lam, L. S., Basnett, B. L., Haltuch, M. A., Cope, J., Andrews, K., Nichols, K. M., Longo, G. C., Samhouri, J. F., & Hamilton, S. L. (2021). Geographic variability in lingcod Ophiodon elongatus life history and demography along the US West Coast: oceanographic drivers and management implications. Marine Ecology Progress Series, )
-[670, 203–222.](ttps://www.jstor.org/stable/27060679)
+Lam, L. S., Basnett, B. L., Haltuch, M. A., Cope, J., Andrews, K.,
+Nichols, K. M., Longo, G. C., Samhouri, J. F., & Hamilton, S. L. (2021).
+Geographic variability in lingcod Ophiodon elongatus life history and
+demography along the US West Coast: oceanographic drivers and management
+implications. Marine Ecology Progress Series, ) [670,
+203–222.](ttps://www.jstor.org/stable/27060679)
 
-Head, M.A., Keller, A.A. & Lam, L.S.(2023). Evaluating drivers of spatial variability in lingcod, Ophiodon elongatus, reproduction along the US West Coast. Environ Biol Fish [106, 2157–2176 ]( https://doi.org/10.1007/s10641-023-01496-w)
+Head, M.A., Keller, A.A. & Lam, L.S.(2023). Evaluating drivers of
+spatial variability in lingcod, Ophiodon elongatus, reproduction along
+the US West Coast. Environ Biol Fish [106,
+2157–2176](https://doi.org/10.1007/s10641-023-01496-w)
 
-Gentry, R. R., et al., Mapping the global potential(2017)
-for marine aquaculture. Nature Ecology & Evolution, 1, 1317-1324
+Gentry, R. R., et al., Mapping the global potential(2017) for marine
+aquaculture. Nature Ecology & Evolution, 1, 1317-1324
 [doi.org/10.1038/s41559-017-0257-9v](doi.org/10.1038/s41559-017-0257-9v).︎
 
-GEBCO Compilation Group,(2022) 
-[GEBCO_2022 Grid](https://www.gebco.net/data-products/gridded-bathymetry-data/gebco-2022)
+GEBCO Compilation Group,(2022) [GEBCO_2022
+Grid](https://www.gebco.net/data-products/gridded-bathymetry-data/gebco-2022)
 
 Palomares, M.L.D. and D. Pauly. Editors. (2025). SeaLifeBase.
 [www.sealifebase.org](https://www.sealifebase.ca/country/CountryChecklist.php?c_code=840&vhabitat=commercial)
 
-Froese, R. and D. Pauly. Editors. (2025). [www.fishbase.org](https://www.fishbase.org/summary/509)
+Froese, R. and D. Pauly. Editors. (2025).
+[www.fishbase.org](https://www.fishbase.org/summary/509)
 
-Blue Frontiers: Managing the Environmental Costs of Aquaculture [(The World Fish Center, Penang,Malaysia,2011)](https://worldfishcenter.org/publication/blue-frontiers-managing-environmental-costs-aquaculture-0).
+Blue Frontiers: Managing the Environmental Costs of Aquaculture [(The
+World Fish Center,
+Penang,Malaysia,2011)](https://worldfishcenter.org/publication/blue-frontiers-managing-environmental-costs-aquaculture-0).
 
 Oliver, R. (2025, November 25). Homework Assignment
 4.[(Github.io.)](https://eds-223-geospatial.github.io/assignments/HW4.html)

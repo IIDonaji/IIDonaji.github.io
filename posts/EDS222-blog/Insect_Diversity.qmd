@@ -1,10 +1,9 @@
 ---
 title: "Urban Insect Biodiversity: Effects of Drought-Tolerant Plants A Negative Binomial Approach"
 description: "Using count data modeling to explore how plant choices shape urban insect communities in LA's Mediterranean climate."
-image: main_plot.png
+image: figs/main_plot.png
 date: "12/12/2025"
 categories: [Quarto, MEDS, R, Statistical Modeling]
-image: fig4_combined_exploratory.png
 draft: false
 format: 
   html:
@@ -31,7 +30,7 @@ library(MASS)
 library(ggdag)
 
 # Data Loading
-insect_div <- read_csv(here::here("posts/2025-12-12-EDS222_Blog/data/insect_raw.csv"))
+insect_div <- read_csv(here::here("posts/EDS222-blog/data/insect_raw.csv"))
 #view(insect_div)
 ```
 
