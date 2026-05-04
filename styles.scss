@@ -1,47 +1,55 @@
-/*-- scss:default --*/ 
+/*-- scss:defaults --*/
 
 // import google font
-@import url('https://fonts.googleapis.com/css2?family=Alice&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Ribeye&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alice&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 
 //* /* ctrl shift c comment all stuff
-// Color
+// Color theme throughout my site 
 // define Sass vars
-$jadegreen: #14A664 
-$bondiblue: #0095B6
-$Aliveblue: #F0F8FF
-$Aerospaeorange: #FF4F00
-
+$jadegreen: #14A664; 
+$bondiblue: #0095B6;
+$aliveblue: #F0F8FF;
+$lightblue: #e8f4f8;
+$aerospaeorange: #FF4F00;
+$meddarkblue: #4781A4;
+$seaweed: #455F21; 
+$dustyblue: #528CAE;
+$darckcyan: #207f81;
+$olive-tonegreen: #8ea604;
+$mutenavy: #112A46;
+$someyellow: #cdb545;
+$muteyellow: #c7bd6a;
 // can define values with units, e.g. $my-font-size: 25px;
 
+// ... Other vars ...
+$font-family-base: 'Lora', serif;
+
 // Base document colors/define quarto variables
-$navbar-bg:  // navbar
-$navbar-fg:  // navbar foreground elements
-$navbar-hl:  // highlight color when hovering over navbar links
-$body-bg:  // page background 
-$body-color:  // page text 
-$footer-bg:  // footer 
-$link-color:  // hyperlinks 
+$navbar-bg: $mutenavy; // navbar
+$navbar-fg: $someyellow; // navbar foreground elements
+$navbar-hl: $muteyellow; // highlight color when hovering over navbar links
+$body-bg: $aliveblue;  // page background 
+$body-color: $mutenavy;  // page text 
+$footer-bg: $aliveblue; // footer 
+$link-color: $meddarkblue; // hyperlinks 
 
 // Inline code
-$code-bg:  // inline code background color
-$code-color: // inline code text color
+$code-bg: $lightblue; // inline code background color
+$code-color: $aerospaeorange; // inline code text color
 
 /*-- scss:rules --*/ 
+
 h1, h2, {
+  font-family: 'Alice', serif;
   letter-spacing: 5px;
   font-weight: 800;
 }
 
-.title{
-  color: Aerospaeorange;
+.navbar-brand img {
+  max-height: 100px;
+  width: auto;
 }
 
-.center-text {
-  text-align: center;
+.navbar-nav .nav-link {
+  font-size: 1.2rem;  // adjust until it matches
 }
-
-
-.orange-text {
-  color: bondiblue;
-}
-]

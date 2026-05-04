@@ -1,38 +1,39 @@
 project:
   type: website
   output-dir: docs
- 
-# ~ parts of `_quarto.yml` omitted for brevity ~
 website:
-  title: "Ixel Medrano" # add a logal instead if possible?
-# favicon: images/
+  title: "Ixel Medrano" # Defaults to github name 
+  favicon: media/logo-aff.png
+# add listing pages for websiteto navbar
   navbar:
-    #title: False #-> disaples for navbar but main
-   #logo: images/
-  # logo-alt: discribes for accsessability speech impare
+    title: false # override printing your website `title` in the top left corner of your navbar
+    logo: media/logo-aff.png
+    logo-alt: "A logo with a cat playing with a crescent moon that connects as the letter i for ee-shells name"
     right: # accepts right/left/center; you can also place items individually on the left, right, and center
       - href: index.qmd
-        text: Home
-      - about.qmd
-#     - href: resources.qmd 
-#       text: Resources
+        text: Home # changed navbar name
+      - href: about.qmd
+        text: About
       - href: posts.qmd
         text: Blog
+#     - href: resources.qmd 
+#       text: Resources
   page-footer:
-    background: light # or `dark` or omit this option altogether (footer color will match page body color)
-    left: Copyright 2025, Ixel M. 
-    right: This website is built with {{< fa heart title= "a heart" >}}, [{{< fa brands github title= "GitHub octocat logo" >}}](https://github.com/iidonaji/iidonaji.github.io/){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} and [Quarto](https://quarto.org/){target=_blank}
-       # add your listing page file to your navbar, just like you would any other new web page
-# supplying just one theme ("lux")
+      background: light # or `dark` or omit this option altogether (footer color will match page body color)
+      left: "&copy; 2025 Ixel Medrano" 
+      right: This website is built with {{< fa heart title= "a heart" >}}, [{{< fa brands github title= "GitHub octocat logo" >}}](https://github.com/iidonaji/iidonaji.github.io/){target=_blank}, [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html){target=_blank} and [Quarto](https://quarto.org/){target=_blank}
+
+
+
+# web page theme/color
 format:
   html:
-    theme: lux # change to css: styles.css # Sam removed the `css: styles.css` option that was included by default, since she will be writing all sass and css in this single styles.scss file
-    # if you want to keep lux theme and only want to change color you can just do the follow;
-#   theme:
-#  - lux
-#  - styles.scss
-    toc: true
-    page-layout: full
-    mainfont: Alice # assign default font in all text elements on website
-
+    theme: styles.scss # can a pre define theme or to toggle between light and dark
+#      light: lux
+#      dark: solar
+    toc: false
+    page-layout: full # set to full so that page content takes up more of  the page width
+#    mainfont: Alice # assign default font in all text elements on website .scss styles now
+  
+    
 editor: visual

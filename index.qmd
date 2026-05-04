@@ -1,10 +1,12 @@
 ---
-#title: "Website Under construction!"
-image: images/IxelCroped.jpg
+# Main page must live in main directory
+title: "Ixel Medrano" #this title appears under photo
+image: media/IxelCroped.jpg
+toc: false # disable table of contents for this page (if applicable)
 about: 
-  template: jolla
-  image-shape: round
-  image-width: 17em
+  template: trestles 
+  image-shape: rounded
+  image-width: 21em
   links: # create buttons
     - icon: linkedin
       text: LinkedIn
@@ -17,15 +19,35 @@ about:
     - icon: envelope
       text: Email
       href: mailto:imedrano@ucsb.edu
- 
-page-footer:
-    left: Copyright© 2025, IxelDonaji
-    right: 
-    - icon: github #This website is built with Github
-      text: Built with Github
-    - href: https://github.com 
 ---
 
-#\~ landing page content / text omitted for brevity
+:::: darkgrey-text
+### Hola!
 
-I value creativity and strong collaborations in addressing ecological issues such as anthropogenic impacts. I understand the importance of working across fields to develop progressive environmental solutions and management strategies
+I'm environmental data scientist with a background in ecology and evolution, using data to better understand and care for the natural world. I enjoy building tools and workflows that make ecological data more accessible and useful for research, conservationist, and decision-making. 
+
+I'm especially interested in human-wildlife interactions, and supporting environmental and cultural preservation through accessible, data-driven tools. I value creative, cross-disciplinary collaboration, and inclusive approaches to data science.
+
+------------------------------------------------------------------------
+
+::: panel-tabset
+### Education
+
+**Master, Environmetal Data Science** (Expected June 2026) \|
+Bren School of Environmental Science & Management \| University of California, Santa Barbara (UCSB)
+
+**Bachelor of Science, Ecology and Evolution** (June 2025) \| University of California, Santa Barbara (UCSB), Santa Barbara CA \| Minor: Remote Sensing  
+
+### Research & Professional Experience
+
+**Turning Data into Action. An R Package for the Western Wildfire Resilience Index (WWRI)** \|Master's Capstone (Current) \| *Collaborators: National Center for Ecological Analysis and Synthesis (NCEAS)*
+
+**Conservation genomics of the endangered southern river otter Lontra provocax in the Valdivian coastal reserve, Chile**
+|Center for Conservation Genomics (CCG) Intern (June 2024 – June 2025) \|Smithsonian’s National Zoological Park & Conservation Biology Institute (SNZPCBI), Washington, D.C \| *Advisor: Jesús E. Maldonado, Lillian D. Parker, & Susette Castañeda-Rico*
+
+**Undergraduate Research Assistant for the Young Lab** \|Department of Ecology, Evolution, and Marine Biology, UCSB (March 2023 - June 2025) \| *Advisor: Dr. Hillary Young* 
+
+**How Human Activity Along The California Coast Impacts The Presence of Large Animals** \|McNair Scholars program Summer research project (2023) \| *Dr. Hillary Young*
+
+:::
+:::
