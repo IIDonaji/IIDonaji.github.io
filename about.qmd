@@ -10,12 +10,13 @@ I grew up five minutes from the Arroyo Seco in Pasadena, on the land of the Haha
 
 ```{r}
 #| echo: false
+#| out-width: 800%
 #| fig-alt: "A shallow rocky creek flowing through a dry chaparral canyon with shrubs and hills in the background, North Arroyo Seco, Pasadena, CA.."
 knitr::include_graphics("media/arroyo-north.jpg")
 ```
 
 ::: figure-caption
-Arroyo Seco, Pasadena, CA
+North Arroyo Seco, Pasadena, CA
 :::
 ::::
 
